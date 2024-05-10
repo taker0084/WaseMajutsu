@@ -14,7 +14,7 @@ namespace unilab2024
     {
         public Form1()
         {
-            InitializeComponent();
+            InitializeComponent();//aa
         }
     }
 }
