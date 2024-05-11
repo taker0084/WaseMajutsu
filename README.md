@@ -87,7 +87,25 @@ Func.CreateForm1(this);
 ### StageSelect.cs
 
 `WorldMap.cs`で何らかのワールド選択をすると立ち上がるフォームです。選択されたワールドによって表示内容を変えるため、classとしての**メンバ変数**を定義しています。
-これは別フォームからの変更が効くようになっています。詳しくはコードを見てください。`各種メンバ変数の定義`に書いてあります。
+これは別フォームからの変更が効くようになっています。例えば次のような感じです.
+```csharp
+public class StageSelect : Form
+{
+        #region 各種メンバ変数の定義
+        private string _worldName;  //WorldMapで選択された学年
+        
+        public string WorldName     //こう書くと別フォームからアクセスできるっぽい。原理はよくわからん
+        {
+            get { return _worldName; }
+            set { _worldName = value; }
+            //別フォームからのアクセス例
+            //StageSelect form = new StageSelect();
+            //form.WorldName = "学年";
+        }
+        #endregion
+}
+```
+
 
 このフォームからは`Stage.cs`、または`WorldMap.cs`に遷移することができます。
 
