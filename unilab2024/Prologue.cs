@@ -10,11 +10,16 @@ using System.Windows.Forms;
 
 namespace unilab2024
 {
-    public partial class Form1 : Form
+    public partial class Prologue : Form
     {
-        public Form1()
+        public Prologue()
         {
             InitializeComponent();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Func.CreateWorldMap(this);
         }
     }
 }
