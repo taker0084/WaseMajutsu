@@ -44,6 +44,13 @@ namespace unilab2024
             currentForm.Dispose();
         }
 
+        public static void CreateStage(Form currentForm, string stageName) //呼び出し方: Func.CreateStageSelect(this,"1");  各ステージどう名付けるか決めたい
+        {
+            Stage form = new Stage();
+            form.StageName = stageName;
+            form.Show();
+            currentForm.Dispose();
+        }
         #endregion
     }
 }
