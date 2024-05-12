@@ -84,6 +84,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Stage.resx">
+      <DependentUpon>Stage.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="StageSelect.resx">
       <DependentUpon>StageSelect.cs</DependentUpon>
     </EmbeddedResource>
