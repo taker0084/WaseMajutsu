@@ -24,6 +24,14 @@ namespace unilab2024
             this.DragDrop += new DragEventHandler(ListBox_DragDrop);          //Form全体にDrop可能にする
             this.DragEnter += new DragEventHandler(ListBox_DragEnter);
 
+            //pictureBoxの設定
+            pictureBox2.Parent = pictureBox1;
+            //pictureBox1.Location = new Point(600, 50);
+            pictureBox2.Location = new Point(0, 0);
+            pictureBox1.ClientSize = new Size(684, 684);
+            pictureBox2.ClientSize = new Size(684, 684);
+            pictureBox2.BackColor = Color.Transparent;
+
         }
         #region メンバー変数定義
         private string _stageName;
