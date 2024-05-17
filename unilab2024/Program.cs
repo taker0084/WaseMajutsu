@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -52,6 +53,7 @@ namespace unilab2024
             currentForm.Dispose();
         }
         #endregion
+
         public static void ResetListBox(ListBox listbox_Input,ListBox listbox)   //ListBoxの中身消去
         {
             if (listbox_Input.SelectedIndex > -1)
@@ -63,5 +65,6 @@ namespace unilab2024
                 listbox.Items.Clear();
             }
         }
+
     }
 }
