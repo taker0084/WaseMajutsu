@@ -21,27 +21,27 @@ namespace unilab2024
         public Stage()
         {
             InitializeComponent();
-            this.AllowDrop = true;
-            this.DragDrop += new DragEventHandler(ListBox_DragDrop);          //Form全体にDrop可能にする
-            this.DragEnter += new DragEventHandler(ListBox_DragEnter);
+            //this.AllowDrop = true;
+            //this.DragDrop += new DragEventHandler(ListBox_DragDrop);          //Form全体にDrop可能にする
+            //this.DragEnter += new DragEventHandler(ListBox_DragEnter);
 
-            //pictureBoxの設定
-            pictureBox2.Parent = pictureBox1;
-            //pictureBox1.Location = new Point(600, 50);
-            pictureBox2.Location = new Point(0, 0);
-            pictureBox1.ClientSize = new Size(684, 684);
-            pictureBox2.ClientSize = new Size(684, 684);
-            pictureBox2.BackColor = Color.Transparent;
+            ////pictureBoxの設定
+            //pictureBox2.Parent = pictureBox1;
+            ////pictureBox1.Location = new Point(600, 50);
+            //pictureBox2.Location = new Point(0, 0);
+            //pictureBox1.ClientSize = new Size(684, 684);
+            //pictureBox2.ClientSize = new Size(684, 684);
+            //pictureBox2.BackColor = Color.Transparent;
 
-            bmp1 = new Bitmap(pictureBox1.Width, pictureBox1.Height);
-            bmp2 = new Bitmap(pictureBox2.Width, pictureBox2.Height);
-            bmp3 = new Bitmap(pictureBox3.Width, pictureBox3.Height);
-            //bmp4 = new Bitmap(pictureBox4.Width, pictureBox4.Height);
-            pictureBox1.Image = bmp1;
-            pictureBox2.Image = bmp2;
-            pictureBox3.Image = bmp3;
-            //pictureBox4.Image = bmp4;
-            this.Load += Stage_Load;
+            //bmp1 = new Bitmap(pictureBox1.Width, pictureBox1.Height);
+            //bmp2 = new Bitmap(pictureBox2.Width, pictureBox2.Height);
+            //bmp3 = new Bitmap(pictureBox3.Width, pictureBox3.Height);
+            ////bmp4 = new Bitmap(pictureBox4.Width, pictureBox4.Height);
+            //pictureBox1.Image = bmp1;
+            //pictureBox2.Image = bmp2;
+            //pictureBox3.Image = bmp3;
+            ////pictureBox4.Image = bmp4;
+            //this.Load += Stage_Load;
 
         }
 
