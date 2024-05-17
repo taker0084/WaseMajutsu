@@ -31,12 +31,12 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
-            this.button_start = new System.Windows.Forms.Button();
+            this.button_Start = new System.Windows.Forms.Button();
             this.button_ResetInput = new System.Windows.Forms.Button();
             this.button_ResetA = new System.Windows.Forms.Button();
             this.button_ResetB = new System.Windows.Forms.Button();
             this.button_ToMap = new System.Windows.Forms.Button();
-            this.button_retry = new System.Windows.Forms.Button();
+            this.button_Retry = new System.Windows.Forms.Button();
             this.button_NextStage = new System.Windows.Forms.Button();
             this.button_Hint = new System.Windows.Forms.Button();
             this.listBox_Input = new System.Windows.Forms.ListBox();
@@ -44,15 +44,23 @@
             this.listBox_A = new System.Windows.Forms.ListBox();
             this.listBox_B = new System.Windows.Forms.ListBox();
             this.listBox_SelectAB = new System.Windows.Forms.ListBox();
-            this.label_Miss = new System.Windows.Forms.Label();
+            this.label_Result = new System.Windows.Forms.Label();
             this.label_Input = new System.Windows.Forms.Label();
             this.label_A = new System.Windows.Forms.Label();
             this.label_B = new System.Windows.Forms.Label();
-            this.label_Miss2 = new System.Windows.Forms.Label();
-            this.label_Intro = new System.Windows.Forms.Label();
+            this.label_Error = new System.Windows.Forms.Label();
+            this.label_Info = new System.Windows.Forms.Label();
+            this.pictureBox4 = new System.Windows.Forms.PictureBox();
+            this.pictureBox5 = new System.Windows.Forms.PictureBox();
+            this.pictureBox6 = new System.Windows.Forms.PictureBox();
+            this.pictureBox7 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -81,18 +89,18 @@
             this.pictureBox3.TabIndex = 2;
             this.pictureBox3.TabStop = false;
             // 
-            // button_start
+            // button_Start
             // 
-            this.button_start.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-            this.button_start.Font = new System.Drawing.Font("游明朝 Demibold", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.button_start.ForeColor = System.Drawing.Color.Navy;
-            this.button_start.Location = new System.Drawing.Point(1291, 621);
-            this.button_start.Name = "button_start";
-            this.button_start.Size = new System.Drawing.Size(223, 100);
-            this.button_start.TabIndex = 3;
-            this.button_start.Text = "出発！";
-            this.button_start.UseVisualStyleBackColor = false;
-            this.button_start.Click += new System.EventHandler(this.button_start_Click);
+            this.button_Start.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+            this.button_Start.Font = new System.Drawing.Font("游明朝 Demibold", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.button_Start.ForeColor = System.Drawing.Color.Navy;
+            this.button_Start.Location = new System.Drawing.Point(1291, 621);
+            this.button_Start.Name = "button_Start";
+            this.button_Start.Size = new System.Drawing.Size(223, 100);
+            this.button_Start.TabIndex = 3;
+            this.button_Start.Text = "出発！";
+            this.button_Start.UseVisualStyleBackColor = false;
+            this.button_Start.Click += new System.EventHandler(this.button_Start_Click);
             // 
             // button_ResetInput
             // 
@@ -135,18 +143,20 @@
             this.button_ToMap.TabIndex = 7;
             this.button_ToMap.Text = "マップに戻る";
             this.button_ToMap.UseVisualStyleBackColor = false;
+            this.button_ToMap.Click += new System.EventHandler(this.button_ToMap_Click);
             // 
-            // button_retry
+            // button_Retry
             // 
-            this.button_retry.BackColor = System.Drawing.Color.Tomato;
-            this.button_retry.Font = new System.Drawing.Font("游明朝 Demibold", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.button_retry.ForeColor = System.Drawing.Color.White;
-            this.button_retry.Location = new System.Drawing.Point(1184, 724);
-            this.button_retry.Name = "button_retry";
-            this.button_retry.Size = new System.Drawing.Size(223, 50);
-            this.button_retry.TabIndex = 8;
-            this.button_retry.Text = "リトライ！";
-            this.button_retry.UseVisualStyleBackColor = false;
+            this.button_Retry.BackColor = System.Drawing.Color.Tomato;
+            this.button_Retry.Font = new System.Drawing.Font("游明朝 Demibold", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.button_Retry.ForeColor = System.Drawing.Color.White;
+            this.button_Retry.Location = new System.Drawing.Point(1184, 724);
+            this.button_Retry.Name = "button_Retry";
+            this.button_Retry.Size = new System.Drawing.Size(223, 50);
+            this.button_Retry.TabIndex = 8;
+            this.button_Retry.Text = "リトライ！";
+            this.button_Retry.UseVisualStyleBackColor = false;
+            this.button_Retry.Click += new System.EventHandler(this.button_Retry_Click);
             // 
             // button_NextStage
             // 
@@ -225,17 +235,17 @@
             this.listBox_SelectAB.Size = new System.Drawing.Size(143, 39);
             this.listBox_SelectAB.TabIndex = 15;
             // 
-            // label_Miss
+            // label_Result
             // 
-            this.label_Miss.AutoSize = true;
-            this.label_Miss.BackColor = System.Drawing.Color.White;
-            this.label_Miss.Font = new System.Drawing.Font("游明朝 Demibold", 48F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label_Miss.ForeColor = System.Drawing.Color.Red;
-            this.label_Miss.Location = new System.Drawing.Point(236, 333);
-            this.label_Miss.Name = "label_Miss";
-            this.label_Miss.Size = new System.Drawing.Size(227, 83);
-            this.label_Miss.TabIndex = 16;
-            this.label_Miss.Text = "ミス！";
+            this.label_Result.AutoSize = true;
+            this.label_Result.BackColor = System.Drawing.Color.White;
+            this.label_Result.Font = new System.Drawing.Font("游明朝 Demibold", 48F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.label_Result.ForeColor = System.Drawing.Color.Red;
+            this.label_Result.Location = new System.Drawing.Point(236, 333);
+            this.label_Result.Name = "label_Result";
+            this.label_Result.Size = new System.Drawing.Size(227, 83);
+            this.label_Result.TabIndex = 16;
+            this.label_Result.Text = "ミス！";
             // 
             // label_Input
             // 
@@ -273,27 +283,63 @@
             this.label_B.TabIndex = 19;
             this.label_B.Text = "Bの魔法";
             // 
-            // label_Miss2
+            // label_Error
             // 
-            this.label_Miss2.AutoSize = true;
-            this.label_Miss2.BackColor = System.Drawing.Color.White;
-            this.label_Miss2.Font = new System.Drawing.Font("游明朝 Demibold", 48F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label_Miss2.ForeColor = System.Drawing.Color.Red;
-            this.label_Miss2.Location = new System.Drawing.Point(48, 240);
-            this.label_Miss2.Name = "label_Miss2";
-            this.label_Miss2.Size = new System.Drawing.Size(227, 83);
-            this.label_Miss2.TabIndex = 20;
-            this.label_Miss2.Text = "ミス！";
+            this.label_Error.AutoSize = true;
+            this.label_Error.BackColor = System.Drawing.Color.White;
+            this.label_Error.Font = new System.Drawing.Font("游明朝 Demibold", 48F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.label_Error.ForeColor = System.Drawing.Color.Red;
+            this.label_Error.Location = new System.Drawing.Point(48, 240);
+            this.label_Error.Name = "label_Error";
+            this.label_Error.Size = new System.Drawing.Size(227, 83);
+            this.label_Error.TabIndex = 20;
+            this.label_Error.Text = "ミス！";
             // 
-            // label_Intro
+            // label_Info
             // 
-            this.label_Intro.AutoSize = true;
-            this.label_Intro.Font = new System.Drawing.Font("游明朝", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label_Intro.Location = new System.Drawing.Point(785, 401);
-            this.label_Intro.Name = "label_Intro";
-            this.label_Intro.Size = new System.Drawing.Size(153, 62);
-            this.label_Intro.TabIndex = 21;
-            this.label_Intro.Text = "label4";
+            this.label_Info.AutoSize = true;
+            this.label_Info.Font = new System.Drawing.Font("游明朝", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.label_Info.Location = new System.Drawing.Point(598, 198);
+            this.label_Info.Name = "label_Info";
+            this.label_Info.Size = new System.Drawing.Size(153, 62);
+            this.label_Info.TabIndex = 21;
+            this.label_Info.Text = "label4";
+            // 
+            // pictureBox4
+            // 
+            this.pictureBox4.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.pictureBox4.Location = new System.Drawing.Point(788, 401);
+            this.pictureBox4.Name = "pictureBox4";
+            this.pictureBox4.Size = new System.Drawing.Size(98, 104);
+            this.pictureBox4.TabIndex = 22;
+            this.pictureBox4.TabStop = false;
+            // 
+            // pictureBox5
+            // 
+            this.pictureBox5.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.pictureBox5.Location = new System.Drawing.Point(900, 401);
+            this.pictureBox5.Name = "pictureBox5";
+            this.pictureBox5.Size = new System.Drawing.Size(98, 104);
+            this.pictureBox5.TabIndex = 23;
+            this.pictureBox5.TabStop = false;
+            // 
+            // pictureBox6
+            // 
+            this.pictureBox6.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.pictureBox6.Location = new System.Drawing.Point(788, 501);
+            this.pictureBox6.Name = "pictureBox6";
+            this.pictureBox6.Size = new System.Drawing.Size(98, 104);
+            this.pictureBox6.TabIndex = 24;
+            this.pictureBox6.TabStop = false;
+            // 
+            // pictureBox7
+            // 
+            this.pictureBox7.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.pictureBox7.Location = new System.Drawing.Point(900, 501);
+            this.pictureBox7.Name = "pictureBox7";
+            this.pictureBox7.Size = new System.Drawing.Size(98, 104);
+            this.pictureBox7.TabIndex = 25;
+            this.pictureBox7.TabStop = false;
             // 
             // Stage
             // 
@@ -301,12 +347,16 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(1829, 931);
-            this.Controls.Add(this.label_Intro);
-            this.Controls.Add(this.label_Miss2);
+            this.Controls.Add(this.pictureBox7);
+            this.Controls.Add(this.pictureBox6);
+            this.Controls.Add(this.pictureBox5);
+            this.Controls.Add(this.pictureBox4);
+            this.Controls.Add(this.label_Info);
+            this.Controls.Add(this.label_Error);
             this.Controls.Add(this.label_B);
             this.Controls.Add(this.label_A);
             this.Controls.Add(this.label_Input);
-            this.Controls.Add(this.label_Miss);
+            this.Controls.Add(this.label_Result);
             this.Controls.Add(this.listBox_SelectAB);
             this.Controls.Add(this.listBox_B);
             this.Controls.Add(this.listBox_A);
@@ -314,12 +364,12 @@
             this.Controls.Add(this.listBox_Input);
             this.Controls.Add(this.button_Hint);
             this.Controls.Add(this.button_NextStage);
-            this.Controls.Add(this.button_retry);
+            this.Controls.Add(this.button_Retry);
             this.Controls.Add(this.button_ToMap);
             this.Controls.Add(this.button_ResetB);
             this.Controls.Add(this.button_ResetA);
             this.Controls.Add(this.button_ResetInput);
-            this.Controls.Add(this.button_start);
+            this.Controls.Add(this.button_Start);
             this.Controls.Add(this.pictureBox3);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.pictureBox1);
@@ -331,6 +381,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -341,12 +395,12 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.PictureBox pictureBox3;
-        private System.Windows.Forms.Button button_start;
+        private System.Windows.Forms.Button button_Start;
         private System.Windows.Forms.Button button_ResetInput;
         private System.Windows.Forms.Button button_ResetA;
         private System.Windows.Forms.Button button_ResetB;
         private System.Windows.Forms.Button button_ToMap;
-        private System.Windows.Forms.Button button_retry;
+        private System.Windows.Forms.Button button_Retry;
         private System.Windows.Forms.Button button_NextStage;
         private System.Windows.Forms.Button button_Hint;
         private System.Windows.Forms.ListBox listBox_Input;
@@ -354,11 +408,15 @@
         private System.Windows.Forms.ListBox listBox_A;
         private System.Windows.Forms.ListBox listBox_B;
         private System.Windows.Forms.ListBox listBox_SelectAB;
-        private System.Windows.Forms.Label label_Miss;
+        private System.Windows.Forms.Label label_Result;
         private System.Windows.Forms.Label label_Input;
         private System.Windows.Forms.Label label_A;
         private System.Windows.Forms.Label label_B;
-        private System.Windows.Forms.Label label_Miss2;
-        private System.Windows.Forms.Label label_Intro;
+        private System.Windows.Forms.Label label_Error;
+        private System.Windows.Forms.Label label_Info;
+        private System.Windows.Forms.PictureBox pictureBox4;
+        private System.Windows.Forms.PictureBox pictureBox5;
+        private System.Windows.Forms.PictureBox pictureBox6;
+        private System.Windows.Forms.PictureBox pictureBox7;
     }
 }
