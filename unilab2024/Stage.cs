@@ -86,13 +86,15 @@ namespace unilab2024
 
             public static List<Conversation> Conversations = new List<Conversation>();  //会話文を入れるリスト
         }
-
         public class Conversation    //会話型のclass(structにするかも)
         {
             public string character = "";
             public string dialogue = "";
             public string img = "";
         }
+        public void Stage_Load(object sender, EventArgs e)
+        {
 
+        }
     }
 }
