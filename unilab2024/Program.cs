@@ -17,7 +17,7 @@ namespace unilab2024
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Prologue());
+            Application.Run(new Stage());
         }
     }
 
@@ -52,5 +52,16 @@ namespace unilab2024
             currentForm.Dispose();
         }
         #endregion
+        public static void ResetListBox(ListBox listbox_Input,ListBox listbox)   //ListBoxの中身消去
+        {
+            if (listbox_Input.SelectedIndex > -1)
+            {
+                listbox.Items.RemoveAt(listbox.SelectedIndex);
+            }
+            else
+            {
+                listbox.Items.Clear();
+            }
+        }
     }
 }
