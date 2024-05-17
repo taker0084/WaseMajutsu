@@ -31,18 +31,19 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
+            this.button_start = new System.Windows.Forms.Button();
+            this.button_ResetInput = new System.Windows.Forms.Button();
+            this.button_ResetA = new System.Windows.Forms.Button();
+            this.button_ResetB = new System.Windows.Forms.Button();
+            this.button_tomap = new System.Windows.Forms.Button();
+            this.button_retry = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
-            this.button8 = new System.Windows.Forms.Button();
-            this.listBox1 = new System.Windows.Forms.ListBox();
-            this.listBox2 = new System.Windows.Forms.ListBox();
-            this.listBox3 = new System.Windows.Forms.ListBox();
-            this.listBox4 = new System.Windows.Forms.ListBox();
+            this.button_hint = new System.Windows.Forms.Button();
+            this.listBox_Input = new System.Windows.Forms.ListBox();
+            this.listBox_options = new System.Windows.Forms.ListBox();
+            this.listBox_A = new System.Windows.Forms.ListBox();
+            this.listBox_B = new System.Windows.Forms.ListBox();
+            this.listBox_ABoptions = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -74,68 +75,68 @@
             this.pictureBox3.TabIndex = 2;
             this.pictureBox3.TabStop = false;
             // 
-            // button1
+            // button_start
             // 
-            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-            this.button1.Font = new System.Drawing.Font("游明朝 Demibold", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.button1.ForeColor = System.Drawing.Color.Navy;
-            this.button1.Location = new System.Drawing.Point(1184, 588);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(223, 100);
-            this.button1.TabIndex = 3;
-            this.button1.Text = "出発";
-            this.button1.UseVisualStyleBackColor = false;
+            this.button_start.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+            this.button_start.Font = new System.Drawing.Font("游明朝 Demibold", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.button_start.ForeColor = System.Drawing.Color.Navy;
+            this.button_start.Location = new System.Drawing.Point(1291, 621);
+            this.button_start.Name = "button_start";
+            this.button_start.Size = new System.Drawing.Size(223, 100);
+            this.button_start.TabIndex = 3;
+            this.button_start.Text = "出発！";
+            this.button_start.UseVisualStyleBackColor = false;
             // 
-            // button2
+            // button_ResetInput
             // 
-            this.button2.Location = new System.Drawing.Point(956, 83);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(54, 24);
-            this.button2.TabIndex = 4;
-            this.button2.Text = "button2";
-            this.button2.UseVisualStyleBackColor = true;
+            this.button_ResetInput.Location = new System.Drawing.Point(783, 97);
+            this.button_ResetInput.Name = "button_ResetInput";
+            this.button_ResetInput.Size = new System.Drawing.Size(54, 24);
+            this.button_ResetInput.TabIndex = 4;
+            this.button_ResetInput.Text = "リセット";
+            this.button_ResetInput.UseVisualStyleBackColor = true;
             // 
-            // button3
+            // button_ResetA
             // 
-            this.button3.Location = new System.Drawing.Point(1249, 83);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(54, 24);
-            this.button3.TabIndex = 5;
-            this.button3.Text = "button3";
-            this.button3.UseVisualStyleBackColor = true;
+            this.button_ResetA.Location = new System.Drawing.Point(1038, 97);
+            this.button_ResetA.Name = "button_ResetA";
+            this.button_ResetA.Size = new System.Drawing.Size(54, 24);
+            this.button_ResetA.TabIndex = 5;
+            this.button_ResetA.Text = "リセット";
+            this.button_ResetA.UseVisualStyleBackColor = true;
             // 
-            // button4
+            // button_ResetB
             // 
-            this.button4.Location = new System.Drawing.Point(697, 83);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(54, 24);
-            this.button4.TabIndex = 6;
-            this.button4.Text = "button4";
-            this.button4.UseVisualStyleBackColor = true;
+            this.button_ResetB.Location = new System.Drawing.Point(1291, 97);
+            this.button_ResetB.Name = "button_ResetB";
+            this.button_ResetB.Size = new System.Drawing.Size(54, 24);
+            this.button_ResetB.TabIndex = 6;
+            this.button_ResetB.Text = "リセット";
+            this.button_ResetB.UseVisualStyleBackColor = true;
             // 
-            // button5
+            // button_tomap
             // 
-            this.button5.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.button5.Font = new System.Drawing.Font("游明朝 Demibold", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.button5.ForeColor = System.Drawing.Color.White;
-            this.button5.Location = new System.Drawing.Point(1335, 9);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(158, 46);
-            this.button5.TabIndex = 7;
-            this.button5.Text = "マップに戻る";
-            this.button5.UseVisualStyleBackColor = false;
+            this.button_tomap.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.button_tomap.Font = new System.Drawing.Font("游明朝 Demibold", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.button_tomap.ForeColor = System.Drawing.Color.White;
+            this.button_tomap.Location = new System.Drawing.Point(1335, 9);
+            this.button_tomap.Name = "button_tomap";
+            this.button_tomap.Size = new System.Drawing.Size(158, 46);
+            this.button_tomap.TabIndex = 7;
+            this.button_tomap.Text = "マップに戻る";
+            this.button_tomap.UseVisualStyleBackColor = false;
             // 
-            // button6
+            // button_retry
             // 
-            this.button6.BackColor = System.Drawing.Color.Tomato;
-            this.button6.Font = new System.Drawing.Font("游明朝 Demibold", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.button6.ForeColor = System.Drawing.Color.White;
-            this.button6.Location = new System.Drawing.Point(1184, 706);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(223, 50);
-            this.button6.TabIndex = 8;
-            this.button6.Text = "リトライ！";
-            this.button6.UseVisualStyleBackColor = false;
+            this.button_retry.BackColor = System.Drawing.Color.Tomato;
+            this.button_retry.Font = new System.Drawing.Font("游明朝 Demibold", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.button_retry.ForeColor = System.Drawing.Color.White;
+            this.button_retry.Location = new System.Drawing.Point(1184, 724);
+            this.button_retry.Name = "button_retry";
+            this.button_retry.Size = new System.Drawing.Size(223, 50);
+            this.button_retry.TabIndex = 8;
+            this.button_retry.Text = "リトライ！";
+            this.button_retry.UseVisualStyleBackColor = false;
             // 
             // button7
             // 
@@ -146,58 +147,72 @@
             this.button7.Text = "button7";
             this.button7.UseVisualStyleBackColor = true;
             // 
-            // button8
+            // button_hint
             // 
-            this.button8.Location = new System.Drawing.Point(926, 652);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(132, 89);
-            this.button8.TabIndex = 10;
-            this.button8.Text = "button8";
-            this.button8.UseVisualStyleBackColor = true;
+            this.button_hint.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+            this.button_hint.Font = new System.Drawing.Font("游明朝 Demibold", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.button_hint.ForeColor = System.Drawing.Color.Black;
+            this.button_hint.Location = new System.Drawing.Point(923, 685);
+            this.button_hint.Name = "button_hint";
+            this.button_hint.Size = new System.Drawing.Size(132, 89);
+            this.button_hint.TabIndex = 10;
+            this.button_hint.Text = "ヒント！";
+            this.button_hint.UseVisualStyleBackColor = false;
             // 
-            // listBox1
+            // listBox_Input
             // 
-            this.listBox1.BackColor = System.Drawing.SystemColors.Info;
-            this.listBox1.Font = new System.Drawing.Font("游明朝", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 35;
-            this.listBox1.Location = new System.Drawing.Point(1038, 124);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(241, 144);
-            this.listBox1.TabIndex = 11;
+            this.listBox_Input.BackColor = System.Drawing.SystemColors.Info;
+            this.listBox_Input.Font = new System.Drawing.Font("游明朝", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.listBox_Input.FormattingEnabled = true;
+            this.listBox_Input.ItemHeight = 35;
+            this.listBox_Input.Location = new System.Drawing.Point(783, 127);
+            this.listBox_Input.Name = "listBox_Input";
+            this.listBox_Input.Size = new System.Drawing.Size(241, 144);
+            this.listBox_Input.TabIndex = 11;
             // 
-            // listBox2
+            // listBox_options
             // 
-            this.listBox2.BackColor = System.Drawing.SystemColors.Info;
-            this.listBox2.Font = new System.Drawing.Font("游明朝", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.listBox2.FormattingEnabled = true;
-            this.listBox2.ItemHeight = 35;
-            this.listBox2.Location = new System.Drawing.Point(1038, 401);
-            this.listBox2.Name = "listBox2";
-            this.listBox2.Size = new System.Drawing.Size(241, 144);
-            this.listBox2.TabIndex = 12;
+            this.listBox_options.BackColor = System.Drawing.SystemColors.Info;
+            this.listBox_options.Font = new System.Drawing.Font("游明朝", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.listBox_options.FormattingEnabled = true;
+            this.listBox_options.ItemHeight = 35;
+            this.listBox_options.Location = new System.Drawing.Point(1038, 401);
+            this.listBox_options.Name = "listBox_options";
+            this.listBox_options.Size = new System.Drawing.Size(241, 144);
+            this.listBox_options.TabIndex = 12;
             // 
-            // listBox3
+            // listBox_A
             // 
-            this.listBox3.BackColor = System.Drawing.SystemColors.Info;
-            this.listBox3.Font = new System.Drawing.Font("游明朝", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.listBox3.FormattingEnabled = true;
-            this.listBox3.ItemHeight = 35;
-            this.listBox3.Location = new System.Drawing.Point(1291, 124);
-            this.listBox3.Name = "listBox3";
-            this.listBox3.Size = new System.Drawing.Size(241, 144);
-            this.listBox3.TabIndex = 13;
+            this.listBox_A.BackColor = System.Drawing.SystemColors.Info;
+            this.listBox_A.Font = new System.Drawing.Font("游明朝", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.listBox_A.FormattingEnabled = true;
+            this.listBox_A.ItemHeight = 35;
+            this.listBox_A.Location = new System.Drawing.Point(1038, 127);
+            this.listBox_A.Name = "listBox_A";
+            this.listBox_A.Size = new System.Drawing.Size(241, 144);
+            this.listBox_A.TabIndex = 13;
             // 
-            // listBox4
+            // listBox_B
             // 
-            this.listBox4.BackColor = System.Drawing.SystemColors.Info;
-            this.listBox4.Font = new System.Drawing.Font("游明朝", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.listBox4.FormattingEnabled = true;
-            this.listBox4.ItemHeight = 35;
-            this.listBox4.Location = new System.Drawing.Point(783, 124);
-            this.listBox4.Name = "listBox4";
-            this.listBox4.Size = new System.Drawing.Size(241, 144);
-            this.listBox4.TabIndex = 14;
+            this.listBox_B.BackColor = System.Drawing.SystemColors.Info;
+            this.listBox_B.Font = new System.Drawing.Font("游明朝", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.listBox_B.FormattingEnabled = true;
+            this.listBox_B.ItemHeight = 35;
+            this.listBox_B.Location = new System.Drawing.Point(1291, 127);
+            this.listBox_B.Name = "listBox_B";
+            this.listBox_B.Size = new System.Drawing.Size(241, 144);
+            this.listBox_B.TabIndex = 14;
+            // 
+            // listBox_ABoptions
+            // 
+            this.listBox_ABoptions.BackColor = System.Drawing.SystemColors.Info;
+            this.listBox_ABoptions.Font = new System.Drawing.Font("游明朝", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.listBox_ABoptions.FormattingEnabled = true;
+            this.listBox_ABoptions.ItemHeight = 35;
+            this.listBox_ABoptions.Location = new System.Drawing.Point(1291, 401);
+            this.listBox_ABoptions.Name = "listBox_ABoptions";
+            this.listBox_ABoptions.Size = new System.Drawing.Size(143, 39);
+            this.listBox_ABoptions.TabIndex = 15;
             // 
             // Stage
             // 
@@ -205,18 +220,19 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(1829, 931);
-            this.Controls.Add(this.listBox4);
-            this.Controls.Add(this.listBox3);
-            this.Controls.Add(this.listBox2);
-            this.Controls.Add(this.listBox1);
-            this.Controls.Add(this.button8);
+            this.Controls.Add(this.listBox_ABoptions);
+            this.Controls.Add(this.listBox_B);
+            this.Controls.Add(this.listBox_A);
+            this.Controls.Add(this.listBox_options);
+            this.Controls.Add(this.listBox_Input);
+            this.Controls.Add(this.button_hint);
             this.Controls.Add(this.button7);
-            this.Controls.Add(this.button6);
-            this.Controls.Add(this.button5);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.button_retry);
+            this.Controls.Add(this.button_tomap);
+            this.Controls.Add(this.button_ResetB);
+            this.Controls.Add(this.button_ResetA);
+            this.Controls.Add(this.button_ResetInput);
+            this.Controls.Add(this.button_start);
             this.Controls.Add(this.pictureBox3);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.pictureBox1);
@@ -237,17 +253,18 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.PictureBox pictureBox3;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Button button_start;
+        private System.Windows.Forms.Button button_ResetInput;
+        private System.Windows.Forms.Button button_ResetA;
+        private System.Windows.Forms.Button button_ResetB;
+        private System.Windows.Forms.Button button_tomap;
+        private System.Windows.Forms.Button button_retry;
         private System.Windows.Forms.Button button7;
-        private System.Windows.Forms.Button button8;
-        private System.Windows.Forms.ListBox listBox1;
-        private System.Windows.Forms.ListBox listBox2;
-        private System.Windows.Forms.ListBox listBox3;
-        private System.Windows.Forms.ListBox listBox4;
+        private System.Windows.Forms.Button button_hint;
+        private System.Windows.Forms.ListBox listBox_Input;
+        private System.Windows.Forms.ListBox listBox_options;
+        private System.Windows.Forms.ListBox listBox_A;
+        private System.Windows.Forms.ListBox listBox_B;
+        private System.Windows.Forms.ListBox listBox_ABoptions;
     }
 }
