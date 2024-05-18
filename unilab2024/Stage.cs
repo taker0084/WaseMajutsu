@@ -100,6 +100,9 @@ namespace unilab2024
         //Image cloud_right = Image.FromFile("マップ_雲_右.png");
         //Image cloud_ur = Image.FromFile("マップ_雲_右上.png");
         //Image cloud_upside = Image.FromFile("マップ_雲_上.png");
+
+        Image[] pictures = new Image[10];
+
         public class Global    //グローバル変数
         {
             public static int[,] map = new int[12, 12]; //map情報
@@ -141,8 +144,7 @@ namespace unilab2024
             public string img = "";
         }
 
-
-        public void Stage_Load(object sender, EventArgs e)
+        public void Stage_Load(object sender, EventArgs e)        //StageのFormの起動時処理
         {
             //button5.Visible = false;
             //_stageName = "stage2-3";
@@ -295,17 +297,18 @@ namespace unilab2024
             //    drawConversation();
             #endregion
         }
+
         #region ListBoxのリセット
-        private void button_ResetInput_Click(object sender, EventArgs e)
+        private void button_ResetInput_Click(object sender, EventArgs e)        //起動部分リセット
         {
-            Func.ResetListBox(listBox_Input, listBox_Input);
-        }
-        private void button_ResetA_Click(object sender, EventArgs e)
+            Func.ResetListBox(listBox_Input, listBox_Input);                    //Program.CSに処理記載
+        } 
+        private void button_ResetA_Click(object sender, EventArgs e)           //Aの魔法リセット
         {
            Func.ResetListBox(listBox_Input, listBox_A);
-        }
+        }       
 
-        private void button_ResetB_Click(object sender, EventArgs e)
+        private void button_ResetB_Click(object sender, EventArgs e)           //Bの魔法リセット
         {
             Func.ResetListBox(listBox_Input, listBox_B);
         }
@@ -389,13 +392,13 @@ namespace unilab2024
         }
 
         #region ボタン押下時処理
-        private void button_Start_Click(object sender, EventArgs e)
+        private void button_Start_Click(object sender, EventArgs e)  //出発ボタン押下時処理
         {
             button_Start.Visible = false;
             button_Start.Enabled = false;
             label_Error.Visible = false;
-            //Global.move = Movement(); //ユーザーの入力を読み取る
-            //SquareMovement(Global.x_now, Global.y_now, Global.map, Global.move); //キャラ動かす
+            Global.move = Movement(); //ユーザーの入力を読み取る
+            SquareMovement(Global.x_now, Global.y_now, Global.map, Global.move); //キャラ動かす
             Global.count += 1;
             if (Global.x_goal == Global.x_now && Global.y_goal == Global.y_now)
             {
@@ -419,12 +422,12 @@ namespace unilab2024
             }
         }
 
-        private void button_Retry_Click(object sender, EventArgs e)
+        private void button_Retry_Click(object sender, EventArgs e)  //リトライボタン押下時処理
         {
             resetStage("reset");
         }
 
-        private void button_ToMap_Click(object sender, EventArgs e)
+        private void button_ToMap_Click(object sender, EventArgs e)  //マップに戻るボタン押下時処理
         {
             resetStage("quit");
         }
@@ -432,7 +435,7 @@ namespace unilab2024
 
         # region ListBox要素操作
         bool isEnableDrop = true;
-        private void ListBox_MouseDown(object sender, MouseEventArgs e)
+        private void ListBox_MouseDown(object sender, MouseEventArgs e)   //ドラッグ&ドロップ処理
         {
             //マウスの左ボタンだけが押されている時のみドラッグできるようにする
             if (e.Button == MouseButtons.Left)
@@ -457,18 +460,18 @@ namespace unilab2024
             }
         }
 
-        private ListBox GetNearestListBox(Point point)
+        private ListBox GetNearestListBox(Point point)                    //ドラック先選択
         {
             // 3つのListBoxをリストに格納する
             List<ListBox> listBoxes = listBoxes = new List<ListBox> { listBox_Input, listBox_A, listBox_B };
 
-            // Bボタンがあるかないかの場合分け
+            // Aボタンがないとき
             if (Global.limit_LB_A == 0)
             {
                 listBoxes = new List<ListBox> { listBox_Input, listBox_B };
             }
 
-            // Aボタンない時
+            // Bボタンがないとき
             if (Global.limit_LB_Input == 0)
             {
                 listBoxes = new List<ListBox> { listBox_A, listBox_B };
@@ -502,7 +505,7 @@ namespace unilab2024
             return nearestListBox;
         }
 
-        private void ListBox_DragEnter(object sender, DragEventArgs e)
+        private void ListBox_DragEnter(object sender, DragEventArgs e)    //ドラックしたアイテムの中身確認
         {
             //ドラッグされているデータがstring型か調べ、
             //そうであればドロップ効果をMoveにする
@@ -513,7 +516,7 @@ namespace unilab2024
                 e.Effect = DragDropEffects.None;
         }
 
-        private void DisplayImageAndTextOnPictureBox(PictureBox pictureBox, string image, string text)
+        private void DisplayImageAndTextOnPictureBox(PictureBox pictureBox, string image, string text)    //中身後で考える
         {
             // 画像ファイルを読み込む。
             Image img = Image.FromFile(image);
@@ -556,7 +559,7 @@ namespace unilab2024
         //}
         */
 
-        private void ListBox_DragDrop(object sender, DragEventArgs e)
+        private void ListBox_DragDrop(object sender, DragEventArgs e)     //ドロップ時処理
         {
             //ドロップされたデータがstring型か調べる
             if (e.Data.GetDataPresent(typeof(string)) && isEnableDrop)
@@ -571,13 +574,13 @@ namespace unilab2024
                 int limit = 0;
                 switch (target.Name)
                 {
-                    case "listBox1":
+                    case "listBox_Input":
                         limit = Global.limit_LB_Input;
                         break;
-                    case "listBox3":
+                    case "listBox_A":
                         limit = Global.limit_LB_A;
                         break;
-                    case "listBox4":
+                    case "listBox_B":
                         limit = Global.limit_LB_B;
                         break;
                         //default:
@@ -605,69 +608,15 @@ namespace unilab2024
         #region for文処理
         private void listBox_Input_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            if (listBox_Input.SelectedItem != null)
-            {
-                string command = listBox_Input.SelectedItem.ToString();
-
-                if (command == "連チャンの術おわり")
-                {
-                    return;
-                }
-                if (command.StartsWith("連チャンの術"))
-                {
-                    string str_num = Regex.Replace(command, @"[^0-9]", "");
-                    int num = int.Parse(str_num);
-
-                    int id = listBox_Input.SelectedIndex;
-                    listBox_Input.Items[id] = "連チャンの術 (" + (num % 9 + 1).ToString() + ")";
-
-                    listBox_Input.Refresh();
-                }
-            }
+            Func.forloop(listBox_Input);
         }
         private void listBox_A_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            if (listBox_A.SelectedItem != null)
-            {
-                string command = listBox_A.SelectedItem.ToString();
-
-                if (command == "連チャンの術おわり")
-                {
-                    return;
-                }
-                if (command.StartsWith("連チャンの術"))
-                {
-                    string str_num = Regex.Replace(command, @"[^0-9]", "");
-                    int num = int.Parse(str_num);
-
-                    int id = listBox_A.SelectedIndex;
-                    listBox_A.Items[id] = "連チャンの術 (" + (num % 9 + 1).ToString() + ")";
-
-                    listBox_A.Refresh();
-                }
-            }
+            Func.forloop(listBox_A);
         }
         private void listBox_B_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            if (listBox_B.SelectedItem != null)
-            {
-                string command = listBox_B.SelectedItem.ToString();
-
-                if (command == "連チャンの術おわり")
-                {
-                    return;
-                }
-                if (command.StartsWith("連チャンの術"))
-                {
-                    string str_num = Regex.Replace(command, @"[^0-9]", "");
-                    int num = int.Parse(str_num);
-
-                    int id = listBox_B.SelectedIndex;
-                    listBox_B.Items[id] = "連チャンの術 (" + (num % 9 + 1).ToString() + ")";
-
-                    listBox_B.Refresh();
-                }
-            }
+            Func.forloop(listBox_B);
         }
         #endregion
 
@@ -716,8 +665,10 @@ namespace unilab2024
                 {
                     int placeX = x * Global.cell_length;
                     int placeY = y * Global.cell_length;
-                    switch (Global.map[y, x])
+                    g1.DrawImage(pictures[Global.map(x, y)], placeX, placeY, Global.cell_length, Global.cell_length);
+                    switch (Global.map[y, x]) //配列に画像を保存し表示で十分
                     {
+
                         //case 0:
                         //    g1.DrawImage(img_noway, placeX, placeY, Global.cell_length, Global.cell_length);
                         //    break;
