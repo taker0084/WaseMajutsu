@@ -54,6 +54,7 @@ namespace unilab2024
         }
         #endregion
 
+        #region Program.CS関数
         public static void ResetListBox(ListBox listbox_Input,ListBox listbox)   //ListBoxの中身消去
         {
             if (listbox_Input.SelectedIndex > -1)
@@ -66,5 +67,28 @@ namespace unilab2024
             }
         }
 
+        public static void forloop(ListBox listbox)
+        {
+            if (listbox.SelectedItem != null)
+            {
+                string command = listbox.SelectedItem.ToString();
+
+                if (command == "反復魔法おわり")
+                {
+                    return;
+                }
+                if (command.StartsWith("反復魔法"))
+                {
+                    string str_num = Regex.Replace(command, @"[^0-9]", "");
+                    int num = int.Parse(str_num);
+
+                    int id = listbox.SelectedIndex;
+                    listbox.Items[id] = "反復魔法 (" + (num % 9 + 1).ToString() + ")";
+
+                    listbox.Refresh();
+                }
+            }
+        }
+        #endregion
     }
 }
