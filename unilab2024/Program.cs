@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
@@ -18,23 +19,24 @@ namespace unilab2024
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Stage());
+            Application.Run(new Title());
         }
     }
 
     public static partial class Func
     {
         #region フォーム呼び出し
+        public static void CreatePrologue ()
+        {
+            Prologue form = new Prologue();
+            form.Show();
+        }
+        
         public static void CreateWorldMap(Form currentForm) //呼び出し方: Func.CreateWorldMap(this);
         {
             WorldMap form = new WorldMap();
             form.Show();
-
-            //Prologue画面消すとアプリケーションが終了してしまう
-            if (currentForm.GetType() != typeof(Prologue))
-            {
-                currentForm.Dispose();
-            }
+            currentForm.Dispose();
         }
 
         public static void CreateStageSelect(Form currentForm,string worldName) //呼び出し方: Func.CreateStageSelect(this,"1年生");
@@ -91,4 +93,48 @@ namespace unilab2024
         }
         #endregion
     }
+
+    #region 会話
+    public static partial class Func
+    {
+        public static List<Conversation> LoadConversations(string ConvFileName)  //引数はConversationファイルの名前
+        {
+            List<Conversation> Conversations = new List<Conversation>();
+
+            using (StreamReader sr = new StreamReader($"{ConvFileName}"))
+            {
+                bool isFirstRow = true;
+
+                while (!sr.EndOfStream)
+                {
+                    string line = sr.ReadLine();
+                    string[] values = line.Split(',');
+
+                    if (isFirstRow) //escape 1st row
+                    {
+                        isFirstRow = false;
+                        continue;
+                    }
+
+                    Conversations.Add(new Conversation(values[0], values[1], values[2]));
+                }
+            }
+
+            return Conversations;
+        }
+    } 
+    public struct Conversation
+    {
+        public string Character;
+        public string Dialogue;
+        public string Img;
+
+        public Conversation(string character, string dialogue, string img)
+        {
+            Character = character;
+            Dialogue = dialogue;
+            Img = img;
+        }
+    }
+    #endregion
 }
