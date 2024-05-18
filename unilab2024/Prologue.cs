@@ -7,19 +7,101 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static unilab2024.Stage;
 
 namespace unilab2024
 {
     public partial class Prologue : Form
     {
+
+        #region メンバ変数の定義など
+        Bitmap bmpPB1;
+        List<Conversation> Conversations;
+        int convIndex = 0;
+
         public Prologue()
         {
             InitializeComponent();
+
+            bmpPB1 = new Bitmap(pictureBox1.Width, pictureBox1.Height);
+            pictureBox1.Image = bmpPB1;
+        }
+        #endregion
+
+        #region 読み込み時
+        private void Prologue_Load(object sender, EventArgs e)
+        {
+            Graphics g1 = Graphics.FromImage(bmpPB1);
+            buttonToMap.Visible = false;
+            buttonToMap.Enabled = false;
+
+            Conversations = Func.LoadConversations("Conv_Prologue.csv");
+            drawConversations();
+        }
+        #endregion
+
+        #region 会話の表示（Form依存なのでこの位置）
+        private void drawConversations()
+        {
+            Graphics g1 = Graphics.FromImage(bmpPB1);
+
+            Pen pen = new Pen(Color.FromArgb(100, 255, 100), 2);
+            Font fnt = new Font("游明朝", 33);
+            int sp = 5;
+
+            int face = 100;
+            int name_x = 300;
+            int name_y = 60;
+
+            int dia_x = 1500;
+            int dia_y = 200;
+
+            int adjust_y = 420;
+
+            int lineHeight = fnt.Height;
+
+            g1.FillRectangle(Brushes.Black, 15, adjust_y + face, name_x, name_y);
+            g1.DrawRectangle(pen, 15, adjust_y + face, name_x, name_y);
+
+            g1.FillRectangle(Brushes.Black, 15, adjust_y + face + name_y, dia_x, dia_y);
+            g1.DrawRectangle(pen, 15, adjust_y + face + name_y, dia_x, dia_y);
+
+            g1.DrawString(Conversations[convIndex].Character, fnt, Brushes.White, 15 + sp, adjust_y + face + sp);
+
+            //改行の処理はこう書かないとうまくいかない
+            char[] lineBreak = new char[]{ '\\' };
+            string[] DialogueLines = Conversations[convIndex].Dialogue.Replace("\\n","\\").Split(lineBreak);
+            for (int i = 0; i < DialogueLines.Length; i++)
+            {
+                g1.DrawString(DialogueLines[i], fnt, Brushes.White, 15 + sp, adjust_y + face + name_y + sp + i*lineHeight);
+            }
+
+            pictureBox1.Image = bmpPB1;
+            g1.Dispose();
+
+            if (convIndex < Conversations.Count - 1)
+            {
+                convIndex++;
+            }
+            else
+            {
+                buttonToMap.Visible = true;
+                buttonToMap.Enabled = true;
+                return;
+            }
+        }
+        #endregion
+
+        #region 諸々クリックの処理
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            drawConversations();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void buttonToMap_Click(object sender, EventArgs e)
         {
             Func.CreateWorldMap(this);
         }
+        #endregion
     }
 }
