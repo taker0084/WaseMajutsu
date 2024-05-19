@@ -802,32 +802,35 @@ namespace unilab2024
         #region 動作関連
         public List<int[]> Movement()      //動作の関数
         {
-            var Move_A = new List<int[]>();
-            var Move_B = new List<int[]>();
-            string[] get_move_a = this.listBox_Input.Items.Cast<string>().ToArray();
-            string[] get_move_b = this.listBox_Input.Items.Cast<string>().ToArray();
-            get_move_a = exchange_move(get_move_a, get_move_a.Length);
-            get_move_b = exchange_move(get_move_b, get_move_b.Length);
-            var get_move_a_list = new List<string>();
-            var get_move_b_list = new List<string>();
+            var Move_A = new List<int[]>();                                                           //Aでの動きを保存
+            var Move_B = new List<int[]>();                                                           //Bでの動きを保存
+            string[] Get_Input_A = this.listBox_A.Items.Cast<string>().ToArray();                     //AのListへの入力を保存
+            string[] Get_Input_B = this.listBox_B.Items.Cast<string>().ToArray();                     //BのListへの入力を保存
+            Get_Input_A = exchange_move(Get_Input_A, Get_Input_A.Length);                             //AのListへの入力を動きに変換
+            Get_Input_B = exchange_move(Get_Input_B, Get_Input_B.Length);                             //BのListへの入力を動きに変換
+            var Move_A_List = new List<string>(Get_Input_A);
+            var Move_B_List = new List<string>(Get_Input_B);
 
-            get_move_a_list.AddRange(get_move_a);
-            get_move_b_list.AddRange(get_move_b);
+            //get_move_a_list.AddRange(get_move_a);
+            //get_move_b_list.AddRange(get_move_b);
 
             int loop_count = 0;
-            while (get_move_a_list.Count <= 30 || get_move_b_list.Count <= 30)
+            while (Move_A_List.Count <= 30 || Move_B_List.Count <= 30)
             {
-                var get_move_a_list_copy = new List<string>(get_move_a_list);
-                var get_move_b_list_copy = new List<string>(get_move_b_list);
-                get_move_a_list.Clear();
-                get_move_b_list.Clear();
+                Move_A_List = Func.MakeMoveList(Get_Input_A, Get_Input_B, Move_A_List);
+                Move_B_List = Func.MakeMoveList(Get_Input_A, Get_Input_B, Move_B_List);
+                /*var get_move_a_list_copy = new List<string>(Move_A_List);
+                var get_move_b_list_copy = new List<string>(Move_B_List);
+                Move_A_List.Clear();
+                Move_B_List.Clear();
+
 
                 for (int i = 0; i < get_move_a_list_copy.Count; i++)
                 {
 
                     if (get_move_a_list_copy[i] == "B")
                     {
-                        get_move_a_list.AddRange(get_move_b);
+                        Move_A_List.AddRange(Get_Input_B);
 
                     }
                     else if (get_move_a_list_copy[i] == "A")
@@ -858,7 +861,7 @@ namespace unilab2024
                     {
                         get_move_b_list.Add(get_move_b_list_copy[i]);
                     }
-                }
+                }*/           //削除候補
                 loop_count++;
 
                 if (loop_count > 5)
@@ -867,13 +870,13 @@ namespace unilab2024
                 }
             }
 
-            if (get_move_a.Length != 0)
+            if (Get_Input_A.Length != 0)
             {
                 //string[] get_move_a = this.listBox_Input.Items.Cast<string>().ToArray();
 
-                for (int i = 0; i < get_move_a_list.Count; i++)
+                for (int i = 0; i < Move_A_List.Count; i++)
                 {
-                    (Move_A, i) = Func.ForLoop(get_move_a_list,Move_A,Move_B, i);
+                    (Move_A, i) = Func.ForLoop(Move_A_List,Move_A,Move_B, i);
                     #region 削除候補
                     //if (get_move_a_list[i].StartsWith("for"))
                     //{
@@ -971,17 +974,17 @@ namespace unilab2024
                     //    }
                     //}
                     #endregion
-                    Func.Move(Move_A, get_move_a[i]);
+                    Func.Move(Move_A, Get_Input_A[i]);
                 }
             }
 
-            if (get_move_b.Length != 0)
+            if (Get_Input_B.Length != 0)
             {
                 //string[] get_move_b = this.listBox3.Items.Cast<string>().ToArray();
 
-                for (int i = 0; i < get_move_b_list.Count; i++)
+                for (int i = 0; i < Move_B_List.Count; i++)
                 {
-                    (Move_B, i) = Func.ForLoop(get_move_a_list, Move_A, Move_B, i);
+                    (Move_B, i) = Func.ForLoop(Move_B_List, Move_A, Move_B, i);
                     #region 削除候補
                     //if (get_move_b_list[i].StartsWith("for"))
                     //{
@@ -1090,22 +1093,21 @@ namespace unilab2024
                     //    }
                     //}
                     #endregion
-                    Func.Move(Move_B, get_move_b[i]);
+                    Func.Move(Move_B, Get_Input_B[i]);
                 }
 
             }
 
-            string[] get_move_main = this.listBox_B.Items.Cast<string>().ToArray();
-            get_move_main = exchange_move(get_move_main, get_move_main.Length);
-            List<string> get_move_main_list = new List<string>();
-            get_move_main_list.AddRange(get_move_main);
+            string[] Get_Input_Main = this.listBox_B.Items.Cast<string>().ToArray();
+            Get_Input_Main = exchange_move(Get_Input_Main, Get_Input_Main.Length);
+            List<string> Move_Main_List = new List<string>(Get_Input_Main);
             var move = new List<int[]>();
 
-            if (get_move_main.Length != 0)
+            if (Get_Input_Main.Length != 0)
             {
-                for (int i = 0; i < get_move_main.Length; i++)
+                for (int i = 0; i < Move_Main_List.Count; i++)
                 {
-                    (move, i) = Func.ForLoop(get_move_main_list,Move_A,Move_B, i);
+                    (move, i) = Func.ForLoop(Move_Main_List,Move_A,Move_B, i);
                     #region 削除候補
                     //if (get_move_main[i].StartsWith("for"))
                     //{
@@ -1239,11 +1241,11 @@ namespace unilab2024
                     //    }
                     //}
                     #endregion
-                    if (int.Parse(get_move_main[i]) < 4)
+                    if (int.Parse(Move_Main_List[i]) < 4)
                     {
-                        Func.Move(move, get_move_main[i]);
+                        Func.Move(move, Move_Main_List[i]);
                     }
-                    else if (get_move_main[i] == "A") move.AddRange(Move_A);
+                    else if (Move_Main_List[i] == "A") move.AddRange(Move_A);
                     else move.AddRange(Move_B);
 
                 }
