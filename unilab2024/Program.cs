@@ -19,7 +19,7 @@ namespace unilab2024
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Title());
+            Application.Run(new Stage());
         }
     }
 
@@ -99,10 +99,10 @@ namespace unilab2024
         {
             int Direction_Index = int.Parse(direction);
             int[][] move = new int[4][];       // up,right.down,leftの順
-            move[0] = [0, -1];     //up
-            move[1] = [1, 0];      //right
-            move[2] = [0, 1];      //down 
-            move[3] = [-1, 0];     //left
+            move[0] = new int[] { 0, -1 };     //up
+            move[1] = new int[] { 1, 0 };      //right
+            move[2] = new int[] { 0, 1 };      //down 
+            move[3] = new int[] { -1, 0 };     //left
             movelist.Add(move[Direction_Index]);
         }
 
