@@ -72,7 +72,7 @@ namespace unilab2024
         //    Image.FromFile("キャラ_ふくろう.png")
         //};
 
-        //Image character_me = Image.FromFile("忍者_正面.png");
+        Image character_me = Image.FromFile("忍者_正面.png");
         //Image[] character_enemy = new Image[6] {
         //    Image.FromFile("キャラ_一つ目小僧.png"),
         //    Image.FromFile("キャラ_唐傘一反.png"),
@@ -103,38 +103,67 @@ namespace unilab2024
 
         Image[] pictures = new Image[10];
 
-        public class Global    //グローバル変数
-        {
-            public static int[,] map = new int[12, 12]; //map情報
-            public static int x_start; //スタート位置ｘ
-            public static int y_start; //スタート位置ｙ
-            public static int x_goal; //ゴール位置ｘ
-            public static int y_goal; //ゴール位置ｙ
-            public static int x_now; //現在位置ｘ
-            public static int y_now; //現在位置 y
-            public static int extra_length = 7;
-            public static int cell_length;
+        public static int[,] map = new int[12, 12]; //map情報
+        public static int x_start; //スタート位置ｘ
+        public static int y_start; //スタート位置ｙ
+        public static int x_goal; //ゴール位置ｘ
+        public static int y_goal; //ゴール位置ｙ
+        public static int x_now; //現在位置ｘ
+        public static int y_now; //現在位置 y
+        public static int extra_length = 7;
+        public static int cell_length;
 
-            public static int count = 0; //試行回数カウント
-            public static int miss_count = 0; //ミスカウント
+        public static int count = 0; //試行回数カウント
+        public static int miss_count = 0; //ミスカウント
 
-            public static int count_walk = 0; //歩数カウント
+        public static int count_walk = 0; //歩数カウント
 
-            public static List<int[]> move;  //プレイヤーの移動指示を入れるリスト
+        public static List<int[]> move;  //プレイヤーの移動指示を入れるリスト
 
-            //listBoxに入れられる行数の制限
-            public static int limit_LB_Input;
-            public static int limit_LB_A;
-            public static int limit_LB_B;
+        //listBoxに入れられる行数の制限
+        public static int limit_LB_Input;
+        public static int limit_LB_A;
+        public static int limit_LB_B;
 
-            public static string hint;
-            public static string hint_character;
-            public static string hint_name;
+        public static string hint;
+        public static string hint_character;
+        public static string hint_name;
 
-            public static string grade;    //学年
+        public static string grade;    //学年
 
-            public static List<Conversation> Conversations = new List<Conversation>();  //会話文を入れるリスト
-        }
+        public static List<Conversation> Conversations = new List<Conversation>();  //会話文を入れるリスト
+        //public class Global    //グローバル変数
+        //{
+        //    public static int[,] map = new int[12, 12]; //map情報
+        //    public static int x_start; //スタート位置ｘ
+        //    public static int y_start; //スタート位置ｙ
+        //    public static int x_goal; //ゴール位置ｘ
+        //    public static int y_goal; //ゴール位置ｙ
+        //    public static int x_now; //現在位置ｘ
+        //    public static int y_now; //現在位置 y
+        //    public static int extra_length = 7;
+        //    public static int cell_length;
+
+        //    public static int count = 0; //試行回数カウント
+        //    public static int miss_count = 0; //ミスカウント
+
+        //    public static int count_walk = 0; //歩数カウント
+
+        //    public static List<int[]> move;  //プレイヤーの移動指示を入れるリスト
+
+        //    //listBoxに入れられる行数の制限
+        //    public static int limit_LB_Input;
+        //    public static int limit_LB_A;
+        //    public static int limit_LB_B;
+
+        //    public static string hint;
+        //    public static string hint_character;
+        //    public static string hint_name;
+
+        //    public static string grade;    //学年
+
+        //    public static List<Conversation> Conversations = new List<Conversation>();  //会話文を入れるリスト
+        //}
         #endregion
 
         //public class Conversation    //会話型のclass(structにするかも)
@@ -148,12 +177,12 @@ namespace unilab2024
         {
             //button5.Visible = false;
             //_stageName = "stage2-3";
-            Global.map = CreateStage(_stageName); //ステージ作成
+            map = CreateStage(_stageName); //ステージ作成
 
-            Global.grade = Regex.Replace(_stageName, @"[^0-9]", "");
-            int chapter_num = int.Parse(Global.grade) / 10;
+            grade = Regex.Replace(_stageName, @"[^0-9]", "");
+            int chapter_num = int.Parse(grade) / 10;
 
-            string file_name = "わせマジ" + Global.grade.ToString() + "章.csv";
+            string file_name = "わせマジ" + grade.ToString() + "章.csv";
 
             //Global.Conversations = LoadConversation(file_name); //会話読み込み
 
@@ -191,9 +220,9 @@ namespace unilab2024
             //    }
             //}
 
-            height_LB_Input = Global.limit_LB_Input + 1;
-            height_LB_A = Global.limit_LB_A + 1;
-            height_LB_B = Global.limit_LB_B + 1;
+            height_LB_Input = limit_LB_Input + 1;
+            height_LB_A = limit_LB_A + 1;
+            height_LB_B = limit_LB_B + 1;
 
             if (height_LB_Input == 1)
             {
@@ -219,9 +248,9 @@ namespace unilab2024
                 listBox_SelectAB.Visible = false;
             }
 
-            Global.hint = null;
-            Global.hint_character = null;
-            Global.hint_name = null;
+            hint = null;
+            hint_character = null;
+            hint_name = null;
 
             // CSVから読み込んだテキストを設定します。
             //using (StreamReader sr = new StreamReader($"hint.csv"))
@@ -242,7 +271,7 @@ namespace unilab2024
             //    }
             //}
 
-            if (Global.hint == null)
+            if (hint == null)
             {
                 button_Hint.Visible = false;
             }
@@ -316,7 +345,7 @@ namespace unilab2024
         {
             if (type == "quit")
             {
-                Func.CreateStageSelect(this, Global.grade);
+                Func.CreateStageSelect(this, grade);
                 return;
             }
 
@@ -326,7 +355,7 @@ namespace unilab2024
                 label_Error.Text = "そこは止まれないよ！やり直そう！";
                 label_Error.Visible = true;
                 Thread.Sleep(300);
-                Global.miss_count += 1;
+                miss_count += 1;
             }
 
             //木に刺されたミス
@@ -335,7 +364,7 @@ namespace unilab2024
                 label_Error.Text = "木に刺された！やり直そう！";
                 label_Error.Visible = true;
                 Thread.Sleep(300);
-                Global.miss_count += 1;
+                miss_count += 1;
             }
 
             //無限ループの時のミス
@@ -344,7 +373,7 @@ namespace unilab2024
                 label_Error.Text = "これ以上は移動できない！やり直そう！";
                 label_Error.Visible = true;
                 Thread.Sleep(300);
-                Global.miss_count += 1;
+                miss_count += 1;
             }
 
             //止まった時ゴール到着してないミス
@@ -353,15 +382,15 @@ namespace unilab2024
                 label_Error.Text = "ゴールまで届いてないね！やり直そう！";
                 label_Error.Visible = true;
                 Thread.Sleep(300);
-                Global.miss_count += 1;
+                miss_count += 1;
             }
 
             // リトライボタン
             else if (type == "retry")
             {
                 //初期位置に戻す
-                Global.x_now = Global.x_start;
-                Global.y_now = Global.y_start;
+                x_now = x_start;
+                y_now = y_start;
 
                 //初期位置に書き換え
                 Graphics g2 = Graphics.FromImage(bmp2);
@@ -381,8 +410,8 @@ namespace unilab2024
                 button_Start.Visible = true;
                 button_Start.Enabled = true;
                 label_Error.Visible = false;
-                Global.count = 0;
-                Global.miss_count = 0;
+                count = 0;
+                miss_count = 0;
                 label_Error.Text = "ミス！";
                 label_Error.Visible = false;
                 label_Result.Visible = false;
@@ -397,10 +426,10 @@ namespace unilab2024
             button_Start.Visible = false;
             button_Start.Enabled = false;
             label_Error.Visible = false;
-            Global.move = Movement(); //ユーザーの入力を読み取る
-            SquareMovement(Global.x_now, Global.y_now, Global.map, Global.move); //キャラ動かす
-            Global.count += 1;
-            if (Global.x_goal == Global.x_now && Global.y_goal == Global.y_now)
+            move = Movement(); //ユーザーの入力を読み取る
+            SquareMovement(x_now, y_now, map, move); //キャラ動かす
+            count += 1;
+            if (x_goal == x_now && y_goal == y_now)
             {
                 label_Result.Text = "クリア！！";
                 label_Result.Visible = true;
@@ -465,19 +494,19 @@ namespace unilab2024
             List<ListBox> listBoxes = listBoxes = new List<ListBox> { listBox_Input, listBox_A, listBox_B };
 
             // Aボタンがないとき
-            if (Global.limit_LB_A == 0)
+            if (limit_LB_A == 0)
             {
                 listBoxes = new List<ListBox> { listBox_Input, listBox_B };
             }
 
             // Bボタンがないとき
-            if (Global.limit_LB_Input == 0)
+            if (limit_LB_Input == 0)
             {
                 listBoxes = new List<ListBox> { listBox_A, listBox_B };
             }
 
             // A.Bボタンない時
-            if (Global.limit_LB_Input == 0 && Global.limit_LB_A == 0)
+            if (limit_LB_Input == 0 && limit_LB_A == 0)
             {
                 listBoxes = new List<ListBox> { listBox_B };
             }
@@ -574,13 +603,13 @@ namespace unilab2024
                 switch (target.Name)
                 {
                     case "listBox_Input":
-                        limit = Global.limit_LB_Input;
+                        limit = limit_LB_Input;
                         break;
                     case "listBox_A":
-                        limit = Global.limit_LB_A;
+                        limit = limit_LB_A;
                         break;
                     case "listBox_B":
-                        limit = Global.limit_LB_B;
+                        limit = limit_LB_B;
                         break;
                         //default:
                         //    throw new Exception("Unsupported ListBox name.");
@@ -636,7 +665,7 @@ namespace unilab2024
                     foreach (var value in values)
                     {
                         // enum 使ったほうが分かりやすそう
-                        Global.map[y, x] = int.Parse(value);
+                        map[y, x] = int.Parse(value);
                         x++;
                     }
                     y++;
@@ -648,7 +677,7 @@ namespace unilab2024
             label_Info.BackgroundImage = Image.FromFile("focus.png");
             label_Info.BackgroundImageLayout = ImageLayout.Stretch;
 
-            Global.cell_length = pictureBox1.Width / 12;
+            cell_length = pictureBox1.Width / 12;
 
             //for (int y = 1; y < 11; y++)
             //{
@@ -662,11 +691,11 @@ namespace unilab2024
             {
                 for (int x = 0; x < 12; x++)
                 {
-                    int placeX = x * Global.cell_length;
-                    int placeY = y * Global.cell_length;
-                    g1.DrawImage(pictures[Global.map[y,x]], placeX, placeY, Global.cell_length, Global.cell_length);
+                    int placeX = x * cell_length;
+                    int placeY = y * cell_length;
+                    g1.DrawImage(pictures[map[y,x]], placeX, placeY, cell_length, cell_length);
 
-                    switch (Global.map[y, x]) //配列に画像を保存し表示で十分
+                    switch (map[y, x]) //配列に画像を保存し表示で十分
                     {
 
                         //case 0:
@@ -796,7 +825,7 @@ namespace unilab2024
             //    graphi.Clear(Color.Transparent);
             //    graphi.DrawImage(img_otomo[3], 0, 0, 100, 100);
             //}
-            return Global.map;
+            return map;
         }
 
         #region 動作関連
@@ -1354,222 +1383,270 @@ namespace unilab2024
         public void SquareMovement(int x, int y, int[,] Map, List<int[]> move)
         {
             Graphics g2 = Graphics.FromImage(bmp2);
-            Global.cell_length = pictureBox1.Width / 12;
-            if (move.Count == 0)
-            {
-                return;
-            }
+            cell_length = pictureBox1.Width / 12;
+            if (move.Count == 0)  return;
 
-            List<int[]> move_copy = new List<int[]>();
-            for (int i = 0; i < move.Count; i++)
-            {
-                move_copy.Add(move[i]);
-            }
-
+            List<int[]> move_copy = new List<int[]>(move);
+            
             bool jump = false;
             bool move_floor = false;
             int waittime = 250; //ミリ秒
-            Global.count_walk = 1;//何マス歩いたか、歩き差分用
-            //while (true)
-            //{
-            //    if (move_copy.Count > 0)
-            //    {
-            //        if (!Colision_detection(x, y, Map, move_copy) && !jump)
-            //        {
-            //            //忍者を動かしてからミスの表示を出す
-            //            x += move_copy[0][0];
-            //            y += move_copy[0][1];
-            //            Global.x_now = x;
-            //            Global.y_now = y;
-            //            g2.Clear(Color.Transparent);
-            //            character_me = Ninja_Image(move_copy[0][0], move_copy[0][1], Global.count, jump, character_me);
-            //            g2.DrawImage(character_me, x * cell_length - Global.extra_length, y * cell_length - 2 * Global.extra_length, cell_length + 2 * Global.extra_length, cell_length + 2 * Global.extra_length);
-            //            //ステージごとにゴールのキャラを変えたい
-            //            g2.DrawImage(goal_obj(_stageName), Global.x_goal * cell_length - Global.extra_length, Global.y_goal * cell_length - 2 * Global.extra_length, cell_length + 2 * Global.extra_length, cell_length + 2 * Global.extra_length);
+            count_walk = 1;//何マス歩いたか、歩き差分用
 
-            //            //pictureBoxの中身を塗り替える
-            //            this.Invoke((MethodInvoker)delegate
-            //            {
-            //                // pictureBox2を同期的にRefreshする
-            //                pictureBox2.Refresh();
-            //            });
-            //            resetStage("miss_out");
-            //            character_me = Image.FromFile("忍者_正面.png");
-            //            g2.DrawImage(character_me, x * cell_length - Global.extra_length, y * cell_length - 2 * Global.extra_length, cell_length + 2 * Global.extra_length, cell_length + 2 * Global.extra_length);
-            //            break;
-            //        }
-            //        if (jump && Map[y + move_copy[0][1] * 2, x + move_copy[0][0] * 2] == 8) //jumpの時着地先が木の場合、ゲームオーバー
-            //        {
-            //            x += move_copy[0][0];
-            //            y += move_copy[0][1];
-            //            Global.x_now = x;
-            //            Global.y_now = y;
-            //            g2.Clear(Color.Transparent);
-            //            //ステージごとにゴールのキャラを変えたい
-            //            g2.DrawImage(goal_obj(_stageName), Global.x_goal * cell_length - Global.extra_length, Global.y_goal * cell_length - 2 * Global.extra_length, cell_length + 2 * Global.extra_length, cell_length + 2 * Global.extra_length);
-            //            //忍者の動きに合わせて向きが変わる
-            //            character_me = Ninja_Image(move_copy[0][0], move_copy[0][1], Global.count, jump, character_me);
-            //            g2.DrawImage(character_me, x * cell_length - Global.extra_length, y * cell_length - 2 * Global.extra_length, cell_length + 2 * Global.extra_length, cell_length + 2 * Global.extra_length);
-            //            pictureBox2.Refresh();
-            //            Thread.Sleep(waittime);
-            //            bool J = false;
-            //            x += move_copy[0][0];
-            //            y += move_copy[0][1];
-            //            Global.x_now = x;
-            //            Global.y_now = y;
-            //            g2.Clear(Color.Transparent);
-            //            //ステージごとにゴールのキャラを変えたい
-            //            g2.DrawImage(goal_obj(_stageName), Global.x_goal * cell_length - Global.extra_length, Global.y_goal * cell_length - 2 * Global.extra_length, cell_length + 2 * Global.extra_length, cell_length + 2 * Global.extra_length);
-            //            //忍者の動きに合わせて向きが変わる
-            //            character_me = Ninja_Image(move_copy[0][0], move_copy[0][1], Global.count, J, character_me);
-            //            g2.DrawImage(character_me, x * cell_length - Global.extra_length, y * cell_length - 2 * Global.extra_length, cell_length + 2 * Global.extra_length, cell_length + 2 * Global.extra_length);
-            //            pictureBox2.Refresh();
-            //            resetStage("miss_tree");
-            //            character_me = Image.FromFile("忍者_正面.png");
-            //            g2.DrawImage(character_me, x * cell_length - Global.extra_length, y * cell_length - 2 * Global.extra_length, cell_length + 2 * Global.extra_length, cell_length + 2 * Global.extra_length);
-            //            break;
-            //        }
-            //        if (Global.count_walk > 50) //無限ループ対策
-            //        {
-            //            resetStage("miss_countover");
-            //            character_me = Image.FromFile("忍者_正面.png");
-            //            g2.DrawImage(character_me, x * cell_length - Global.extra_length, y * cell_length - 2 * Global.extra_length, cell_length + 2 * Global.extra_length, cell_length + 2 * Global.extra_length);
-            //            break;
-            //        }
-            //    }
-            //    else
-            //    {
-            //        character_me = Image.FromFile("忍者_正面.png");
-            //        g2.DrawImage(character_me, x * cell_length - Global.extra_length, y * cell_length - 2 * Global.extra_length, cell_length + 2 * Global.extra_length, cell_length + 2 * Global.extra_length);
-            //        break;
-            //    }
+            (int, int) place_update(int a, int b, List<int[]> move_next)
+            {
+                x += move_next[0][0];
+                y += move_next[0][1];
+                x_now = x;
+                y_now = y;
+                g2.Clear(Color.Transparent);
+                return (x_now, y_now);
+            }
 
-            //    //jumpでない時移動先が木の場合、木の方向には進めない
-            //    if (!jump && Map[y + move_copy[0][1], x + move_copy[0][0]] == 8)
-            //    {
-            //        character_me = Ninja_Image(move_copy[0][0], move_copy[0][1], Global.count_walk, jump, character_me);
-            //        g2.DrawImage(character_me, x * cell_length - Global.extra_length, y * cell_length - 2 * Global.extra_length, cell_length + 2 * Global.extra_length, cell_length + 2 * Global.extra_length);
-            //        //move_copy[0] = new int[] { 0, 0 };
-            //        move_copy.RemoveAt(0);
-            //        //500ミリ秒=0.5秒待機する
-            //        Thread.Sleep(waittime);
-            //        continue;
-            //    }
+            void DrawCharacter(int a, int b, ref Image character_me, string filePath = "忍者_正面.png")
+            {
+                character_me = Image.FromFile(filePath);
+                g2.DrawImage(character_me, a * cell_length - extra_length, b * cell_length - 2 * extra_length, cell_length + 2 * extra_length, cell_length + 2 * extra_length);
+            }
 
-            //    x += move_copy[0][0];
-            //    y += move_copy[0][1];
+            (int,int) draw_move(int a,int b,ref List<int[]> move_next, string filePath = "忍者_正面.png")
+            {
+                (x_now, y_now) = place_update(a, b, move_next);
+                character_me = Ninja_Image(move_copy[0][0], move_copy[0][1], count, jump, character_me);
+                DrawCharacter(x_now, y_now, ref character_me);
+                this.Invoke((MethodInvoker)delegate
+                {
+                    // pictureBox2を同期的にRefreshする
+                    pictureBox2.Refresh();
+                });
+                return (x_now, y_now);
+            }
+            while (true)
+            {
+                if (move_copy.Count > 0)
+                {
+                    if (!Colision_detection(x, y, Map, move_copy) && !jump)
+                    {
+                        //忍者を動かしてからミスの表示を出す
+                        (x_now, y_now) = draw_move(x, y, ref move_copy);
+                        //x += move_copy[0][0];
+                        //y += move_copy[0][1];
+                        //x_now = x;
+                        //y_now = y;
+                        //g2.Clear(Color.Transparent);
+
+                        //character_me = Ninja_Image(move_copy[0][0], move_copy[0][1], count, jump, character_me);
+                        //DrawCharacter(x, y, ref character_me);
+
+                        //g2.DrawImage(character_me, x * cell_length - extra_length, y * cell_length - 2 * extra_length, cell_length + 2 * extra_length, cell_length + 2 * extra_length);
+                        //ステージごとにゴールのキャラを変えたい
+                        //g2.DrawImage(goal_obj(_stageName), x_goal * cell_length - extra_length, y_goal * cell_length - 2 * extra_length, cell_length + 2 * extra_length, cell_length + 2 * extra_length);
+
+                        //pictureBoxの中身を塗り替える
+                        //this.Invoke((MethodInvoker)delegate
+                        //{
+                        //    // pictureBox2を同期的にRefreshする
+                        //    pictureBox2.Refresh();
+                        //});
+                        resetStage("miss_out");
+                        //character_me = Image.FromFile("忍者_正面.png");
+                        //g2.DrawImage(character_me, x * cell_length - extra_length, y * cell_length - 2 * extra_length, cell_length + 2 * extra_length, cell_length + 2 * extra_length);
+                        DrawCharacter(x, y, ref character_me);
+                        break;
+                    }
+                    if (jump && Map[y + move_copy[0][1] * 2, x + move_copy[0][0] * 2] == 8) //jumpの時着地先が木の場合、ゲームオーバー
+                    {
+                        (x_now, y_now) = draw_move(x, y, ref move_copy);
+                        //x += move_copy[0][0];
+                        //y += move_copy[0][1];
+                        //x_now = x;
+                        //y_now = y;
+                        //g2.Clear(Color.Transparent);
+                        //ステージごとにゴールのキャラを変えたい
+                        //g2.DrawImage(goal_obj(_stageName), x_goal * cell_length - extra_length, y_goal * cell_length - 2 * extra_length, cell_length + 2 * extra_length, cell_length + 2 * extra_length);
+
+                        //忍者の動きに合わせて向きが変わる
+                        //character_me = Ninja_Image(move_copy[0][0], move_copy[0][1], count, jump, character_me);
+
+                        //g2.DrawImage(character_me, x * cell_length - extra_length, y * cell_length - 2 * extra_length, cell_length + 2 * extra_length, cell_length + 2 * extra_length);
+                        //DrawCharacter(x, y, ref character_me);
+
+                        //pictureBox2.Refresh();
+                        Thread.Sleep(waittime);
+                        //bool J = false;
+                        //x += move_copy[0][0];
+                        //y += move_copy[0][1];
+                        //x_now = x;
+                        //y_now = y;
+                        //g2.Clear(Color.Transparent);
+                        (x_now, y_now) = draw_move(x, y, ref move_copy);
+
+                        //ステージごとにゴールのキャラを変えたい
+                        //g2.DrawImage(goal_obj(_stageName), x_goal * cell_length - extra_length, y_goal * cell_length - 2 * extra_length, cell_length + 2 * extra_length, cell_length + 2 * extra_length);
+                        //忍者の動きに合わせて向きが変わる
+                        //character_me = Ninja_Image(move_copy[0][0], move_copy[0][1], count, J, character_me);
+                        //g2.DrawImage(character_me, x * cell_length - extra_length, y * cell_length - 2 * extra_length, cell_length + 2 * extra_length, cell_length + 2 * extra_length);
+                        //pictureBox2.Refresh();
+
+                        resetStage("miss_tree");
+                        character_me = Image.FromFile("忍者_正面.png");
+                        g2.DrawImage(character_me, x * cell_length - extra_length, y * cell_length - 2 * extra_length, cell_length + 2 * extra_length, cell_length + 2 * extra_length);
+                        break;
+                    }
+                    if (count_walk > 50) //無限ループ対策
+                    {
+                        resetStage("miss_countover");
+                        DrawCharacter(x, y, ref character_me);
+                        //character_me = Image.FromFile("忍者_正面.png");
+                        //g2.DrawImage(character_me, x * cell_length - extra_length, y * cell_length - 2 * extra_length, cell_length + 2 * extra_length, cell_length + 2 * extra_length);
+                        break;
+                    }
+                }
+                else
+                {
+                    DrawCharacter(x, y, ref character_me);
+                    //character_me = Image.FromFile("忍者_正面.png");
+                    //g2.DrawImage(character_me, x * cell_length - extra_length, y * cell_length - 2 * extra_length, cell_length + 2 * extra_length, cell_length + 2 *    extra_length);
+                    break;
+                }
+
+                //jumpでない時移動先が木の場合、木の方向には進めない
+                if (!jump && Map[y + move_copy[0][1], x + move_copy[0][0]] == 8)
+                {
+                    DrawCharacter(x, y, ref character_me);
+                    //character_me = Ninja_Image(move_copy[0][0], move_copy[0][1], count_walk, jump, character_me);
+                    //g2.DrawImage(character_me, x * cell_length - extra_length, y * cell_length - 2 * extra_length, cell_length + 2 * extra_length, cell_length + 2 * extra_length);
+                    //move_copy[0] = new int[] { 0, 0 };
+                    move_copy.RemoveAt(0);
+                    //500ミリ秒=0.5秒待機する
+                    Thread.Sleep(waittime);
+                    continue;
+                }
+
+                (x_now, y_now) = draw_move(x, y, ref move_copy);
+                //x += move_copy[0][0];
+                //y += move_copy[0][1];
+                //x_now = x;
+                //y_now = y;
+                //g2.Clear(Color.Transparent);
+
+                //ステージごとにゴールのキャラを変えたい
+                //g2.DrawImage(goal_obj(_stageName), x_goal * cell_length - extra_length, y_goal * cell_length - 2 * extra_length, cell_length + 2 * extra_length, cell_length + 2 * extra_length);
+
+                //忍者の動きに合わせて向きが変わる
+                //character_me = Ninja_Image(move_copy[0][0], move_copy[0][1], count_walk, jump, character_me);
+                //g2.DrawImage(character_me, x * cell_length - extra_length, y * cell_length - 2 * extra_length, cell_length + 2 * extra_length, cell_length + 2 * extra_length);
+
+                //Thread.Sleep(waittime);//マスの間に歩く差分を出そうとしたけど。。。
+                //g2.Clear(Color.Transparent);
+                //character_me = Ninja_Image(move_copy[0][0], move_copy[0][1], stepCount, jump, character_me);
+                //g2.DrawImage(character_me, x * cell_length + move_copy[0][0] * cell_length / 2, y * cell_length + move_copy[0][1] * cell_length / 2, cell_length, cell_length);
 
 
-            //    Global.x_now = x;
-            //    Global.y_now = y;
+                //pictureBoxの中身を塗り替える
+                //this.Invoke((MethodInvoker)delegate
+                //{
+                //    // pictureBox2を同期的にRefreshする
+                //    pictureBox2.Refresh();
+                //});
 
-            //    g2.Clear(Color.Transparent);
-            //    //ステージごとにゴールのキャラを変えたい
-            //    g2.DrawImage(goal_obj(_stageName), Global.x_goal * cell_length - Global.extra_length, Global.y_goal * cell_length - 2 * Global.extra_length, cell_length + 2 * Global.extra_length, cell_length + 2 * Global.extra_length);
-            //    //忍者の動きに合わせて向きが変わる
+                if (Map[y, x] == 101 && Map[y - move_copy[0][1], x - move_copy[0][0]] != 3)
+                {
+                    DrawCharacter(x, y, ref character_me);
+                    //character_me = Image.FromFile("忍者_正面.png");
+                    //g2.DrawImage(character_me, x * cell_length - extra_length, y * cell_length - 2 * extra_length, cell_length + 2 * extra_length, cell_length + 2 * extra_length);
+                    break;
+                }
 
-            //    character_me = Ninja_Image(move_copy[0][0], move_copy[0][1], Global.count_walk, jump, character_me);
-            //    g2.DrawImage(character_me, x * cell_length - Global.extra_length, y * cell_length - 2 * Global.extra_length, cell_length + 2 * Global.extra_length, cell_length + 2 * Global.extra_length);
-            //    //Thread.Sleep(waittime);//マスの間に歩く差分を出そうとしたけど。。。
-            //    //g2.Clear(Color.Transparent);
-            //    //character_me = Ninja_Image(move_copy[0][0], move_copy[0][1], stepCount, jump, character_me);
-            //    //g2.DrawImage(character_me, x * cell_length + move_copy[0][0] * cell_length / 2, y * cell_length + move_copy[0][1] * cell_length / 2, cell_length, cell_length);
+                //移動先が氷の上なら同じ方向にもう一回進む
+                if (!jump && Map[y, x] == 2)
+                {
+                    //500ミリ秒=0.5秒待機する
+                    Thread.Sleep(waittime);
+                    continue;
+                }
 
+                //移動先がジャンプ台なら同じ方向に二回進む（１個先の障害物は無視）
+                if (Map[y, x] == 3 || jump)
+                {
+                    if (move_floor)
+                    {
+                        move_floor = false;
+                        move_copy.RemoveAt(0);
+                    }
 
-            //    //pictureBoxの中身を塗り替える
-            //    this.Invoke((MethodInvoker)delegate
-            //    {
-            //        // pictureBox2を同期的にRefreshする
-            //        pictureBox2.Refresh();
-            //    });
+                    jump = !jump;
+                    //if (jump) //次の移動で着地
+                    //{
+                    //    jump = false;
+                    //}
+                    //else //ジャンプ台の上（次の移動でジャンプ）
+                    //{
+                    //    jump = true;
+                    //}
 
-            //    if (Map[y, x] == 101 && Map[y - move_copy[0][1], x - move_copy[0][0]] != 3)
-            //    {
-            //        character_me = Image.FromFile("忍者_正面.png");
-            //        g2.DrawImage(character_me, x * cell_length - Global.extra_length, y * cell_length - 2 * Global.extra_length, cell_length + 2 * Global.extra_length, cell_length + 2 * Global.extra_length);
-            //        break;
-            //    }
+                    //500ミリ秒=0.5秒待機する
+                    Thread.Sleep(waittime);
+                    continue;
+                }
 
-            //    //移動先が氷の上なら同じ方向にもう一回進む
-            //    if (!jump && Map[y, x] == 2)
-            //    {
-            //        //500ミリ秒=0.5秒待機する
-            //        Thread.Sleep(waittime);
-            //        continue;
-            //    }
+                switch (Map[y, x])
+                {
+                    case 4: move_copy[0] = new int[2] { 0, -1 }; break;
+                    case 5: move_copy[0] = new int[2] { 1, 0 }; break;
+                    case 6: move_copy[0] = new int[2] { 0, 1 }; break;
+                    case 7: move_copy[0] = new int[2] { -1, 0 }; break;
+                }
+                ////上に移動するマスを踏んだ場合1つ上に進む
+                //if (Map[y, x] == 4)
+                //{
+                //    move_copy[0] = new int[2] { 0, -1 };
+                //    Thread.Sleep(waittime);
+                //    continue;
+                //}
 
-            //    //移動先がジャンプ台なら同じ方向に二回進む（１個先の障害物は無視）
-            //    if (Map[y, x] == 3 || jump)
-            //    {
-            //        if (move_floor)
-            //        {
-            //            move_floor = false;
-            //            move_copy.RemoveAt(0);
-            //        }
+                ////右に移動するマスを踏んだ場合1つ右に進む
+                //if (Map[y, x] == 5)
+                //{
+                //    move_copy[0] = new int[2] { 1, 0 };
+                //    Thread.Sleep(waittime);
+                //    continue;
+                //}
 
-            //        if (jump) //次の移動で着地
-            //        {
-            //            jump = false;
-            //        }
-            //        else //ジャンプ台の上（次の移動でジャンプ）
-            //        {
-            //            jump = true;
-            //        }
+                ////下に移動するマスを踏んだ場合1つ下に進む
+                //if (Map[y, x] == 6)
+                //{
+                //    move_copy[0] = new int[2] { 0, 1 };
+                //    Thread.Sleep(waittime);
+                //    continue;
+                //}
 
-            //        //500ミリ秒=0.5秒待機する
-            //        Thread.Sleep(waittime);
-            //        continue;
-            //    }
+                ////左に移動するマスを踏んだ場合1つ左に進む
+                //if (Map[y, x] == 7)
+                //{
+                //    move_copy[0] = new int[2] { -1, 0 };
+                //    Thread.Sleep(waittime);
+                //    continue;
+                //}
 
-            //    //上に移動するマスを踏んだ場合1つ上に進む
-            //    if (Map[y, x] == 4)
-            //    {
-            //        move_copy[0] = new int[2] { 0, -1 };
-            //        Thread.Sleep(waittime);
-            //        continue;
-            //    }
+                move_copy.RemoveAt(0);
+                if (move_copy.Count == 0)//動作がすべて終了した場合
+                {
+                    if (x_now != x_goal || y_now != y_goal)
+                    {
+                        resetStage("miss_end");
+                        Thread.Sleep(300);
+                        DrawCharacter(x, y, ref character_me);
+                        //character_me = Image.FromFile("忍者_正面.png");
+                        //g2.DrawImage(character_me, x * cell_length - extra_length, y * cell_length - 2 * extra_length, cell_length + 2 * extra_length, cell_length + 2 * extra_length);
+                    }
+                    break;
+                }
 
-            //    //右に移動するマスを踏んだ場合1つ右に進む
-            //    if (Map[y, x] == 5)
-            //    {
-            //        move_copy[0] = new int[2] { 1, 0 };
-            //        Thread.Sleep(waittime);
-            //        continue;
-            //    }
-
-            //    //下に移動するマスを踏んだ場合1つ下に進む
-            //    if (Map[y, x] == 6)
-            //    {
-            //        move_copy[0] = new int[2] { 0, 1 };
-            //        Thread.Sleep(waittime);
-            //        continue;
-            //    }
-
-            //    //左に移動するマスを踏んだ場合1つ左に進む
-            //    if (Map[y, x] == 7)
-            //    {
-            //        move_copy[0] = new int[2] { -1, 0 };
-            //        Thread.Sleep(waittime);
-            //        continue;
-            //    }
-
-            //    move_copy.RemoveAt(0);
-            //    if (move_copy.Count == 0)//動作がすべて終了した場合
-            //    {
-            //        if (Global.x_now != Global.x_goal || Global.y_now != Global.y_goal)
-            //        {
-            //            resetStage("miss_end");
-            //            Thread.Sleep(300);
-            //            character_me = Image.FromFile("忍者_正面.png");
-            //            g2.DrawImage(character_me, x * cell_length - Global.extra_length, y * cell_length - 2 * Global.extra_length, cell_length + 2 * Global.extra_length, cell_length + 2 * Global.extra_length);
-            //        }
-            //        break;
-            //    }
-
-            //    //500ミリ秒=0.5秒待機する
-            //    Thread.Sleep(waittime);
-            //    Global.count_walk++;
-            //}
+                //500ミリ秒=0.5秒待機する
+                Thread.Sleep(waittime);
+                count_walk++;
+            }
         }
         #endregion
     }
