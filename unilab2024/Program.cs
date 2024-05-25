@@ -23,9 +23,10 @@ namespace unilab2024
         }
     }
 
+    #region フォーム呼び出し
     public static partial class Func
     {
-        #region フォーム呼び出し
+        
         public static void CreatePrologue ()
         {
             Prologue form = new Prologue();
@@ -54,8 +55,9 @@ namespace unilab2024
             form.Show();
             currentForm.Dispose();
         }
-        #endregion
+        
     }
+    #endregion
 
     #region Program.CS用関数
     public static partial class Func
