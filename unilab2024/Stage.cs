@@ -72,7 +72,8 @@ namespace unilab2024
         //    Image.FromFile("キャラ_ふくろう.png")
         //};
 
-        Image character_me = Image.FromFile("忍者_正面.png");
+        //Image character_me = Image.FromFile("忍者_正面.png");
+
         //Image[] character_enemy = new Image[6] {
         //    Image.FromFile("キャラ_一つ目小僧.png"),
         //    Image.FromFile("キャラ_唐傘一反.png"),
@@ -101,7 +102,7 @@ namespace unilab2024
         //Image cloud_ur = Image.FromFile("マップ_雲_右上.png");
         //Image cloud_upside = Image.FromFile("マップ_雲_上.png");
 
-        Image[] pictures = new Image[10];
+        //Image[] pictures = new Image[10];
 
         public static int[,] map = new int[12, 12]; //map情報
         public static int x_start; //スタート位置ｘ
