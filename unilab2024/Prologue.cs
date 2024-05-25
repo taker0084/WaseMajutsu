@@ -35,7 +35,7 @@ namespace unilab2024
             buttonToMap.Visible = false;
             buttonToMap.Enabled = false;
 
-            Conversations = Func.LoadConversations("Conv_Prologue.csv");
+            Conversations = Func.LoadConversations("Conv_Story_Chapter0.csv");
             drawConversations();
         }
         #endregion
@@ -45,26 +45,28 @@ namespace unilab2024
         {
             Graphics g1 = Graphics.FromImage(bmpPB1);
 
-            Pen pen = new Pen(Color.FromArgb(100, 255, 100), 2);
+            //Pen pen = new Pen(Color.FromArgb(100, 255, 100), 2);
             Font fnt = new Font("游明朝", 33);
+            Brush Color_BackConv = new SolidBrush(ColorTranslator.FromHtml("#f8e58c"));
+            Brush Color_BackName = new SolidBrush(ColorTranslator.FromHtml("#856859"));
             int sp = 5;
 
-            int face = 100;
+            int face = 300;
             int name_x = 300;
             int name_y = 60;
 
             int dia_x = 1500;
             int dia_y = 200;
 
-            int adjust_y = 420;
+            int adjust_y = 300;
 
             int lineHeight = fnt.Height;
 
-            g1.FillRectangle(Brushes.Black, 15, adjust_y + face, name_x, name_y);
-            g1.DrawRectangle(pen, 15, adjust_y + face, name_x, name_y);
+            g1.FillRectangle(Color_BackName, 15, adjust_y + face, name_x, name_y);
+            //g1.DrawRectangle(pen, 15, adjust_y + face, name_x, name_y);
 
-            g1.FillRectangle(Brushes.Black, 15, adjust_y + face + name_y, dia_x, dia_y);
-            g1.DrawRectangle(pen, 15, adjust_y + face + name_y, dia_x, dia_y);
+            g1.FillRectangle(Color_BackConv, 15, adjust_y + face + name_y, dia_x, dia_y);
+            //g1.DrawRectangle(pen, 15, adjust_y + face + name_y, dia_x, dia_y);
 
             g1.DrawString(Conversations[convIndex].Character, fnt, Brushes.White, 15 + sp, adjust_y + face + sp);
 
@@ -73,8 +75,9 @@ namespace unilab2024
             string[] DialogueLines = Conversations[convIndex].Dialogue.Replace("\\n","\\").Split(lineBreak);
             for (int i = 0; i < DialogueLines.Length; i++)
             {
-                g1.DrawString(DialogueLines[i], fnt, Brushes.White, 15 + sp, adjust_y + face + name_y + sp + i*lineHeight);
+                g1.DrawString(DialogueLines[i], fnt, Brushes.Black, 15 + sp, adjust_y + face + name_y + sp + i*lineHeight);
             }
+            g1.DrawImage(Dictionaries.Img_Character[Conversations[convIndex].Img], 15, adjust_y, face, face);
 
             pictureBox1.Image = bmpPB1;
             g1.Dispose();
