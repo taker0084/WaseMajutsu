@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace unilab2024
 {
@@ -19,7 +20,11 @@ namespace unilab2024
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Stage());
+
+            Func.LoadImg_Character();
+            Func.LoadImg_DotPic();
+
+            Application.Run(new Title());
         }
     }
 
@@ -59,7 +64,7 @@ namespace unilab2024
     }
     #endregion
 
-    #region Program.CS用関数
+    #region Stage用関数
     public static partial class Func
     {
         public static void ResetListBox(ListBox listbox_Input, ListBox listbox)   //ListBoxの中身消去
@@ -208,6 +213,42 @@ namespace unilab2024
             Character = character;
             Dialogue = dialogue;
             Img = img;
+        }
+    }
+    #endregion
+
+    #region 各データのDictionaryと読み込み関数
+    public partial class Dictionaries
+    {
+        //g1.DrawImage()の第1引数にDictionaries.Img_Character["画像名"]と入れて使う
+        //使い方の例（in Prologue.cs）
+        //g1.DrawImage(Dictionaries.Img_Character[Conversations[convIndex].Img], 15, adjust_y, face, face);
+        //ここでのConversations[convIndex].Imgは"Teacher".
+        public static Dictionary<string, Image> Img_Character = new Dictionary<string, Image>();
+        public static Dictionary<string, Image> Img_DotPic = new Dictionary<string, Image>();
+    }
+
+    public partial class Func
+    {
+        //読み込みはProgram.csのMain関数内で行っている。以下の関数は他のFormで呼び出す必要はない。
+        public static void LoadImg_Character()
+        {
+            string[] files = Directory.GetFiles(Directory.GetCurrentDirectory(), "Img_Character_*.png");
+            foreach (string file in files)
+            {
+                string key = Path.GetFileNameWithoutExtension(file).Replace("Img_Character_","");
+                Dictionaries.Img_Character[key] = Image.FromFile(file);
+            }
+        }
+
+        public static void LoadImg_DotPic()
+        {
+            string[] files = Directory.GetFiles(Directory.GetCurrentDirectory(), "Img_DotPic_*.png");
+            foreach (string file in files)
+            {
+                string key = Path.GetFileNameWithoutExtension(file).Replace("Img_DotPic_", "");
+                Dictionaries.Img_DotPic[key] = Image.FromFile(file);
+            }
         }
     }
     #endregion
