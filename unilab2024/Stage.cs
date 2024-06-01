@@ -47,7 +47,7 @@ namespace unilab2024
         }
 
         #region メンバー変数定義
-        private string worldName;
+        private string _worldName;
         private int _worldNumber;
         private int _level;
         public int WorldNumber     //StageSelectからの呼び出し用
@@ -65,8 +65,8 @@ namespace unilab2024
         }
         public string WorldName
         {
-            get { return worldName; }
-            set { worldName = value; }
+            get { return _worldName; }
+            set { _worldName = value; }
         }
         #endregion
 
@@ -354,7 +354,7 @@ namespace unilab2024
         {
             if (type == "quit")
             {
-                Func.CreateStageSelect(this, grade, gradenum);
+                Func.CreateStageSelect(this, _worldName, _worldNumber);
                 return;
             }
 
