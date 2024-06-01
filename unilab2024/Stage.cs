@@ -47,14 +47,26 @@ namespace unilab2024
         }
 
         #region メンバー変数定義
-        private string _stageName;
-        public string StageName     //StageSelectからの呼び出し用
+        private string worldName;
+        private int _worldNumber;
+        private int _level;
+        public int WorldNumber     //StageSelectからの呼び出し用
         {
-            get { return _stageName; }
-            set { _stageName = value; }
+            get { return _worldNumber; }
+            set { _worldNumber = value; }
             //別フォームからのアクセス例
             //Stage form = new Stage();
             //form.StageName = "ステージ名";
+        }
+        public int Level
+        {
+            get { return _level; }
+            set { _level = value; }
+        }
+        public string WorldName
+        {
+            get { return worldName; }
+            set { worldName = value; }
         }
         #endregion
 
@@ -72,7 +84,7 @@ namespace unilab2024
         //    Image.FromFile("キャラ_ふくろう.png")
         //};
 
-        //Image character_me = Image.FromFile("忍者_正面.png");
+        Image character_me = Image.FromFile("忍者_正面.png");
 
         //Image[] character_enemy = new Image[6] {
         //    Image.FromFile("キャラ_一つ目小僧.png"),
@@ -102,7 +114,7 @@ namespace unilab2024
         //Image cloud_ur = Image.FromFile("マップ_雲_右上.png");
         //Image cloud_upside = Image.FromFile("マップ_雲_上.png");
 
-        //Image[] pictures = new Image[10];
+        Image[] pictures = new Image[10];
 
         public static int[,] map = new int[12, 12]; //map情報
         public static int x_start; //スタート位置ｘ
@@ -131,6 +143,7 @@ namespace unilab2024
         public static string hint_name;
 
         public static string grade;    //学年
+        public static int gradenum;
 
         public static List<Conversation> Conversations = new List<Conversation>();  //会話文を入れるリスト
         //public class Global    //グローバル変数
@@ -167,20 +180,15 @@ namespace unilab2024
         //}
         #endregion
 
-        //public class Conversation    //会話型のclass(structにするかも)
-        //{
-        //    public string character = "";
-        //    public string dialogue = "";
-        //    public string img = "";
-        //}
 
         public void Stage_Load(object sender, EventArgs e)        //StageのFormの起動時処理
         {
             //button5.Visible = false;
             //_stageName = "stage2-3";
-            map = CreateStage(_stageName); //ステージ作成
+            string stageName = "stage"+_worldNumber + "-" + _level;
+            map = CreateStage(stageName); //ステージ作成
 
-            grade = Regex.Replace(_stageName, @"[^0-9]", "");
+            grade = Regex.Replace(stageName, @"[^0-9]", "");
             int chapter_num = int.Parse(grade) / 10;
 
             string file_name = "わせマジ" + grade.ToString() + "章.csv";
@@ -346,7 +354,7 @@ namespace unilab2024
         {
             if (type == "quit")
             {
-                Func.CreateStageSelect(this, grade);
+                Func.CreateStageSelect(this, grade, gradenum);
                 return;
             }
 
@@ -444,6 +452,7 @@ namespace unilab2024
                 pictureBox5.Visible = false;
                 pictureBox6.Visible = false;
                 pictureBox7.Visible = false;
+                Progress.IsCleared[_worldNumber, _level] = true;    //クリア状況管理
             }
             else
             {
@@ -651,27 +660,27 @@ namespace unilab2024
 
         private int[,] CreateStage(string stage_name)     //ステージ作成
         {
-            using (StreamReader sr = new StreamReader($"{_stageName}.csv"))
-            {
-                int x;
-                int y = 0;
+            //using (StreamReader sr = new StreamReader($"{_stageName}.csv"))
+            //{
+            //    int x;
+            //    int y = 0;
 
-                while (!sr.EndOfStream)
-                {
-                    string line = sr.ReadLine();
-                    string[] values = line.Split(',');
+            //    while (!sr.EndOfStream)
+            //    {
+            //        string line = sr.ReadLine();
+            //        string[] values = line.Split(',');
 
-                    x = 0;
+            //        x = 0;
 
-                    foreach (var value in values)
-                    {
-                        // enum 使ったほうが分かりやすそう
-                        map[y, x] = int.Parse(value);
-                        x++;
-                    }
-                    y++;
-                }
-            }
+            //        foreach (var value in values)
+            //        {
+            //            // enum 使ったほうが分かりやすそう
+            //            map[y, x] = int.Parse(value);
+            //            x++;
+            //        }
+            //        y++;
+            //    }
+            //}
 
             Graphics g1 = Graphics.FromImage(bmp1);
             Graphics g2 = Graphics.FromImage(bmp2);

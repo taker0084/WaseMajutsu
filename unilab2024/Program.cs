@@ -23,6 +23,7 @@ namespace unilab2024
 
             Func.LoadImg_Character();
             Func.LoadImg_DotPic();
+            Func.InitializeIsCleared();
 
             Application.Run(new Title());
         }
@@ -45,18 +46,21 @@ namespace unilab2024
             currentForm.Dispose();
         }
 
-        public static void CreateStageSelect(Form currentForm,string worldName) //呼び出し方: Func.CreateStageSelect(this,"1年生");
+        public static void CreateStageSelect(Form currentForm,string worldName, int worldNumber) //呼び出し方: Func.CreateStageSelect(this,"1年生",1);
         {
             StageSelect form = new StageSelect();
             form.WorldName = worldName;
+            form.WorldNumber = worldNumber;
             form.Show();
             currentForm.Dispose();
         }
 
-        public static void CreateStage(Form currentForm, string stageName) //呼び出し方: Func.CreateStageSelect(this,"1");  各ステージどう名付けるか決めたい
+        public static void CreateStage(Form currentForm, string worldName,int worldNumber, int level) //呼び出し方: Func.CreateStageSelect(this,"1");  各ステージどう名付けるか決めたい
         {
             Stage form = new Stage();
-            form.StageName = stageName;
+            form.WorldName = worldName;
+            form.WorldNumber = worldNumber;
+            form.Level = level;
             form.Show();
             currentForm.Dispose();
         }
@@ -248,6 +252,27 @@ namespace unilab2024
             {
                 string key = Path.GetFileNameWithoutExtension(file).Replace("Img_DotPic_", "");
                 Dictionaries.Img_DotPic[key] = Image.FromFile(file);
+            }
+        }
+    }
+    #endregion
+
+    #region 進行状況管理
+    public partial class Progress
+    {
+        public static bool[,] IsCleared = new bool[6, 3];
+    }
+
+    public partial class Func
+    {
+        public static void InitializeIsCleared()    //Main関数で呼び出す
+        {
+            for (int i = 0; i < 6; i++)
+            {
+                for(int j = 0; j < 3; j++)
+                {
+                    Progress.IsCleared[i, j] = false;
+                }
             }
         }
     }

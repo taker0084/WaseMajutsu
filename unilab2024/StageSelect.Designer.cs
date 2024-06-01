@@ -30,21 +30,27 @@
         {
             this.labelWorld = new System.Windows.Forms.Label();
             this.buttonToMap = new System.Windows.Forms.Button();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.button_Stage1 = new System.Windows.Forms.Button();
+            this.button_Stage2 = new System.Windows.Forms.Button();
+            this.button_Stage3 = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // labelWorld
             // 
             this.labelWorld.AutoSize = true;
-            this.labelWorld.Font = new System.Drawing.Font("游明朝 Demibold", 48F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.labelWorld.Location = new System.Drawing.Point(660, 150);
+            this.labelWorld.Font = new System.Drawing.Font("游ゴシック", 48F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.labelWorld.Location = new System.Drawing.Point(30, 30);
             this.labelWorld.Name = "labelWorld";
-            this.labelWorld.Size = new System.Drawing.Size(383, 83);
+            this.labelWorld.Size = new System.Drawing.Size(395, 82);
             this.labelWorld.TabIndex = 0;
             this.labelWorld.Text = "WorldName";
             // 
             // buttonToMap
             // 
             this.buttonToMap.BackColor = System.Drawing.Color.Gray;
+            this.buttonToMap.Cursor = System.Windows.Forms.Cursors.Hand;
             this.buttonToMap.Font = new System.Drawing.Font("游明朝 Demibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.buttonToMap.ForeColor = System.Drawing.Color.White;
             this.buttonToMap.Location = new System.Drawing.Point(1350, 10);
@@ -55,17 +61,66 @@
             this.buttonToMap.UseVisualStyleBackColor = false;
             this.buttonToMap.Click += new System.EventHandler(this.buttonToMap_Click);
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(1536, 900);
+            this.pictureBox1.TabIndex = 2;
+            this.pictureBox1.TabStop = false;
+            // 
+            // button_Stage1
+            // 
+            this.button_Stage1.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.button_Stage1.Font = new System.Drawing.Font("游ゴシック", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.button_Stage1.Location = new System.Drawing.Point(243, 600);
+            this.button_Stage1.Name = "button_Stage1";
+            this.button_Stage1.Size = new System.Drawing.Size(250, 80);
+            this.button_Stage1.TabIndex = 3;
+            this.button_Stage1.Text = "レベル1";
+            this.button_Stage1.UseVisualStyleBackColor = true;
+            this.button_Stage1.Click += new System.EventHandler(this.button_Stage1_Click);
+            // 
+            // button_Stage2
+            // 
+            this.button_Stage2.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.button_Stage2.Font = new System.Drawing.Font("游ゴシック", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.button_Stage2.Location = new System.Drawing.Point(643, 600);
+            this.button_Stage2.Name = "button_Stage2";
+            this.button_Stage2.Size = new System.Drawing.Size(250, 80);
+            this.button_Stage2.TabIndex = 4;
+            this.button_Stage2.Text = "レベル2";
+            this.button_Stage2.UseVisualStyleBackColor = true;
+            this.button_Stage2.Click += new System.EventHandler(this.button_Stage2_Click);
+            // 
+            // button_Stage3
+            // 
+            this.button_Stage3.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.button_Stage3.Font = new System.Drawing.Font("游ゴシック", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.button_Stage3.Location = new System.Drawing.Point(1043, 600);
+            this.button_Stage3.Name = "button_Stage3";
+            this.button_Stage3.Size = new System.Drawing.Size(250, 80);
+            this.button_Stage3.TabIndex = 5;
+            this.button_Stage3.Text = "レベル3";
+            this.button_Stage3.UseVisualStyleBackColor = true;
+            this.button_Stage3.Click += new System.EventHandler(this.button_Stage3_Click);
+            // 
             // StageSelect
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1559, 931);
+            this.ClientSize = new System.Drawing.Size(1520, 861);
+            this.Controls.Add(this.button_Stage3);
+            this.Controls.Add(this.button_Stage2);
+            this.Controls.Add(this.button_Stage1);
             this.Controls.Add(this.buttonToMap);
             this.Controls.Add(this.labelWorld);
+            this.Controls.Add(this.pictureBox1);
             this.Name = "StageSelect";
             this.Text = "StageSelect";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.StageSelect_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -75,5 +130,9 @@
 
         private System.Windows.Forms.Label labelWorld;
         private System.Windows.Forms.Button buttonToMap;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Button button_Stage1;
+        private System.Windows.Forms.Button button_Stage2;
+        private System.Windows.Forms.Button button_Stage3;
     }
 }

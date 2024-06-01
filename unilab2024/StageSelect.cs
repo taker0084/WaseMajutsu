@@ -19,6 +19,7 @@ namespace unilab2024
 
         #region 各種メンバ変数の定義
         private string _worldName;  //WorldMapで選択された学年
+        private int _worldNumber;
 
         public string WorldName     //こう書くと別フォームからアクセスできるっぽい。原理はよくわからん
         {
@@ -27,6 +28,11 @@ namespace unilab2024
             //別フォームからのアクセス例
             //StageSelect form = new StageSelect();
             //form.WorldName = "学年";
+        }
+        public int WorldNumber
+        {
+            get { return _worldNumber; }
+            set { _worldNumber = value; }
         }
         #endregion
 
@@ -39,6 +45,21 @@ namespace unilab2024
         private void buttonToMap_Click(object sender, EventArgs e)
         {
             Func.CreateWorldMap(this);
+        }
+
+        private void button_Stage1_Click(object sender, EventArgs e)
+        {
+            Func.CreateStage(this, _worldName, _worldNumber, 1);
+        }
+
+        private void button_Stage2_Click(object sender, EventArgs e)
+        {
+            Func.CreateStage(this, _worldName, _worldNumber, 2);
+        }
+
+        private void button_Stage3_Click(object sender, EventArgs e)
+        {
+            Func.CreateStage(this, _worldName, _worldNumber, 3);
         }
         #endregion
     }

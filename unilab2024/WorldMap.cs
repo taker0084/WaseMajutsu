@@ -20,32 +20,32 @@ namespace unilab2024
         #region StageSelectフォームの呼び出し
         private void button1_Click(object sender, EventArgs e)
         {
-            Func.CreateStageSelect(this, "1年生");
+            Func.CreateStageSelect(this, button1.Text,1);
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            Func.CreateStageSelect(this, "2年生");
+            Func.CreateStageSelect(this, button2.Text,2);
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            Func.CreateStageSelect(this, "3年生");
+            Func.CreateStageSelect(this, button3.Text,3);
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            Func.CreateStageSelect(this, "4年生");
+            Func.CreateStageSelect(this, button4.Text,4);
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
-            Func.CreateStageSelect(this, "5年生");
+            Func.CreateStageSelect(this, button5.Text,5);
         }
 
         private void button6_Click(object sender, EventArgs e)
         {
-            Func.CreateStageSelect(this, "6年生");
+            Func.CreateStageSelect(this, button6.Text,6);
         }
         #endregion
     }
