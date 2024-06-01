@@ -114,7 +114,7 @@ namespace unilab2024
         //Image cloud_ur = Image.FromFile("マップ_雲_右上.png");
         //Image cloud_upside = Image.FromFile("マップ_雲_上.png");
 
-        Image[] pictures = new Image[10];
+        //Image[] pictures = new Image[10];
 
         public static int[,] map = new int[12, 12]; //map情報
         public static int x_start; //スタート位置ｘ
@@ -352,80 +352,137 @@ namespace unilab2024
         }
         public void resetStage(string type) // ステージリセットまとめ
         {
-            if (type == "quit")
+            switch (type)
             {
-                Func.CreateStageSelect(this, _worldName, _worldNumber);
-                return;
+                case "quit":
+                    Func.CreateStageSelect(this, _worldName, _worldNumber);
+                    break; ;
+                case "miss_out":
+                    label_Error.Text = "そこは止まれないよ！やり直そう！";
+                    label_Error.Visible = true;
+                    Thread.Sleep(300);
+                    miss_count += 1;
+                    break;
+                case "miss_countover":
+                    label_Error.Text = "これ以上は移動できない！やり直そう！";
+                    label_Error.Visible = true;
+                    Thread.Sleep(300);
+                    miss_count += 1;
+                    break;
+                case "miss_end":
+                    label_Error.Text = "ゴールまで届いてないね！やり直そう！";
+                    label_Error.Visible = true;
+                    Thread.Sleep(300);
+                    miss_count += 1;
+                    break;
+                case "retry":
+                    //初期位置に戻す
+                    x_now = x_start;
+                    y_now = y_start;
+
+                    //初期位置に書き換え
+                    Graphics g2 = Graphics.FromImage(bmp2);
+                    g2.Clear(Color.Transparent);
+                    int cell_length = pictureBox1.Width / 12;
+                    //character_me = Image.FromFile("忍者_正面.png");
+                    //g2.DrawImage(character_me, Global.x_now * cell_length - Global.extra_length, Global.y_now * cell_length - 2 * Global.extra_length, cell_length + 2 * Global.extra_length, cell_length + 2 * Global.extra_length);
+
+                    //g2.DrawImage(goal_obj(_stageName), Global.x_goal * cell_length - Global.extra_length, Global.y_goal * cell_length - 2 * Global.extra_length, cell_length + 2 * Global.extra_length, cell_length + 2 * Global.extra_length);
+                    this.Invoke((MethodInvoker)delegate
+                    {
+                        // pictureBox2を同期的にRefreshする
+                        pictureBox2.Refresh();
+                    });
+
+                    //初期設定に戻す
+                    button_Start.Visible = true;
+                    button_Start.Enabled = true;
+                    label_Error.Visible = false;
+                    count = 0;
+                    miss_count = 0;
+                    label_Error.Text = "ミス！";
+                    label_Error.Visible = false;
+                    label_Result.Visible = false;
+                    label_Info.Visible = false;
+                    break;
+                default: break;
             }
+            #region 削除候補
+            //if (type == "quit")
+            //{
+            //    Func.CreateStageSelect(this, _worldName, _worldNumber);
+            //    return;
+            //}
 
-            // 曇から落ちたミス
-            else if (type == "miss_out")
-            {
-                label_Error.Text = "そこは止まれないよ！やり直そう！";
-                label_Error.Visible = true;
-                Thread.Sleep(300);
-                miss_count += 1;
-            }
+            //// 曇から落ちたミス
+            //else if (type == "miss_out")
+            //{
+            //    label_Error.Text = "そこは止まれないよ！やり直そう！";
+            //    label_Error.Visible = true;
+            //    Thread.Sleep(300);
+            //    miss_count += 1;
+            //}
 
-            //木に刺されたミス
-            else if (type == "miss_tree")
-            {
-                label_Error.Text = "木に刺された！やり直そう！";
-                label_Error.Visible = true;
-                Thread.Sleep(300);
-                miss_count += 1;
-            }
+            ////木に刺されたミス
+            //else if (type == "miss_tree")
+            //{
+            //    label_Error.Text = "木に刺された！やり直そう！";
+            //    label_Error.Visible = true;
+            //    Thread.Sleep(300);
+            //    miss_count += 1;
+            //}
 
-            //無限ループの時のミス
-            else if (type == "miss_countover")
-            {
-                label_Error.Text = "これ以上は移動できない！やり直そう！";
-                label_Error.Visible = true;
-                Thread.Sleep(300);
-                miss_count += 1;
-            }
+            ////無限ループの時のミス
+            //else if (type == "miss_countover")
+            //{
+            //    label_Error.Text = "これ以上は移動できない！やり直そう！";
+            //    label_Error.Visible = true;
+            //    Thread.Sleep(300);
+            //    miss_count += 1;
+            //}
 
-            //止まった時ゴール到着してないミス
-            else if (type == "miss_end")
-            {
-                label_Error.Text = "ゴールまで届いてないね！やり直そう！";
-                label_Error.Visible = true;
-                Thread.Sleep(300);
-                miss_count += 1;
-            }
+            ////止まった時ゴール到着してないミス
+            //else if (type == "miss_end")
+            //{
+            //    label_Error.Text = "ゴールまで届いてないね！やり直そう！";
+            //    label_Error.Visible = true;
+            //    Thread.Sleep(300);
+            //    miss_count += 1;
+            //}
 
-            // リトライボタン
-            else if (type == "retry")
-            {
-                //初期位置に戻す
-                x_now = x_start;
-                y_now = y_start;
+            //// リトライボタン
+            //else if (type == "retry")
+            //{
+            //    //初期位置に戻す
+            //    x_now = x_start;
+            //    y_now = y_start;
 
-                //初期位置に書き換え
-                Graphics g2 = Graphics.FromImage(bmp2);
-                g2.Clear(Color.Transparent);
-                int cell_length = pictureBox1.Width / 12;
-                //character_me = Image.FromFile("忍者_正面.png");
-                //g2.DrawImage(character_me, Global.x_now * cell_length - Global.extra_length, Global.y_now * cell_length - 2 * Global.extra_length, cell_length + 2 * Global.extra_length, cell_length + 2 * Global.extra_length);
+            //    //初期位置に書き換え
+            //    Graphics g2 = Graphics.FromImage(bmp2);
+            //    g2.Clear(Color.Transparent);
+            //    int cell_length = pictureBox1.Width / 12;
+            //    //character_me = Image.FromFile("忍者_正面.png");
+            //    //g2.DrawImage(character_me, Global.x_now * cell_length - Global.extra_length, Global.y_now * cell_length - 2 * Global.extra_length, cell_length + 2 * Global.extra_length, cell_length + 2 * Global.extra_length);
 
-                //g2.DrawImage(goal_obj(_stageName), Global.x_goal * cell_length - Global.extra_length, Global.y_goal * cell_length - 2 * Global.extra_length, cell_length + 2 * Global.extra_length, cell_length + 2 * Global.extra_length);
-                this.Invoke((MethodInvoker)delegate
-                {
-                    // pictureBox2を同期的にRefreshする
-                    pictureBox2.Refresh();
-                });
+            //    //g2.DrawImage(goal_obj(_stageName), Global.x_goal * cell_length - Global.extra_length, Global.y_goal * cell_length - 2 * Global.extra_length, cell_length + 2 * Global.extra_length, cell_length + 2 * Global.extra_length);
+            //    this.Invoke((MethodInvoker)delegate
+            //    {
+            //        // pictureBox2を同期的にRefreshする
+            //        pictureBox2.Refresh();
+            //    });
 
-                //初期設定に戻す
-                button_Start.Visible = true;
-                button_Start.Enabled = true;
-                label_Error.Visible = false;
-                count = 0;
-                miss_count = 0;
-                label_Error.Text = "ミス！";
-                label_Error.Visible = false;
-                label_Result.Visible = false;
-                label_Info.Visible = false;
-            }
+            //    //初期設定に戻す
+            //    button_Start.Visible = true;
+            //    button_Start.Enabled = true;
+            //    label_Error.Visible = false;
+            //    count = 0;
+            //    miss_count = 0;
+            //    label_Error.Text = "ミス！";
+            //    label_Error.Visible = false;
+            //    label_Result.Visible = false;
+            //    label_Info.Visible = false;
+            //}
+            #endregion
         }
         #endregion
 
@@ -448,10 +505,10 @@ namespace unilab2024
                 button_ToMap.Location = new Point(800, 600);
                 button_ToMap.Size = new Size(200, 50);
                 label_Info.Visible = true;
-                pictureBox4.Visible = false;
-                pictureBox5.Visible = false;
-                pictureBox6.Visible = false;
-                pictureBox7.Visible = false;
+                //pictureBox4.Visible = false;
+                //pictureBox5.Visible = false;
+                //pictureBox6.Visible = false;
+                //pictureBox7.Visible = false;
                 Progress.IsCleared[_worldNumber, _level] = true;    //クリア状況管理
             }
             else
@@ -703,7 +760,7 @@ namespace unilab2024
                 {
                     int placeX = x * cell_length;
                     int placeY = y * cell_length;
-                    g1.DrawImage(pictures[map[y,x]], placeX, placeY, cell_length, cell_length);
+                    g1.DrawImage(Dictionaries.Img_BackGround[map[y,x]], placeX, placeY, cell_length, cell_length);
 
                     switch (map[y, x]) //配列に画像を保存し表示で十分
                     {
@@ -800,11 +857,11 @@ namespace unilab2024
             //pictureBox7.Image = bmp8;
 
 
-            //this.Invoke((MethodInvoker)delegate
-            //{
-            //    // pictureBox2を同期的にRefreshする
-            //    pictureBox2.Refresh();
-            //});
+            this.Invoke((MethodInvoker)delegate
+            {
+                // pictureBox2を同期的にRefreshする
+                pictureBox2.Refresh();
+            });
 
             //if (stageClear[0])
             //{
