@@ -258,9 +258,9 @@ namespace unilab2024
         public static void LoadImg_BackGround()
         {
             string[] files = Directory.GetFiles(@"BackGround");
-            for (int i = 0; i < files.Length ;i++ )
+            foreach (string file in files)
             {
-                Dictionaries.Img_BackGround[i] = Image.FromFile(files[i]);
+                Dictionaries.Img_BackGround.Add(Image.FromFile(file));
             }
         }
     }
