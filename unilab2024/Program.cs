@@ -230,6 +230,7 @@ namespace unilab2024
         //ここでのConversations[convIndex].Imgは"Teacher".
         public static Dictionary<string, Image> Img_Character = new Dictionary<string, Image>();
         public static Dictionary<string, Image> Img_DotPic = new Dictionary<string, Image>();
+        public static List<Image> Img_BackGround = new List<Image>();
     }
 
     public partial class Func
@@ -252,6 +253,14 @@ namespace unilab2024
             {
                 string key = Path.GetFileNameWithoutExtension(file).Replace("Img_DotPic_", "");
                 Dictionaries.Img_DotPic[key] = Image.FromFile(file);
+            }
+        }
+        public static void LoadImg_BackGround()
+        {
+            string[] files = Directory.GetFiles(@"BackGround");
+            for (int i = 0; i < files.Length ;i++ )
+            {
+                Dictionaries.Img_BackGround[i] = Image.FromFile(files[i]);
             }
         }
     }
