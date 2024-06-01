@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Prologue));
             this.buttonToMap = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -35,8 +36,9 @@
             // 
             // buttonToMap
             // 
+            this.buttonToMap.Cursor = System.Windows.Forms.Cursors.Hand;
             this.buttonToMap.Font = new System.Drawing.Font("游明朝 Demibold", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.buttonToMap.Location = new System.Drawing.Point(1300, 720);
+            this.buttonToMap.Location = new System.Drawing.Point(1280, 800);
             this.buttonToMap.Margin = new System.Windows.Forms.Padding(2);
             this.buttonToMap.Name = "buttonToMap";
             this.buttonToMap.Size = new System.Drawing.Size(250, 80);
@@ -47,9 +49,12 @@
             // 
             // pictureBox1
             // 
+            this.pictureBox1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox1.BackgroundImage")));
+            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pictureBox1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pictureBox1.Location = new System.Drawing.Point(0, 0);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(1550, 800);
+            this.pictureBox1.Size = new System.Drawing.Size(1536, 900);
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
@@ -58,7 +63,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1534, 761);
+            this.ClientSize = new System.Drawing.Size(1520, 861);
             this.Controls.Add(this.buttonToMap);
             this.Controls.Add(this.pictureBox1);
             this.Name = "Prologue";

@@ -46,7 +46,8 @@ namespace unilab2024
             Graphics g1 = Graphics.FromImage(bmpPB1);
 
             //Pen pen = new Pen(Color.FromArgb(100, 255, 100), 2);
-            Font fnt = new Font("游明朝", 33);
+            Font fnt_name = new Font("游ゴシック", 33, FontStyle.Bold);
+            Font fnt_dia = new Font("游ゴシック", 33);
             Brush Color_BackConv = new SolidBrush(ColorTranslator.FromHtml("#f8e58c"));
             Brush Color_BackName = new SolidBrush(ColorTranslator.FromHtml("#856859"));
             int sp = 5;
@@ -60,7 +61,7 @@ namespace unilab2024
 
             int adjust_y = 300;
 
-            int lineHeight = fnt.Height;
+            int lineHeight = fnt_dia.Height;
 
             g1.FillRectangle(Color_BackName, 15, adjust_y + face, name_x, name_y);
             //g1.DrawRectangle(pen, 15, adjust_y + face, name_x, name_y);
@@ -68,14 +69,14 @@ namespace unilab2024
             g1.FillRectangle(Color_BackConv, 15, adjust_y + face + name_y, dia_x, dia_y);
             //g1.DrawRectangle(pen, 15, adjust_y + face + name_y, dia_x, dia_y);
 
-            g1.DrawString(Conversations[convIndex].Character, fnt, Brushes.White, 15 + sp, adjust_y + face + sp);
+            g1.DrawString(Conversations[convIndex].Character, fnt_name, Brushes.White, 15 + sp, adjust_y + face + sp);
 
             //改行の処理はこう書かないとうまくいかない
             char[] lineBreak = new char[]{ '\\' };
             string[] DialogueLines = Conversations[convIndex].Dialogue.Replace("\\n","\\").Split(lineBreak);
             for (int i = 0; i < DialogueLines.Length; i++)
             {
-                g1.DrawString(DialogueLines[i], fnt, Brushes.Black, 15 + sp, adjust_y + face + name_y + sp + i*lineHeight);
+                g1.DrawString(DialogueLines[i], fnt_dia, Brushes.Black, 15 + sp, adjust_y + face + name_y + sp + i*lineHeight);
             }
             g1.DrawImage(Dictionaries.Img_Character[Conversations[convIndex].Img], 15, adjust_y, face, face);
 
