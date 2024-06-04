@@ -26,6 +26,36 @@ namespace unilab2024
             this.DragDrop += new DragEventHandler(ListBox_DragDrop);          //Form全体にDrop可能にする
             this.DragEnter += new DragEventHandler(ListBox_DragEnter);
 
+            #region ボタン表示(開発中)
+            UIButtonObject upButton = new UIButtonObject();
+            EventHandler upHandler = new EventHandler(upButton_Click);
+            upButton.Click += upHandler;
+            upButton.Location = new System.Drawing.Point(20, 20);
+            upButton.Size = new System.Drawing.Size(101, 101);
+            this.Controls.Add(upButton);
+
+            UIButtonObject downButton = new UIButtonObject();
+            EventHandler downHandler = new EventHandler(downButton_Click);
+            downButton.Click += downHandler;
+            downButton.Location = new System.Drawing.Point(40, 40);
+            downButton.Size = new System.Drawing.Size(101, 101);
+            this.Controls.Add(downButton);
+
+            UIButtonObject leftButton = new UIButtonObject();
+            EventHandler leftHandler = new EventHandler(leftButton_Click);
+            leftButton.Click += leftHandler;
+            leftButton.Location = new System.Drawing.Point(60, 60);
+            leftButton.Size = new System.Drawing.Size(101, 101);
+            this.Controls.Add(leftButton);
+
+            UIButtonObject rightButton = new UIButtonObject();
+            EventHandler rightHandler = new EventHandler(rightButton_Click);
+            rightButton.Click += rightHandler;
+            rightButton.Location = new System.Drawing.Point(80, 80);
+            rightButton.Size = new System.Drawing.Size(101, 101);
+            this.Controls.Add(rightButton);
+            #endregion
+
             //pictureBoxの設定
             pictureBox2.Parent = pictureBox1;
             //pictureBox1.Location = new Point(600, 50);
@@ -43,6 +73,8 @@ namespace unilab2024
             pictureBox3.Image = bmp3;
             //pictureBox4.Image = bmp4;
             this.Load += Stage_Load;
+
+
 
         }
 
@@ -486,7 +518,7 @@ namespace unilab2024
         }
         #endregion
 
-        #region ボタン押下時処理
+        #region ボタン押下時処理(UI開発中)
         private void button_Start_Click(object sender, EventArgs e)  //出発ボタン押下時処理
         {
             button_Start.Visible = false;
@@ -526,6 +558,27 @@ namespace unilab2024
         {
             resetStage("quit");
         }
+
+        void upButton_Click(object sender, EventArgs e)             //↑ボタン押下時処理
+        {
+
+        }
+
+        void downButton_Click(object sender, EventArgs e)             //↓ボタン押下時処理
+        {
+
+        }
+
+        void leftButton_Click(object sender, EventArgs e)             //↓ボタン押下時処理
+        {
+
+        }
+
+        void rightButton_Click(object sender, EventArgs e)             //↓ボタン押下時処理
+        {
+
+        }
+
         #endregion
 
         # region ListBox要素操作
@@ -741,8 +794,8 @@ namespace unilab2024
 
             Graphics g1 = Graphics.FromImage(bmp1);
             Graphics g2 = Graphics.FromImage(bmp2);
-            label_Info.BackgroundImage = Image.FromFile("focus.png");
-            label_Info.BackgroundImageLayout = ImageLayout.Stretch;
+            //label_Info.BackgroundImage = Image.FromFile("focus.png");
+            //label_Info.BackgroundImageLayout = ImageLayout.Stretch;
 
             cell_length = pictureBox1.Width / 12;
 
@@ -1717,4 +1770,17 @@ namespace unilab2024
         }
         #endregion
     }
+    #region ボタン設定
+    public class UIButtonObject : UserControl
+    {
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            //base.OnPaint(e);
+            Graphics graphic = e.Graphics;
+            Pen myPen = new Pen(Color.Black);
+            graphic.DrawEllipse(myPen, 0, 0, 100, 100);
+            myPen.Dispose();
+        }
+    }
+    #endregion
 }
