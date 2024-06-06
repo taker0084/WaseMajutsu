@@ -27,33 +27,33 @@ namespace unilab2024
             this.DragEnter += new DragEventHandler(ListBox_DragEnter);
 
             #region ボタン表示(開発中)
-            //UIButtonObject upButton = new UIButtonObject();
-            //EventHandler upHandler = new EventHandler(upButton_Click);
-            //upButton.Click += upHandler;
-            //upButton.Location = new System.Drawing.Point(20, 20);
-            //upButton.Size = new System.Drawing.Size(101, 101);
-            //this.Controls.Add(upButton);
+            UIButtonObject upButton = new UIButtonObject();
+            EventHandler upHandler = new EventHandler(upButton_Click);
+            upButton.Click += upHandler;
+            upButton.Location = new System.Drawing.Point(20, 20);
+            upButton.Size = new System.Drawing.Size(101, 101);
+            this.Controls.Add(upButton);
 
-            //UIButtonObject downButton = new UIButtonObject();
-            //EventHandler downHandler = new EventHandler(downButton_Click);
-            //downButton.Click += downHandler;
-            //downButton.Location = new System.Drawing.Point(40, 40);
-            //downButton.Size = new System.Drawing.Size(101, 101);
-            //this.Controls.Add(downButton);
+            UIButtonObject downButton = new UIButtonObject();
+            EventHandler downHandler = new EventHandler(downButton_Click);
+            downButton.Click += downHandler;
+            downButton.Location = new System.Drawing.Point(40, 40);
+            downButton.Size = new System.Drawing.Size(101, 101);
+            this.Controls.Add(downButton);
 
-            //UIButtonObject leftButton = new UIButtonObject();
-            //EventHandler leftHandler = new EventHandler(leftButton_Click);
-            //leftButton.Click += leftHandler;
-            //leftButton.Location = new System.Drawing.Point(60, 60);
-            //leftButton.Size = new System.Drawing.Size(101, 101);
-            //this.Controls.Add(leftButton);
+            UIButtonObject leftButton = new UIButtonObject();
+            EventHandler leftHandler = new EventHandler(leftButton_Click);
+            leftButton.Click += leftHandler;
+            leftButton.Location = new System.Drawing.Point(60, 60);
+            leftButton.Size = new System.Drawing.Size(101, 101);
+            this.Controls.Add(leftButton);
 
-            //UIButtonObject rightButton = new UIButtonObject();
-            //EventHandler rightHandler = new EventHandler(rightButton_Click);
-            //rightButton.Click += rightHandler;
-            //rightButton.Location = new System.Drawing.Point(80, 80);
-            //rightButton.Size = new System.Drawing.Size(101, 101);
-            //this.Controls.Add(rightButton);
+            UIButtonObject rightButton = new UIButtonObject();
+            EventHandler rightHandler = new EventHandler(rightButton_Click);
+            rightButton.Click += rightHandler;
+            rightButton.Location = new System.Drawing.Point(80, 80);
+            rightButton.Size = new System.Drawing.Size(101, 101);
+            this.Controls.Add(rightButton);
             #endregion
 
             //pictureBoxの設定
@@ -346,25 +346,25 @@ namespace unilab2024
             //    g3.DrawRectangle(Pens.Black, 0, 0, bmp3.Height - 1, bmp3.Height - 1);
             //    g3.Dispose();
 
-            //    //チュートリアルステージでは、マップに戻るボタンを消す。ゴールしたら見える
-            //    if (stageName == "stage1-1")
-            //    {
-            //        button5.Visible = false;
-            //    }
-            //    //for文をステージ1-1,1-2で消す
-            //    if (stageName == "stage1-1" || stageName == "stage1-2")
-            //    {
-            //        listBox2.Items.Remove("連チャンの術 (1)");
-            //        listBox2.Items.Remove("連チャンの術おわり");
-            //    }
+            //チュートリアルステージでは、マップに戻るボタンを消す。ゴールしたら見える
+            if (stageName == "stage1-1")
+            {
+                button_ToMap.Visible = false;
+            }
+            //for文をステージ1-1,1-2で消す
+            if (stageName == "stage1-1" || stageName == "stage1-2")
+            {
+                listBox_options.Items.Remove("連チャンの術 (1)");
+                listBox_options.Items.Remove("連チャンの術おわり");
+            }
 
-            //    //ストーリー強制視聴
-            //    listBox2.Enabled = false;
-            //    listBox5.Enabled = false;
-            //    button1.Enabled = false;
-            //    button6.Enabled = false;
-            //    button8.Enabled = false;
-            //    drawConversation();
+            //ストーリー強制視聴
+            listBox_options.Enabled = false;
+            listBox_SelectAB.Enabled = false;
+            button_Hint.Enabled = false;
+            button_Retry.Enabled = false;
+            button_ToMap.Enabled = false;
+            //drawConversation();
             #endregion
         }
 
@@ -768,34 +768,35 @@ namespace unilab2024
         }
         #endregion
 
-        private int[,] CreateStage(string stage_name)     //ステージ作成
+        private int[,] CreateStage(string stageName)     //ステージ作成
         {
-            //using (StreamReader sr = new StreamReader($"{_stageName}.csv"))
-            //{
-            //    int x;
-            //    int y = 0;
+            //string stagenum = _worldNumber + "-" + _level;
+            using (StreamReader sr = new StreamReader($"Map\\{stageName}.csv"))
+            {
+                int x;
+                int y = 0;
 
-            //    while (!sr.EndOfStream)
-            //    {
-            //        string line = sr.ReadLine();
-            //        string[] values = line.Split(',');
+                while (!sr.EndOfStream)
+                {
+                    string line = sr.ReadLine();
+                    string[] values = line.Split(',');
 
-            //        x = 0;
+                    x = 0;
 
-            //        foreach (var value in values)
-            //        {
-            //            // enum 使ったほうが分かりやすそう
-            //            map[y, x] = int.Parse(value);
-            //            x++;
-            //        }
-            //        y++;
-            //    }
-            //}
+                    foreach (var value in values)
+                    {
+                        // enum 使ったほうが分かりやすそう
+                        map[y, x] = int.Parse(value);
+                        x++;
+                    }
+                    y++;
+                }
+            }
 
             Graphics g1 = Graphics.FromImage(bmp1);
             Graphics g2 = Graphics.FromImage(bmp2);
             //label_Info.BackgroundImage = Image.FromFile("focus.png");
-            //label_Info.BackgroundImageLayout = ImageLayout.Stretch;
+            label_Info.BackgroundImageLayout = ImageLayout.Stretch;
 
             cell_length = pictureBox1.Width / 12;
 
@@ -815,80 +816,80 @@ namespace unilab2024
                     int placeY = y * cell_length;
                     g1.DrawImage(Dictionaries.Img_Object[map[y,x]], placeX, placeY, cell_length, cell_length);
 
-                    switch (map[y, x]) //配列に画像を保存し表示で十分
-                    {
+                    //switch (map[y, x]) //配列に画像を保存し表示で十分
+                    //{
 
-                        //case 0:
-                        //    g1.DrawImage(img_noway, placeX, placeY, Global.cell_length, Global.cell_length);
-                        //    break;
-                        //case 1:
-                        //    g1.DrawImage(img_way, placeX, placeY, Global.cell_length, Global.cell_length);
-                        //    break;
-                        //case 2:
-                        //    g1.DrawImage(img_ice, placeX, placeY, Global.cell_length, Global.cell_length);
-                        //    break;
-                        //case 3:
-                        //    g1.DrawImage(img_jump, placeX, placeY, Global.cell_length, Global.cell_length);
-                        //    break;
-                        //case 4:
-                        //    ImageAnimator.UpdateFrames(animatedImage_up);
-                        //    g1.DrawImage(animatedImage_up, placeX, placeY, Global.cell_length, Global.cell_length);
-                        //    break;
-                        //case 5:
-                        //    ImageAnimator.UpdateFrames(animatedImage_right);
-                        //    g1.DrawImage(animatedImage_right, placeX, placeY, Global.cell_length, Global.cell_length);
-                        //    break;
-                        //case 6:
-                        //    ImageAnimator.UpdateFrames(animatedImage_down);
-                        //    g1.DrawImage(animatedImage_down, placeX, placeY, Global.cell_length, Global.cell_length);
-                        //    break;
-                        //case 7:
-                        //    ImageAnimator.UpdateFrames(animatedImage_left);
-                        //    g1.DrawImage(animatedImage_left, placeX, placeY, Global.cell_length, Global.cell_length);
-                        //    break;
-                        //case 8:
-                        //    g1.DrawImage(img_tree, placeX, placeY, Global.cell_length, Global.cell_length);
-                        //    break;
-                        //case 20:
-                        //    g1.DrawImage(cloud_ul, placeX, placeY, Global.cell_length, Global.cell_length);
-                        //    break;
-                        //case 21:
-                        //    g1.DrawImage(cloud_left, placeX, placeY, Global.cell_length, Global.cell_length);
-                        //    break;
-                        //case 22:
-                        //    g1.DrawImage(cloud_bl, placeX, placeY, Global.cell_length, Global.cell_length);
-                        //    break;
-                        //case 23:
-                        //    g1.DrawImage(cloud_bottom, placeX, placeY, Global.cell_length, Global.cell_length);
-                        //    break;
-                        //case 24:
-                        //    g1.DrawImage(cloud_br, placeX, placeY, Global.cell_length, Global.cell_length);
-                        //    break;
-                        //case 25:
-                        //    g1.DrawImage(cloud_right, placeX, placeY, Global.cell_length, Global.cell_length);
-                        //    break;
-                        //case 26:
-                        //    g1.DrawImage(cloud_ur, placeX, placeY, Global.cell_length, Global.cell_length);
-                        //    break;
-                        //case 27:
-                        //    g1.DrawImage(cloud_upside, placeX, placeY, Global.cell_length, Global.cell_length);
-                        //    break;
-                        //case 100:
-                        //    g1.FillRectangle(startBackgroundColor,placeX, placeY, Global.cell_length, Global.cell_length);
-                        //    Global.x_start = x;
-                        //    Global.y_start = y;
-                        //    Global.x_now = x;
-                        //    Global.y_now = y;
-                        //    g2.DrawImage(character_me, placeX - Global.extra_length, placeY - 2 * Global.extra_length, Global.cell_length + 2 * Global.extra_length, Global.cell_length + 2 * Global.extra_length);
-                        //    break;
-                        //case 101:
-                        //    g1.FillRectangle(goalBackgroundColor, placeX, placeY, Global.cell_length, Global.cell_length);
-                        //    //ステージごとにゴールのキャラを変えたい
-                        //    g2.DrawImage(goal_obj(_stageName), placeX - Global.extra_length, placeY - 2 * Global.extra_length, Global.cell_length + 2 * Global.extra_length, Global.cell_length + 2 * Global.extra_length);
-                        //    Global.x_goal = x;
-                        //    Global.y_goal = y;
-                        //    break;
-                    }
+                    //    case 0:
+                    //        g1.DrawImage(img_noway, placeX, placeY, Global.cell_length, Global.cell_length);
+                    //        break;
+                    //    case 1:
+                    //        g1.DrawImage(img_way, placeX, placeY, Global.cell_length, Global.cell_length);
+                    //        break;
+                    //    case 2:
+                    //        g1.DrawImage(img_ice, placeX, placeY, Global.cell_length, Global.cell_length);
+                    //        break;
+                    //    case 3:
+                    //        g1.DrawImage(img_jump, placeX, placeY, Global.cell_length, Global.cell_length);
+                    //        break;
+                    //    case 4:
+                    //        ImageAnimator.UpdateFrames(animatedImage_up);
+                    //        g1.DrawImage(animatedImage_up, placeX, placeY, Global.cell_length, Global.cell_length);
+                    //        break;
+                    //    case 5:
+                    //        ImageAnimator.UpdateFrames(animatedImage_right);
+                    //        g1.DrawImage(animatedImage_right, placeX, placeY, Global.cell_length, Global.cell_length);
+                    //        break;
+                    //    case 6:
+                    //        ImageAnimator.UpdateFrames(animatedImage_down);
+                    //        g1.DrawImage(animatedImage_down, placeX, placeY, Global.cell_length, Global.cell_length);
+                    //        break;
+                    //    case 7:
+                    //        ImageAnimator.UpdateFrames(animatedImage_left);
+                    //        g1.DrawImage(animatedImage_left, placeX, placeY, Global.cell_length, Global.cell_length);
+                    //        break;
+                    //    case 8:
+                    //        g1.DrawImage(img_tree, placeX, placeY, Global.cell_length, Global.cell_length);
+                    //        break;
+                    //    case 20:
+                    //        g1.DrawImage(cloud_ul, placeX, placeY, Global.cell_length, Global.cell_length);
+                    //        break;
+                    //    case 21:
+                    //        g1.DrawImage(cloud_left, placeX, placeY, Global.cell_length, Global.cell_length);
+                    //        break;
+                    //    case 22:
+                    //        g1.DrawImage(cloud_bl, placeX, placeY, Global.cell_length, Global.cell_length);
+                    //        break;
+                    //    case 23:
+                    //        g1.DrawImage(cloud_bottom, placeX, placeY, Global.cell_length, Global.cell_length);
+                    //        break;
+                    //    case 24:
+                    //        g1.DrawImage(cloud_br, placeX, placeY, Global.cell_length, Global.cell_length);
+                    //        break;
+                    //    case 25:
+                    //        g1.DrawImage(cloud_right, placeX, placeY, Global.cell_length, Global.cell_length);
+                    //        break;
+                    //    case 26:
+                    //        g1.DrawImage(cloud_ur, placeX, placeY, Global.cell_length, Global.cell_length);
+                    //        break;
+                    //    case 27:
+                    //        g1.DrawImage(cloud_upside, placeX, placeY, Global.cell_length, Global.cell_length);
+                    //        break;
+                    //    case 100:
+                    //        g1.FillRectangle(startBackgroundColor, placeX, placeY, Global.cell_length, Global.cell_length);
+                    //        Global.x_start = x;
+                    //        Global.y_start = y;
+                    //        Global.x_now = x;
+                    //        Global.y_now = y;
+                    //        g2.DrawImage(character_me, placeX - Global.extra_length, placeY - 2 * Global.extra_length, Global.cell_length + 2 * Global.extra_length, Global.cell_length + 2 * Global.extra_length);
+                    //        break;
+                    //    case 101:
+                    //        g1.FillRectangle(goalBackgroundColor, placeX, placeY, Global.cell_length, Global.cell_length);
+                    //        //ステージごとにゴールのキャラを変えたい
+                    //        g2.DrawImage(goal_obj(_stageName), placeX - Global.extra_length, placeY - 2 * Global.extra_length, Global.cell_length + 2 * Global.extra_length, Global.cell_length + 2 * Global.extra_length);
+                    //        Global.x_goal = x;
+                    //        Global.y_goal = y;
+                    //        break;
+                    //}
                 }
             }
 
