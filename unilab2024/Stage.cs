@@ -359,11 +359,13 @@ namespace unilab2024
             }
 
             //ストーリー強制視聴
-            listBox_options.Enabled = false;
-            listBox_SelectAB.Enabled = false;
-            button_Hint.Enabled = false;
-            button_Retry.Enabled = false;
-            button_ToMap.Enabled = false;
+            listBox_options.Visible = false;
+            listBox_SelectAB.Visible = false;
+            button_Hint.Visible = false;
+            button_Retry.Visible = false;
+            button_ToMap.Visible = false;
+            label_Error.Visible = false;
+            label_Result.Visible = false;
             //drawConversation();
             #endregion
         }
@@ -393,17 +395,23 @@ namespace unilab2024
                     label_Error.Text = "そこは止まれないよ！やり直そう！";
                     label_Error.Visible = true;
                     Thread.Sleep(300);
+                    button_Retry.Visible = true;
+                    button_Retry.Enabled = true;
                     miss_count += 1;
                     break;
                 case "miss_countover":
                     label_Error.Text = "これ以上は移動できない！やり直そう！";
                     label_Error.Visible = true;
+                    button_Retry.Visible = true;
+                    button_Retry.Enabled = true;
                     Thread.Sleep(300);
                     miss_count += 1;
                     break;
                 case "miss_end":
                     label_Error.Text = "ゴールまで届いてないね！やり直そう！";
                     label_Error.Visible = true;
+                    button_Retry.Visible = true;
+                    button_Retry.Enabled = true;
                     Thread.Sleep(300);
                     miss_count += 1;
                     break;
@@ -416,8 +424,8 @@ namespace unilab2024
                     Graphics g2 = Graphics.FromImage(bmp2);
                     g2.Clear(Color.Transparent);
                     int cell_length = pictureBox1.Width / 12;
-                    //character_me = Image.FromFile("忍者_正面.png");
-                    //g2.DrawImage(character_me, Global.x_now * cell_length - Global.extra_length, Global.y_now * cell_length - 2 * Global.extra_length, cell_length + 2 * Global.extra_length, cell_length + 2 * Global.extra_length);
+                    character_me = Image.FromFile("忍者_正面.png");
+                    g2.DrawImage(character_me, x_now * cell_length - extra_length, y_now * cell_length - 2 * extra_length, cell_length + 2 * extra_length, cell_length + 2 * extra_length);
 
                     //g2.DrawImage(goal_obj(_stageName), Global.x_goal * cell_length - Global.extra_length, Global.y_goal * cell_length - 2 * Global.extra_length, cell_length + 2 * Global.extra_length, cell_length + 2 * Global.extra_length);
                     this.Invoke((MethodInvoker)delegate
@@ -551,7 +559,7 @@ namespace unilab2024
 
         private void button_Retry_Click(object sender, EventArgs e)  //リトライボタン押下時処理
         {
-            resetStage("reset");
+            resetStage("retry");
         }
 
         private void button_ToMap_Click(object sender, EventArgs e)  //マップに戻るボタン押下時処理
@@ -786,7 +794,22 @@ namespace unilab2024
                     foreach (var value in values)
                     {
                         // enum 使ったほうが分かりやすそう
-                        map[y, x] = int.Parse(value);
+                        map[x, y] = int.Parse(value);
+                        switch (map[x,y])
+                        {
+                            case 0:
+                                x_start = x;
+                                y_start = y;
+                                x_now = x;
+                                y_now = y;
+                                break;
+                            case 1:
+                                x_goal = x;
+                                y_goal = y;
+                                break;
+                            default:
+                                break;
+                        }
                         x++;
                     }
                     y++;
@@ -814,7 +837,7 @@ namespace unilab2024
                 {
                     int placeX = x * cell_length;
                     int placeY = y * cell_length;
-                    g1.DrawImage(Dictionaries.Img_Object[map[y,x]], placeX, placeY, cell_length, cell_length);
+                    g1.DrawImage(Dictionaries.Img_Object[map[x,y]], placeX, placeY, cell_length, cell_length);
 
                     //switch (map[y, x]) //配列に画像を保存し表示で十分
                     //{
