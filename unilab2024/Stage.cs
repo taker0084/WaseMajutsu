@@ -27,33 +27,33 @@ namespace unilab2024
             this.DragEnter += new DragEventHandler(ListBox_DragEnter);
 
             #region ボタン表示(開発中)
-            UIButtonObject upButton = new UIButtonObject();
-            EventHandler upHandler = new EventHandler(upButton_Click);
-            upButton.Click += upHandler;
-            upButton.Location = new System.Drawing.Point(20, 20);
-            upButton.Size = new System.Drawing.Size(101, 101);
-            this.Controls.Add(upButton);
+            //UIButtonObject upButton = new UIButtonObject();
+            //EventHandler upHandler = new EventHandler(upButton_Click);
+            //upButton.Click += upHandler;
+            //upButton.Location = new System.Drawing.Point(20, 20);
+            //upButton.Size = new System.Drawing.Size(101, 101);
+            //this.Controls.Add(upButton);
 
-            UIButtonObject downButton = new UIButtonObject();
-            EventHandler downHandler = new EventHandler(downButton_Click);
-            downButton.Click += downHandler;
-            downButton.Location = new System.Drawing.Point(40, 40);
-            downButton.Size = new System.Drawing.Size(101, 101);
-            this.Controls.Add(downButton);
+            //UIButtonObject downButton = new UIButtonObject();
+            //EventHandler downHandler = new EventHandler(downButton_Click);
+            //downButton.Click += downHandler;
+            //downButton.Location = new System.Drawing.Point(40, 40);
+            //downButton.Size = new System.Drawing.Size(101, 101);
+            //this.Controls.Add(downButton);
 
-            UIButtonObject leftButton = new UIButtonObject();
-            EventHandler leftHandler = new EventHandler(leftButton_Click);
-            leftButton.Click += leftHandler;
-            leftButton.Location = new System.Drawing.Point(60, 60);
-            leftButton.Size = new System.Drawing.Size(101, 101);
-            this.Controls.Add(leftButton);
+            //UIButtonObject leftButton = new UIButtonObject();
+            //EventHandler leftHandler = new EventHandler(leftButton_Click);
+            //leftButton.Click += leftHandler;
+            //leftButton.Location = new System.Drawing.Point(60, 60);
+            //leftButton.Size = new System.Drawing.Size(101, 101);
+            //this.Controls.Add(leftButton);
 
-            UIButtonObject rightButton = new UIButtonObject();
-            EventHandler rightHandler = new EventHandler(rightButton_Click);
-            rightButton.Click += rightHandler;
-            rightButton.Location = new System.Drawing.Point(80, 80);
-            rightButton.Size = new System.Drawing.Size(101, 101);
-            this.Controls.Add(rightButton);
+            //UIButtonObject rightButton = new UIButtonObject();
+            //EventHandler rightHandler = new EventHandler(rightButton_Click);
+            //rightButton.Click += rightHandler;
+            //rightButton.Location = new System.Drawing.Point(80, 80);
+            //rightButton.Size = new System.Drawing.Size(101, 101);
+            //this.Controls.Add(rightButton);
             #endregion
 
             //pictureBoxの設定
@@ -813,7 +813,7 @@ namespace unilab2024
                 {
                     int placeX = x * cell_length;
                     int placeY = y * cell_length;
-                    g1.DrawImage(Dictionaries.Img_BackGround[map[y,x]], placeX, placeY, cell_length, cell_length);
+                    g1.DrawImage(Dictionaries.Img_Object[map[y,x]], placeX, placeY, cell_length, cell_length);
 
                     switch (map[y, x]) //配列に画像を保存し表示で十分
                     {
