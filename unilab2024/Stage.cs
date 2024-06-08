@@ -27,33 +27,33 @@ namespace unilab2024
             this.DragEnter += new DragEventHandler(ListBox_DragEnter);
 
             #region ボタン表示(開発中)
-            UIButtonObject upButton = new UIButtonObject();
-            EventHandler upHandler = new EventHandler(upButton_Click);
-            upButton.Click += upHandler;
-            upButton.Location = new System.Drawing.Point(20, 20);
-            upButton.Size = new System.Drawing.Size(101, 101);
-            this.Controls.Add(upButton);
+            //UIButtonObject upButton = new UIButtonObject();
+            //EventHandler upHandler = new EventHandler(upButton_Click);
+            //upButton.Click += upHandler;
+            //upButton.Location = new System.Drawing.Point(20, 20);
+            //upButton.Size = new System.Drawing.Size(101, 101);
+            //this.Controls.Add(upButton);
 
-            UIButtonObject downButton = new UIButtonObject();
-            EventHandler downHandler = new EventHandler(downButton_Click);
-            downButton.Click += downHandler;
-            downButton.Location = new System.Drawing.Point(40, 40);
-            downButton.Size = new System.Drawing.Size(101, 101);
-            this.Controls.Add(downButton);
+            //UIButtonObject downButton = new UIButtonObject();
+            //EventHandler downHandler = new EventHandler(downButton_Click);
+            //downButton.Click += downHandler;
+            //downButton.Location = new System.Drawing.Point(40, 40);
+            //downButton.Size = new System.Drawing.Size(101, 101);
+            //this.Controls.Add(downButton);
 
-            UIButtonObject leftButton = new UIButtonObject();
-            EventHandler leftHandler = new EventHandler(leftButton_Click);
-            leftButton.Click += leftHandler;
-            leftButton.Location = new System.Drawing.Point(60, 60);
-            leftButton.Size = new System.Drawing.Size(101, 101);
-            this.Controls.Add(leftButton);
+            //UIButtonObject leftButton = new UIButtonObject();
+            //EventHandler leftHandler = new EventHandler(leftButton_Click);
+            //leftButton.Click += leftHandler;
+            //leftButton.Location = new System.Drawing.Point(60, 60);
+            //leftButton.Size = new System.Drawing.Size(101, 101);
+            //this.Controls.Add(leftButton);
 
-            UIButtonObject rightButton = new UIButtonObject();
-            EventHandler rightHandler = new EventHandler(rightButton_Click);
-            rightButton.Click += rightHandler;
-            rightButton.Location = new System.Drawing.Point(80, 80);
-            rightButton.Size = new System.Drawing.Size(101, 101);
-            this.Controls.Add(rightButton);
+            //UIButtonObject rightButton = new UIButtonObject();
+            //EventHandler rightHandler = new EventHandler(rightButton_Click);
+            //rightButton.Click += rightHandler;
+            //rightButton.Location = new System.Drawing.Point(80, 80);
+            //rightButton.Size = new System.Drawing.Size(101, 101);
+            //this.Controls.Add(rightButton);
             #endregion
 
             //pictureBoxの設定
@@ -239,9 +239,9 @@ namespace unilab2024
             int element_height = listBox_Input.ItemHeight;
 
             // それぞれの枠の高さ
-            int height_LB_Input = 0;
-            int height_LB_A = 0;
-            int height_LB_B = 0;
+            int height_LB_Input = 10;
+            int height_LB_A = 10;
+            int height_LB_B = 10;
 
             //using (StreamReader sr = new StreamReader($"stage_frame.csv"))
             //{
@@ -261,13 +261,13 @@ namespace unilab2024
             //    }
             //}
 
-            height_LB_Input = limit_LB_Input + 1;
-            height_LB_A = limit_LB_A + 1;
-            height_LB_B = limit_LB_B + 1;
+            //height_LB_Input = limit_LB_Input + 1;
+            //height_LB_A = limit_LB_A + 1;
+            //height_LB_B = limit_LB_B + 1;
 
             if (height_LB_Input == 1)
             {
-                listBox_Input.Visible = false;
+                //listBox_Input.Visible = false;
                 label_Info.Visible = false;
                 listBox_SelectAB.Items.Remove("A");
                 button_ResetInput.Visible = false;
@@ -277,8 +277,8 @@ namespace unilab2024
 
             if (height_LB_A == 1)
             {
-                listBox_A.Visible = false;
-                label_B.Visible = false;
+                //listBox_A.Visible = false;
+                //label_B.Visible = false;
                 listBox_B.Items.Remove("B");
                 button_ResetInput.Visible = false;
                 button_ResetInput.Enabled = false;
@@ -289,9 +289,11 @@ namespace unilab2024
                 listBox_SelectAB.Visible = false;
             }
 
-            hint = null;
-            hint_character = null;
-            hint_name = null;
+           //listBox_Options.Items.Add()
+
+            //hint = null;
+            //hint_character = null;
+            //hint_name = null;
 
             // CSVから読み込んだテキストを設定します。
             //using (StreamReader sr = new StreamReader($"hint.csv"))
@@ -838,7 +840,22 @@ namespace unilab2024
                     int placeX = x * cell_length;
                     int placeY = y * cell_length;
                     g1.DrawImage(Dictionaries.Img_Object[map[x,y]], placeX, placeY, cell_length, cell_length);
-
+                    switch (map[x, y])
+                    {
+                        case 0:
+                            x_start = x;
+                            y_start = y;
+                            x_now = x;
+                            y_now = y;
+                            g2.DrawImage(character_me, placeX - extra_length, placeY - 2 * extra_length, cell_length + 2 * extra_length, cell_length + 2 * extra_length);
+                            break;
+                        case 1:
+                            x_goal = x;
+                            y_goal = y;
+                            break;
+                        default:
+                            break;
+                    }
                     //switch (map[y, x]) //配列に画像を保存し表示で十分
                     //{
 
