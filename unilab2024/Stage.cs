@@ -113,7 +113,7 @@ namespace unilab2024
         //    Image.FromFile("キャラ_ふくろう.png")
         //};
 
-        Image character_me = Image.FromFile("忍者_正面.png");
+        Image character_me = Dictionaries.Img_DotPic["魔法使いサンプル"];
 
         //Image[] character_enemy = new Image[6] {
         //    Image.FromFile("キャラ_一つ目小僧.png"),
@@ -153,7 +153,7 @@ namespace unilab2024
         public static int x_now; //現在位置ｘ
         public static int y_now; //現在位置 y
         public static int extra_length = 7;
-        public static int cell_length;
+        public static int cell_length ;
 
         public static int count = 0; //試行回数カウント
         public static int miss_count = 0; //ミスカウント
@@ -258,9 +258,10 @@ namespace unilab2024
             //    }
             //}
 
-            limit_LB_Input = 5;
-            limit_LB_A = 5;
-            limit_LB_B = 5;
+            limit_LB_Input = 8;
+            limit_LB_A = 8;
+            limit_LB_B = 8;
+            cell_length = pictureBox1.Width / 12;
 
             if (height_LB_Input == 1)
             {
@@ -287,6 +288,9 @@ namespace unilab2024
             }
 
             listBox_Options.Items.Add("→");
+            listBox_Options.Items.Add("↑");
+            listBox_Options.Items.Add("←");
+            listBox_Options.Items.Add("↓");
             //hint = null;
             //hint_character = null;
             //hint_name = null;
@@ -421,8 +425,8 @@ namespace unilab2024
                     //初期位置に書き換え
                     Graphics g2 = Graphics.FromImage(bmp2);
                     g2.Clear(Color.Transparent);
-                    int cell_length = pictureBox1.Width / 12;
-                    character_me = Image.FromFile("忍者_正面.png");
+                    //int cell_length = pictureBox1.Width / 12;
+                    //character_me = Image.FromFile("忍者_正面.png");
                     g2.DrawImage(character_me, x_now * cell_length - extra_length, y_now * cell_length - 2 * extra_length, cell_length + 2 * extra_length, cell_length + 2 * extra_length);
 
                     //g2.DrawImage(goal_obj(_stageName), Global.x_goal * cell_length - Global.extra_length, Global.y_goal * cell_length - 2 * Global.extra_length, cell_length + 2 * Global.extra_length, cell_length + 2 * Global.extra_length);
@@ -537,7 +541,7 @@ namespace unilab2024
             {
                 label_Result.Text = "クリア！！";
                 label_Result.Visible = true;
-                button_ToMap.Enabled = false;
+                button_ToMap.Enabled = true;
                 button_Retry.Enabled = false;
                 button_ToMap.Visible = true;
                 button_ToMap.Location = new Point(800, 600);
@@ -547,12 +551,12 @@ namespace unilab2024
                 //pictureBox5.Visible = false;
                 //pictureBox6.Visible = false;
                 //pictureBox7.Visible = false;
-                Progress.IsCleared[_worldNumber, _level] = true;    //クリア状況管理
+                Progress.IsCleared[_worldNumber, _level] = true;    //クリア状況管理(配列番号お願い)
             }
-            else
-            {
-                resetStage("miss_end");
-            }
+            //else
+            //{
+            //    resetStage("miss_end");
+            //}
         }
 
         private void button_Retry_Click(object sender, EventArgs e)  //リトライボタン押下時処理
@@ -855,80 +859,80 @@ namespace unilab2024
                         default:
                             break;
                     }
-                    //switch (map[y, x]) //配列に画像を保存し表示で十分
-                    //{
+                    /*switch (map[y, x]) //配列に画像を保存し表示で十分
+                    {
 
-                    //    case 0:
-                    //        g1.DrawImage(img_noway, placeX, placeY, Global.cell_length, Global.cell_length);
-                    //        break;
-                    //    case 1:
-                    //        g1.DrawImage(img_way, placeX, placeY, Global.cell_length, Global.cell_length);
-                    //        break;
-                    //    case 2:
-                    //        g1.DrawImage(img_ice, placeX, placeY, Global.cell_length, Global.cell_length);
-                    //        break;
-                    //    case 3:
-                    //        g1.DrawImage(img_jump, placeX, placeY, Global.cell_length, Global.cell_length);
-                    //        break;
-                    //    case 4:
-                    //        ImageAnimator.UpdateFrames(animatedImage_up);
-                    //        g1.DrawImage(animatedImage_up, placeX, placeY, Global.cell_length, Global.cell_length);
-                    //        break;
-                    //    case 5:
-                    //        ImageAnimator.UpdateFrames(animatedImage_right);
-                    //        g1.DrawImage(animatedImage_right, placeX, placeY, Global.cell_length, Global.cell_length);
-                    //        break;
-                    //    case 6:
-                    //        ImageAnimator.UpdateFrames(animatedImage_down);
-                    //        g1.DrawImage(animatedImage_down, placeX, placeY, Global.cell_length, Global.cell_length);
-                    //        break;
-                    //    case 7:
-                    //        ImageAnimator.UpdateFrames(animatedImage_left);
-                    //        g1.DrawImage(animatedImage_left, placeX, placeY, Global.cell_length, Global.cell_length);
-                    //        break;
-                    //    case 8:
-                    //        g1.DrawImage(img_tree, placeX, placeY, Global.cell_length, Global.cell_length);
-                    //        break;
-                    //    case 20:
-                    //        g1.DrawImage(cloud_ul, placeX, placeY, Global.cell_length, Global.cell_length);
-                    //        break;
-                    //    case 21:
-                    //        g1.DrawImage(cloud_left, placeX, placeY, Global.cell_length, Global.cell_length);
-                    //        break;
-                    //    case 22:
-                    //        g1.DrawImage(cloud_bl, placeX, placeY, Global.cell_length, Global.cell_length);
-                    //        break;
-                    //    case 23:
-                    //        g1.DrawImage(cloud_bottom, placeX, placeY, Global.cell_length, Global.cell_length);
-                    //        break;
-                    //    case 24:
-                    //        g1.DrawImage(cloud_br, placeX, placeY, Global.cell_length, Global.cell_length);
-                    //        break;
-                    //    case 25:
-                    //        g1.DrawImage(cloud_right, placeX, placeY, Global.cell_length, Global.cell_length);
-                    //        break;
-                    //    case 26:
-                    //        g1.DrawImage(cloud_ur, placeX, placeY, Global.cell_length, Global.cell_length);
-                    //        break;
-                    //    case 27:
-                    //        g1.DrawImage(cloud_upside, placeX, placeY, Global.cell_length, Global.cell_length);
-                    //        break;
-                    //    case 100:
-                    //        g1.FillRectangle(startBackgroundColor, placeX, placeY, Global.cell_length, Global.cell_length);
-                    //        Global.x_start = x;
-                    //        Global.y_start = y;
-                    //        Global.x_now = x;
-                    //        Global.y_now = y;
-                    //        g2.DrawImage(character_me, placeX - Global.extra_length, placeY - 2 * Global.extra_length, Global.cell_length + 2 * Global.extra_length, Global.cell_length + 2 * Global.extra_length);
-                    //        break;
-                    //    case 101:
-                    //        g1.FillRectangle(goalBackgroundColor, placeX, placeY, Global.cell_length, Global.cell_length);
-                    //        //ステージごとにゴールのキャラを変えたい
-                    //        g2.DrawImage(goal_obj(_stageName), placeX - Global.extra_length, placeY - 2 * Global.extra_length, Global.cell_length + 2 * Global.extra_length, Global.cell_length + 2 * Global.extra_length);
-                    //        Global.x_goal = x;
-                    //        Global.y_goal = y;
-                    //        break;
-                    //}
+                        case 0:
+                            g1.DrawImage(img_noway, placeX, placeY, Global.cell_length, Global.cell_length);
+                            break;
+                        case 1:
+                            g1.DrawImage(img_way, placeX, placeY, Global.cell_length, Global.cell_length);
+                            break;
+                        case 2:
+                            g1.DrawImage(img_ice, placeX, placeY, Global.cell_length, Global.cell_length);
+                            break;
+                        case 3:
+                            g1.DrawImage(img_jump, placeX, placeY, Global.cell_length, Global.cell_length);
+                            break;
+                        case 4:
+                            ImageAnimator.UpdateFrames(animatedImage_up);
+                            g1.DrawImage(animatedImage_up, placeX, placeY, Global.cell_length, Global.cell_length);
+                            break;
+                        case 5:
+                            ImageAnimator.UpdateFrames(animatedImage_right);
+                            g1.DrawImage(animatedImage_right, placeX, placeY, Global.cell_length, Global.cell_length);
+                            break;
+                        case 6:
+                            ImageAnimator.UpdateFrames(animatedImage_down);
+                            g1.DrawImage(animatedImage_down, placeX, placeY, Global.cell_length, Global.cell_length);
+                            break;
+                        case 7:
+                            ImageAnimator.UpdateFrames(animatedImage_left);
+                            g1.DrawImage(animatedImage_left, placeX, placeY, Global.cell_length, Global.cell_length);
+                            break;
+                        case 8:
+                            g1.DrawImage(img_tree, placeX, placeY, Global.cell_length, Global.cell_length);
+                            break;
+                        case 20:
+                            g1.DrawImage(cloud_ul, placeX, placeY, Global.cell_length, Global.cell_length);
+                            break;
+                        case 21:
+                            g1.DrawImage(cloud_left, placeX, placeY, Global.cell_length, Global.cell_length);
+                            break;
+                        case 22:
+                            g1.DrawImage(cloud_bl, placeX, placeY, Global.cell_length, Global.cell_length);
+                            break;
+                        case 23:
+                            g1.DrawImage(cloud_bottom, placeX, placeY, Global.cell_length, Global.cell_length);
+                            break;
+                        case 24:
+                            g1.DrawImage(cloud_br, placeX, placeY, Global.cell_length, Global.cell_length);
+                            break;
+                        case 25:
+                            g1.DrawImage(cloud_right, placeX, placeY, Global.cell_length, Global.cell_length);
+                            break;
+                        case 26:
+                            g1.DrawImage(cloud_ur, placeX, placeY, Global.cell_length, Global.cell_length);
+                            break;
+                        case 27:
+                            g1.DrawImage(cloud_upside, placeX, placeY, Global.cell_length, Global.cell_length);
+                            break;
+                        case 100:
+                            g1.FillRectangle(startBackgroundColor, placeX, placeY, Global.cell_length, Global.cell_length);
+                            Global.x_start = x;
+                            Global.y_start = y;
+                            Global.x_now = x;
+                            Global.y_now = y;
+                            g2.DrawImage(character_me, placeX - Global.extra_length, placeY - 2 * Global.extra_length, Global.cell_length + 2 * Global.extra_length, Global.cell_length + 2 * Global.extra_length);
+                            break;
+                        case 101:
+                            g1.FillRectangle(goalBackgroundColor, placeX, placeY, Global.cell_length, Global.cell_length);
+                            //ステージごとにゴールのキャラを変えたい
+                            g2.DrawImage(goal_obj(_stageName), placeX - Global.extra_length, placeY - 2 * Global.extra_length, Global.cell_length + 2 * Global.extra_length, Global.cell_length + 2 * Global.extra_length);
+                            Global.x_goal = x;
+                            Global.y_goal = y;
+                            break;
+                    }*/  //削除候補
                 }
             }
 
@@ -1492,7 +1496,7 @@ namespace unilab2024
             int new_y = y + move[0][1];
 
             if (new_x <= 0 || (max_x - new_x) <= 1 || new_y <= 0 || (max_y - new_y) <= 1) return false;
-            else if (Map[new_y, new_x] == 0) return false;
+            else if (Map[new_x,new_y] == 2) return false;
             else
             {
                 //move.RemoveAt(0);
@@ -1505,6 +1509,7 @@ namespace unilab2024
             int a = steps % 4;//歩き差分を識別
             int direction = x * 10 + y;
             int type = (a + 1) / 2;
+            if (a % 2 == 0) return Dictionaries.Img_DotPic["魔法使いサンプル"];   //左右図でき次第差し替え
             switch (direction)
             {
                 case 10:
@@ -1557,7 +1562,7 @@ namespace unilab2024
         public void SquareMovement(int x, int y, int[,] Map, List<int[]> move)
         {
             Graphics g2 = Graphics.FromImage(bmp2);
-            cell_length = pictureBox1.Width / 12;
+            //cell_length = pictureBox1.Width / 12;
             if (move.Count == 0)  return;
 
             List<int[]> move_copy = new List<int[]>(move);
@@ -1577,13 +1582,13 @@ namespace unilab2024
                 return (x_now, y_now);
             }
 
-            void DrawCharacter(int a, int b, ref Image character_me, string filePath = "忍者_正面.png")
+            void DrawCharacter(int a, int b, ref Image character_me)
             {
-                character_me = Image.FromFile(filePath);
+                //character_me = Dictionaries.Img_DotPic["魔法使いサンプル"];
                 g2.DrawImage(character_me, a * cell_length - extra_length, b * cell_length - 2 * extra_length, cell_length + 2 * extra_length, cell_length + 2 * extra_length);
             }
 
-            (int,int) draw_move(int a,int b,ref List<int[]> move_next, string filePath = "忍者_正面.png")
+            (int,int) draw_move(int a,int b,ref List<int[]> move_next)
             {
                 (x_now, y_now) = place_update(a, b, move_next);
                 character_me = Ninja_Image(move_copy[0][0], move_copy[0][1], count_walk, jump, character_me);
@@ -1599,6 +1604,11 @@ namespace unilab2024
             {
                 if (move_copy.Count > 0)
                 {
+                    //int max_x = Map.GetLength(0);
+                    //int max_y = Map.GetLength(1);
+                    //int new_x = x + move[0][0];
+                    //int new_y = y + move[0][1];
+                    //bool a = Colision_detection(x, y, Map, move_copy);
                     if (!Colision_detection(x, y, Map, move_copy) && !jump)
                     {
                         //忍者を動かしてからミスの表示を出す
@@ -1628,7 +1638,7 @@ namespace unilab2024
                         DrawCharacter(x, y, ref character_me);
                         break;
                     }
-                    if (jump && Map[y + move_copy[0][1] * 2, x + move_copy[0][0] * 2] == 8) //jumpの時着地先が木の場合、ゲームオーバー
+                    if (jump && Map[x + move_copy[0][1] * 2, y + move_copy[0][0] * 2] == 8) //jumpの時着地先が木の場合、ゲームオーバー
                     {
                         (x_now, y_now) = draw_move(x, y, ref move_copy);
                         //x += move_copy[0][0];
@@ -1663,8 +1673,9 @@ namespace unilab2024
                         //pictureBox2.Refresh();
 
                         resetStage("miss_tree");
-                        character_me = Image.FromFile("忍者_正面.png");
-                        g2.DrawImage(character_me, x * cell_length - extra_length, y * cell_length - 2 * extra_length, cell_length + 2 * extra_length, cell_length + 2 * extra_length);
+                        DrawCharacter(x, y, ref character_me);
+                        //character_me = Image.FromFile("忍者_正面.png");
+                        //g2.DrawImage(character_me, x * cell_length - extra_length, y * cell_length - 2 * extra_length, cell_length + 2 * extra_length, cell_length + 2 * extra_length);
                         break;
                     }
                     if (count_walk > 50) //無限ループ対策
@@ -1685,7 +1696,7 @@ namespace unilab2024
                 }
 
                 //jumpでない時移動先が木の場合、木の方向には進めない
-                if (!jump && Map[y + move_copy[0][1], x + move_copy[0][0]] == 8)
+                if (!jump && Map[x + move_copy[0][0], y + move_copy[0][1]] == 2)
                 {
                     DrawCharacter(x, y, ref character_me);
                     //character_me = Ninja_Image(move_copy[0][0], move_copy[0][1], count_walk, jump, character_me);
@@ -1724,7 +1735,7 @@ namespace unilab2024
                 //    pictureBox2.Refresh();
                 //});
 
-                if (Map[y, x] == 101 && Map[y - move_copy[0][1], x - move_copy[0][0]] != 3)
+                if (Map[x, y] == 101 && Map[x - move_copy[0][1], y - move_copy[0][0]] != 3)     //何の判定???
                 {
                     DrawCharacter(x, y, ref character_me);
                     //character_me = Image.FromFile("忍者_正面.png");
@@ -1733,7 +1744,7 @@ namespace unilab2024
                 }
 
                 //移動先が氷の上なら同じ方向にもう一回進む
-                if (!jump && Map[y, x] == 2)
+                if (!jump && Map[x, y] == 8)                         //氷ステージ出来たら数字きめる(いまは一旦8)
                 {
                     //500ミリ秒=0.5秒待機する
                     Thread.Sleep(waittime);
@@ -1741,7 +1752,7 @@ namespace unilab2024
                 }
 
                 //移動先がジャンプ台なら同じ方向に二回進む（１個先の障害物は無視）
-                if (Map[y, x] == 3 || jump)
+                if (Map[x, y] == 9 || jump)                           //ジャンプ台の番号も決める(いまは一旦9)
                 {
                     if (move_floor)
                     {
@@ -1764,7 +1775,7 @@ namespace unilab2024
                     continue;
                 }
 
-                switch (Map[y, x])
+                switch (Map[x, y])       //動く床
                 {
                     case 4: move_copy[0] = new int[2] { 0, -1 }; break;
                     case 5: move_copy[0] = new int[2] { 1, 0 }; break;
@@ -1804,6 +1815,7 @@ namespace unilab2024
                 //}
 
                 move_copy.RemoveAt(0);
+
                 if (move_copy.Count == 0)//動作がすべて終了した場合
                 {
                     if (x_now != x_goal || y_now != y_goal)
