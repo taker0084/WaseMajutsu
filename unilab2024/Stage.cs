@@ -1444,45 +1444,71 @@ namespace unilab2024
             return move;
         }
 
-        public string[] exchange_move(string[] get_move)     //矢印変換
+        public string[] exchange_move(string[] get_move)     //矢印変換→もっと削減できそう
         {    
             List<string> newget_move = get_move.ToList();
             for (int i = 0; i < get_move.Length; i++)
             {
-                if (newget_move[i] == "↑")
-                {
-                    newget_move[i] = "0";          // up → 0と変換
-                }
-                if (newget_move[i] == "→")
-                {
-                    newget_move[i] = "1";          // right → 1と変換
-                }
-                if (newget_move[i] == "↓")
-                {
-                    newget_move[i] = "2";          // down → 2と変換
-                }
-                if (newget_move[i] == "←")
-                {
-                    newget_move[i] = "3";          // left → 3と変換
-                }
                 if (newget_move[i].StartsWith("反復魔法 ("))
                 {
                     string str_num = Regex.Replace(newget_move[i], @"[^0-9]", "");
                     int num = int.Parse(str_num);
                     newget_move[i] = "for (" + (num % 10).ToString() + ")";
+                    continue;
                 }
                 if (newget_move[i].StartsWith("反復魔法"))
                 {
                     newget_move[i] = "endfor";
+                    continue;
                 }
-                if (newget_move[i] == "Aの術")
+
+                switch (newget_move[i])
                 {
-                    newget_move[i] = "A";
+                    case "↑":
+                        newget_move[i] = "0";
+                        break;
+                    case "→":
+                        newget_move[i] = "1";
+                        break;
+                    case "↓":
+                        newget_move[i] = "2";
+                        break;
+                    case "←":
+                        newget_move[i] = "3";
+                        break;
+                    case "Aの術":
+                        newget_move[i] = "A";
+                        break;
+                    case "Bの術":
+                        newget_move[i] = "B";
+                        break;
+                    default:
+                        break;
                 }
-                if (newget_move[i] == "Bの術")
-                {
-                    newget_move[i] = "B";
-                }
+                //if (newget_move[i] == "↑")
+                //{
+                //    newget_move[i] = "0";          // up → 0と変換
+                //}
+                //if (newget_move[i] == "→")
+                //{
+                //    newget_move[i] = "1";          // right → 1と変換
+                //}
+                //if (newget_move[i] == "↓")
+                //{
+                //    newget_move[i] = "2";          // down → 2と変換
+                //}
+                //if (newget_move[i] == "←")
+                //{
+                //    newget_move[i] = "3";          // left → 3と変換
+                //}
+                //if (newget_move[i] == "Aの術")
+                //{
+                //    newget_move[i] = "A";
+                //}
+                //if (newget_move[i] == "Bの術")
+                //{
+                //    newget_move[i] = "B";
+                //}
             }
             return newget_move.ToArray();
         }
