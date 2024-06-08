@@ -142,11 +142,11 @@ namespace unilab2024
             return Return_List;
         }
 
-        public static (List<int[]>,int a) ForLoop(List<string> Move_Input, List<int[]> Move_A, List<int[]> Move_B,int i)     //for文処理
+        public static (List<int[]>,int a) ForLoop(List<int[]> move,List<string> Move_Input, List<int[]> Move_A, List<int[]> Move_B,int i)     //for文処理
         {
             int trial;                                                                                                //反復回数
             int Now;                                                                                                  //入力したListのうち何番目の処理か
-            List<int[]> Return_List = new List<int[]>();                                                              //出力の配列(動きを[x,y]として保存)
+            //List<int[]> Return_List = new List<int[]>();                                                              //出力の配列(動きを[x,y]として保存)
             int Return_Num = i;                                                                                       //何番目までfor文処理が続いているか
             if (Move_Input[i].StartsWith("for"))
             {
@@ -159,21 +159,21 @@ namespace unilab2024
                         if (Now  >= Move_Input.Count)                                                                 //for文の終わりが存在しない場合、エラー表示
                         {
                             MessageBox.Show("「反復魔法」と「反復魔法おわり」はセットで使ってください");
-                            return (Return_List, i);
+                            return (move, i);
                         }
-                        (Return_List, Now) = ForLoop(Move_Input,Move_A,Move_B,Now );                                  //二重ループの探索
+                        (move, Now) = ForLoop(move,Move_Input,Move_A,Move_B,Now );                                  //二重ループの探索
                         if (Move_Input[Now] == "endfor") break;                                                       //for文終わりが存在したら処理終了
                         else
                         {
-                            if(int.Parse(Move_Input[Now]) < 4) Func.Move(Return_List, Move_Input[Now]);               //動く方向が指定されている場合、その方向への動きをListに追加
-                            else if (Move_Input[Now] == "A") Return_List.AddRange(Move_A);                            //Aの魔法が入力されている場合、Aの処理内容をListに追加
-                            else Return_List.AddRange(Move_B);                                                        //Bの魔法の際も同様
+                            if(int.Parse(Move_Input[Now]) < 4) Func.Move(move, Move_Input[Now]);               //動く方向が指定されている場合、その方向への動きをListに追加
+                            else if (Move_Input[Now] == "A") move.AddRange(Move_A);                            //Aの魔法が入力されている場合、Aの処理内容をListに追加
+                            else move.AddRange(Move_B);                                                        //Bの魔法の際も同様
                             Now++;
                         }
                     }
                 }
             }
-            return (Return_List,Return_Num);                                                                          //動きの内容(List)とどこまで処理したかを返却
+            return (move,Return_Num);                                                                          //動きの内容(List)とどこまで処理したかを返却
         }
     }
     #endregion

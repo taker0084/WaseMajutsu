@@ -72,10 +72,7 @@ namespace unilab2024
             pictureBox2.Image = bmp2;
             pictureBox3.Image = bmp3;
             //pictureBox4.Image = bmp4;
-            this.Load += Stage_Load;
-
-
-
+            //this.Load += Stage_Load;
         }
 
         #region メンバー変数定義
@@ -231,7 +228,7 @@ namespace unilab2024
             // 1行文の高さ
             int ItemHeight = 20;
             listBox_Input.ItemHeight = ItemHeight;
-            listBox_options.ItemHeight = ItemHeight;
+            listBox_Options.ItemHeight = ItemHeight;
             listBox_A.ItemHeight = ItemHeight;
             listBox_B.ItemHeight = ItemHeight;
             listBox_SelectAB.ItemHeight = ItemHeight;
@@ -239,9 +236,9 @@ namespace unilab2024
             int element_height = listBox_Input.ItemHeight;
 
             // それぞれの枠の高さ
-            int height_LB_Input = 10;
-            int height_LB_A = 10;
-            int height_LB_B = 10;
+            int height_LB_Input = 5;
+            int height_LB_A = 5;
+            int height_LB_B = 5;
 
             //using (StreamReader sr = new StreamReader($"stage_frame.csv"))
             //{
@@ -261,9 +258,9 @@ namespace unilab2024
             //    }
             //}
 
-            //height_LB_Input = limit_LB_Input + 1;
-            //height_LB_A = limit_LB_A + 1;
-            //height_LB_B = limit_LB_B + 1;
+            limit_LB_Input = 5;
+            limit_LB_A = 5;
+            limit_LB_B = 5;
 
             if (height_LB_Input == 1)
             {
@@ -289,8 +286,7 @@ namespace unilab2024
                 listBox_SelectAB.Visible = false;
             }
 
-           //listBox_Options.Items.Add()
-
+            listBox_Options.Items.Add("→");
             //hint = null;
             //hint_character = null;
             //hint_name = null;
@@ -331,7 +327,7 @@ namespace unilab2024
             listBox_Input.SelectionMode = SelectionMode.One;
             listBox_Input.DragEnter += new DragEventHandler(ListBox_DragEnter);
             listBox_Input.DragDrop += new DragEventHandler(ListBox_DragDrop);
-            listBox_options.MouseDown += new MouseEventHandler(ListBox_MouseDown);
+            listBox_Options.MouseDown += new MouseEventHandler(ListBox_MouseDown);
             listBox_A.SelectionMode = SelectionMode.One;
             listBox_A.DragEnter += new DragEventHandler(ListBox_DragEnter);
             listBox_A.DragDrop += new DragEventHandler(ListBox_DragDrop);
@@ -349,19 +345,19 @@ namespace unilab2024
             //    g3.Dispose();
 
             //チュートリアルステージでは、マップに戻るボタンを消す。ゴールしたら見える
-            if (stageName == "stage1-1")
-            {
-                button_ToMap.Visible = false;
-            }
-            //for文をステージ1-1,1-2で消す
-            if (stageName == "stage1-1" || stageName == "stage1-2")
-            {
-                listBox_options.Items.Remove("連チャンの術 (1)");
-                listBox_options.Items.Remove("連チャンの術おわり");
-            }
+            //if (stageName == "stage1-1")
+            //{
+            //    button_ToMap.Visible = false;
+            //}
+            ////for文をステージ1-1,1-2で消す
+            //if (stageName == "stage1-1" || stageName == "stage1-2")
+            //{
+            //    listBox_options.Items.Remove("連チャンの術 (1)");
+            //    listBox_options.Items.Remove("連チャンの術おわり");
+            //}
 
             //ストーリー強制視聴
-            listBox_options.Visible = false;
+            //listBox_Options.Visible = false;
             listBox_SelectAB.Visible = false;
             button_Hint.Visible = false;
             button_Retry.Visible = false;
@@ -621,7 +617,7 @@ namespace unilab2024
         private ListBox GetNearestListBox(Point point)                    //ドラック先選択
         {
             // 3つのListBoxをリストに格納する
-            List<ListBox> listBoxes = listBoxes = new List<ListBox> { listBox_Input, listBox_A, listBox_B };
+            List<ListBox> listBoxes =  new List<ListBox> { listBox_Input, listBox_A, listBox_B };
 
             // Aボタンがないとき
             if (limit_LB_A == 0)
@@ -632,25 +628,28 @@ namespace unilab2024
             // Bボタンがないとき
             if (limit_LB_Input == 0)
             {
-                listBoxes = new List<ListBox> { listBox_A, listBox_B };
+                listBoxes = new List<ListBox> { listBox_Input, listBox_A };
             }
 
             // A.Bボタンない時
             if (limit_LB_Input == 0 && limit_LB_A == 0)
             {
-                listBoxes = new List<ListBox> { listBox_B };
+                listBoxes = new List<ListBox> { listBox_Input };
             }
-            double minDistance = double.MaxValue;
+
+            double ListBox_To_Distance(ListBox listBox)
+            {
+                Point listBox_Center = new Point(listBox.Location.X + listBox.Width / 2, listBox.Location.Y + listBox.Height / 2);      // ListBoxの中心座標を計算する
+                double distance = Math.Sqrt(Math.Pow(listBox_Center.X - point.X, 2) + Math.Pow(listBox_Center.Y - point.Y, 2));         // ドラッグされたポイントとListBoxの中心との間の距離を計算する
+                return distance;
+            }
+            
+            double minDistance = ListBox_To_Distance(listBox_Options);
             ListBox nearestListBox = null;
 
             foreach (var listBox in listBoxes)
             {
-                // ListBoxの中心座標を計算する
-                Point listBoxCenter = new Point(listBox.Location.X + listBox.Width / 2, listBox.Location.Y + listBox.Height / 2);
-
-                // ドラッグされたポイントとListBoxの中心との間の距離を計算する
-                double distance = Math.Sqrt(Math.Pow(listBoxCenter.X - point.X, 2) + Math.Pow(listBoxCenter.Y - point.Y, 2));
-
+                double distance = ListBox_To_Distance(listBox);
                 // これまでの最小距離よりも小さい場合は、更新する
                 if (distance < minDistance)
                 {
@@ -674,29 +673,29 @@ namespace unilab2024
                 e.Effect = DragDropEffects.None;
         }
 
-        private void DisplayImageAndTextOnPictureBox(PictureBox pictureBox, string image, string text)    //中身後で考える
-        {
-            // 画像ファイルを読み込む。
-            Image img = Image.FromFile(image);
+        //private void DisplayImageAndTextOnPictureBox(PictureBox pictureBox, string image, string text)    //中身後で考える
+        //{
+        //    // 画像ファイルを読み込む。
+        //    Image img = Image.FromFile(image);
 
-            Bitmap bmp = new Bitmap(pictureBox3.Width, pictureBox3.Height);
-            Graphics g = Graphics.FromImage(bmp);
+        //    Bitmap bmp = new Bitmap(pictureBox3.Width, pictureBox3.Height);
+        //    Graphics g = Graphics.FromImage(bmp);
 
-            Font fnt = new Font("游明朝", 20);
-            int sp = 8;
+        //    Font fnt = new Font("游明朝", 20);
+        //    int sp = 8;
 
-            g.DrawImage(img, 0, 0, bmp.Height - 1, bmp.Height - 1);
-            g.DrawRectangle(Pens.Black, 0, 0, bmp.Height - 1, bmp.Height - 1);
+        //    g.DrawImage(img, 0, 0, bmp.Height - 1, bmp.Height - 1);
+        //    g.DrawRectangle(Pens.Black, 0, 0, bmp.Height - 1, bmp.Height - 1);
 
-            g.DrawRectangle(Pens.White, 100, 100, 100, 100);
-            g.DrawString(text, fnt, Brushes.Black, bmp.Height + sp, 0 + sp);
+        //    g.DrawRectangle(Pens.White, 100, 100, 100, 100);
+        //    g.DrawString(text, fnt, Brushes.Black, bmp.Height + sp, 0 + sp);
 
-            pictureBox.Image = bmp;
-            //label2.Text = Global.hint_name;
+        //    pictureBox.Image = bmp;
+        //    //label2.Text = Global.hint_name;
 
 
-            g.Dispose();
-        }
+        //    g.Dispose();
+        //}
 
         /*
         //listbox内の行数を制限しない場合
@@ -996,8 +995,8 @@ namespace unilab2024
             var Move_B = new List<int[]>();                                                           //Bでの動きを保存
             string[] Get_Input_A = this.listBox_A.Items.Cast<string>().ToArray();                     //AのListへの入力を保存
             string[] Get_Input_B = this.listBox_B.Items.Cast<string>().ToArray();                     //BのListへの入力を保存
-            Get_Input_A = exchange_move(Get_Input_A, Get_Input_A.Length);                             //AのListへの入力を動きに変換
-            Get_Input_B = exchange_move(Get_Input_B, Get_Input_B.Length);                             //BのListへの入力を動きに変換
+            Get_Input_A = exchange_move(Get_Input_A);                             //AのListへの入力を動きに変換
+            Get_Input_B = exchange_move(Get_Input_B);                             //BのListへの入力を動きに変換
             var Move_A_List = new List<string>(Get_Input_A);
             var Move_B_List = new List<string>(Get_Input_B);
 
@@ -1066,7 +1065,7 @@ namespace unilab2024
 
                 for (int i = 0; i < Move_A_List.Count; i++)
                 {
-                    (Move_A, i) = Func.ForLoop(Move_A_List,Move_A,Move_B, i);
+                    (Move_A, i) = Func.ForLoop(Move_A,Move_A_List,Move_A,Move_B, i);
                     #region 削除候補
                     //if (get_move_a_list[i].StartsWith("for"))
                     //{
@@ -1174,7 +1173,7 @@ namespace unilab2024
 
                 for (int i = 0; i < Move_B_List.Count; i++)
                 {
-                    (Move_B, i) = Func.ForLoop(Move_B_List, Move_A, Move_B, i);
+                    (Move_B, i) = Func.ForLoop(Move_B,Move_B_List, Move_A, Move_B, i);
                     #region 削除候補
                     //if (get_move_b_list[i].StartsWith("for"))
                     //{
@@ -1285,19 +1284,18 @@ namespace unilab2024
                     #endregion
                     Func.Move(Move_B, Get_Input_B[i]);
                 }
-
             }
 
-            string[] Get_Input_Main = this.listBox_B.Items.Cast<string>().ToArray();
-            Get_Input_Main = exchange_move(Get_Input_Main, Get_Input_Main.Length);
+            string[] Get_Input_Main = this.listBox_Input.Items.Cast<string>().ToArray();
+            Get_Input_Main = exchange_move(Get_Input_Main);
             List<string> Move_Main_List = new List<string>(Get_Input_Main);
-            var move = new List<int[]>();
+            List<int[]> move = new List<int[]>();
 
             if (Get_Input_Main.Length != 0)
             {
                 for (int i = 0; i < Move_Main_List.Count; i++)
                 {
-                    (move, i) = Func.ForLoop(Move_Main_List,Move_A,Move_B, i);
+                    (move, i) = Func.ForLoop(move,Move_Main_List,Move_A,Move_B, i);
                     #region 削除候補
                     //if (get_move_main[i].StartsWith("for"))
                     //{
@@ -1437,17 +1435,15 @@ namespace unilab2024
                     }
                     else if (Move_Main_List[i] == "A") move.AddRange(Move_A);
                     else move.AddRange(Move_B);
-
                 }
-
             }
             return move;
         }
 
-        public string[] exchange_move(string[] get_move, int l)     //矢印変換
+        public string[] exchange_move(string[] get_move)     //矢印変換
         {    
             List<string> newget_move = get_move.ToList();
-            for (int i = 0; i < l; i++)
+            for (int i = 0; i < get_move.Length; i++)
             {
                 if (newget_move[i] == "↑")
                 {
@@ -1504,41 +1500,58 @@ namespace unilab2024
             }
         }
 
-        Image Ninja_Image(int x, int y, int steps, bool jump, Image Ninja)  //動きにあわせてキャラの画像を返す
+        Image Ninja_Image(int x, int y, int steps, bool jump, Image Chara)  //動きにあわせてキャラの画像を返す
         {
             int a = steps % 4;//歩き差分を識別
-            if (a == 1)
+            int direction = x * 10 + y;
+            int type = (a + 1) / 2;
+            switch (direction)
             {
-                if (x == -1) Ninja = Image.FromFile("忍者_左面_右足.png");
-                if (x == 1) Ninja = Image.FromFile("忍者_右面_右足.png");
-                if (y == -1) Ninja = Image.FromFile("忍者_背面_右足.png");
-                if (y == 1) Ninja = Image.FromFile("忍者_正面_右足.png");
+                case 10:
+                    Chara = Dictionaries.Img_DotPic[$"歩き右{type}"];
+                    break;
+                case -10:
+                    Chara = Dictionaries.Img_DotPic[$"歩き左{type}"];
+                    break;
+                case 1:
+                    Chara = Dictionaries.Img_DotPic[$"歩き{type}"];
+                    break;
+                case -1:
+                    Chara = Dictionaries.Img_DotPic[$"歩き後ろ{type}"];
+                    break;
             }
-            else if (a == 3)
-            {
-                if (x == -1) Ninja = Image.FromFile("忍者_左面_左足.png");
-                if (x == 1) Ninja = Image.FromFile("忍者_右面_左足.png");
-                if (y == -1) Ninja = Image.FromFile("忍者_背面_左足.png");
-                if (y == 1) Ninja = Image.FromFile("忍者_正面_左足.png");
+            //if (a == 1)
+            //{
+            //    if (x == -1) Ninja = Image.FromFile("忍者_左面_右足.png");
+            //    if (x == 1) Ninja = Image.FromFile("忍者_右面_右足.png");
+            //    if (y == -1) Ninja = Image.FromFile("忍者_背面_右足.png");
+            //    if (y == 1) Ninja = Image.FromFile("忍者_正面_右足.png");
+            //}
+            //else if (a == 3)
+            //{
+            //    if (x == -1) Ninja = Image.FromFile("忍者_左面_左足.png");
+            //    if (x == 1) Ninja = Image.FromFile("忍者_右面_左足.png");
+            //    if (y == -1) Ninja = Image.FromFile("忍者_背面_左足.png");
+            //    if (y == 1) Ninja = Image.FromFile("忍者_正面_左足.png");
 
-            }
-            else
-            {
-                if (x == -1) Ninja = Image.FromFile("忍者_左面.png");
-                if (x == 1) Ninja = Image.FromFile("忍者_右面.png");
-                if (y == -1) Ninja = Image.FromFile("忍者_背面.png");
-                if (y == 1) Ninja = Image.FromFile("忍者_正面.png");
-            }
+            //}
+            //else
+            //{
+            //    if (x == -1) Ninja = Image.FromFile("忍者_左面.png");
+            //    if (x == 1) Ninja = Image.FromFile("忍者_右面.png");
+            //    if (y == -1) Ninja = Image.FromFile("忍者_背面.png");
+            //    if (y == 1) Ninja = Image.FromFile("忍者_正面.png");
+            //}
 
 
-            if (jump)
-            {
-                if (x == -1) Ninja = Image.FromFile("忍者_左面_ジャンプ.png");
-                if (x == 1) Ninja = Image.FromFile("忍者_右面_ジャンプ.png");
-                if (y == -1) Ninja = Image.FromFile("忍者_背面_ジャンプ.png");
-                if (y == 1) Ninja = Image.FromFile("忍者_正面_ジャンプ.png");
-            }
-            return Ninja;
+            //if (jump)
+            //{
+            //    if (x == -1) Ninja = Image.FromFile("忍者_左面_ジャンプ.png");
+            //    if (x == 1) Ninja = Image.FromFile("忍者_右面_ジャンプ.png");
+            //    if (y == -1) Ninja = Image.FromFile("忍者_背面_ジャンプ.png");
+            //    if (y == 1) Ninja = Image.FromFile("忍者_正面_ジャンプ.png");
+            //}
+            return Chara;
         }
 
         public void SquareMovement(int x, int y, int[,] Map, List<int[]> move)
@@ -1573,7 +1586,7 @@ namespace unilab2024
             (int,int) draw_move(int a,int b,ref List<int[]> move_next, string filePath = "忍者_正面.png")
             {
                 (x_now, y_now) = place_update(a, b, move_next);
-                character_me = Ninja_Image(move_copy[0][0], move_copy[0][1], count, jump, character_me);
+                character_me = Ninja_Image(move_copy[0][0], move_copy[0][1], count_walk, jump, character_me);
                 DrawCharacter(x_now, y_now, ref character_me);
                 this.Invoke((MethodInvoker)delegate
                 {
