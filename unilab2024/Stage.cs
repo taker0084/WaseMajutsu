@@ -571,7 +571,7 @@ namespace unilab2024
 
         void upButton_Click(object sender, EventArgs e)             //↑ボタン押下時処理
         {
-
+            listBox_Input.Items.Add("→");
         }
 
         void downButton_Click(object sender, EventArgs e)             //↓ボタン押下時処理
@@ -1532,10 +1532,10 @@ namespace unilab2024
 
         Image Ninja_Image(int x, int y, int steps, bool jump, Image Chara)  //動きにあわせてキャラの画像を返す
         {
-            int a = steps % 4;//歩き差分を識別
+            int a = steps % 2;//歩き差分を識別
             int direction = x * 10 + y;
-            int type = (a + 1) / 2;
-            if (a % 2 == 0) return Dictionaries.Img_DotPic["魔法使いサンプル"];   //左右図でき次第差し替え
+            int type = a + 1;
+            //if (a % 2 == 0) return Dictionaries.Img_DotPic["魔法使いサンプル"];   //左右図でき次第差し替え
             switch (direction)
             {
                 case 10:
