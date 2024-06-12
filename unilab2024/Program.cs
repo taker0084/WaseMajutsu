@@ -261,8 +261,8 @@ namespace unilab2024
             string[] files = Directory.GetFiles(@"Object");
             foreach (string file in files)
             {
-                string File_Name = file.Replace("Object\\", "");
-                Dictionaries.Img_Object.Add(Image.FromFile(File_Name));
+                //string File_Name = file.Replace("Object\\", "");
+                Dictionaries.Img_Object.Add(Image.FromFile(file));
             }
         }
     }
