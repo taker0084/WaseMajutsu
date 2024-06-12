@@ -27,12 +27,12 @@ namespace unilab2024
             this.DragEnter += new DragEventHandler(ListBox_DragEnter);
 
             #region ボタン表示(開発中)
-            //UIButtonObject upButton = new UIButtonObject();
-            //EventHandler upHandler = new EventHandler(upButton_Click);
-            //upButton.Click += upHandler;
-            //upButton.Location = new System.Drawing.Point(20, 20);
-            //upButton.Size = new System.Drawing.Size(101, 101);
-            //this.Controls.Add(upButton);
+            UIButtonObject upButton = new UIButtonObject();
+            EventHandler upHandler = new EventHandler(upButton_Click);
+            upButton.Click += upHandler;
+            upButton.Location = new System.Drawing.Point(650, 400);
+            upButton.Size = new System.Drawing.Size(70, 70);
+            this.Controls.Add(upButton);
 
             //UIButtonObject downButton = new UIButtonObject();
             //EventHandler downHandler = new EventHandler(downButton_Click);
@@ -365,7 +365,7 @@ namespace unilab2024
             listBox_SelectAB.Visible = false;
             button_Hint.Visible = false;
             button_Retry.Visible = false;
-            button_ToMap.Visible = false;
+            button_ToMap.Visible = true;
             label_Error.Visible = false;
             label_Result.Visible = false;
             //drawConversation();
