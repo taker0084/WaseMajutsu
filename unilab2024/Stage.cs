@@ -30,7 +30,7 @@ namespace unilab2024
             UIButtonObject upButton = new UIButtonObject();
             EventHandler upHandler = new EventHandler(upButton_Click);
             upButton.Click += upHandler;
-            upButton.Location = new System.Drawing.Point(650, 400);
+            upButton.Location = new System.Drawing.Point(800, 400);
             upButton.Size = new System.Drawing.Size(70, 70);
             this.Controls.Add(upButton);
 
