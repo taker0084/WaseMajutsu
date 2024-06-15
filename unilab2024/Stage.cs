@@ -14,6 +14,7 @@ using System.IO;
 using System.Collections;
 using System.Security.Cryptography.X509Certificates;
 using System.Reflection.Emit;
+using System.Drawing.Drawing2D;
 
 namespace unilab2024
 {
@@ -27,12 +28,16 @@ namespace unilab2024
             this.DragEnter += new DragEventHandler(ListBox_DragEnter);
 
             #region ボタン表示(開発中)
-            UIButtonObject upButton = new UIButtonObject();
-            EventHandler upHandler = new EventHandler(upButton_Click);
-            upButton.Click += upHandler;
-            upButton.Location = new System.Drawing.Point(800, 400);
-            upButton.Size = new System.Drawing.Size(70, 70);
-            this.Controls.Add(upButton);
+            //UIButtonObject uiButtonObject_up = new UIButtonObject();
+            //EventHandler upHandler = new EventHandler(uiButtonObject_up_Click);
+            uiButtonObject_up.Size = new Size(80, 80);
+            uiButtonObject_left.Size = new Size(80, 80);
+            uiButtonObject_right.Size = new Size(80, 80);
+            uiButtonObject_down.Size = new Size(80, 80);
+            //upButton.Click += upHandler;
+            //upButton.Location = new System.Drawing.Point(800, 400);
+            //upButton.Size = new System.Drawing.Size(70, 70);
+            //this.Controls.Add(upButton);
 
             //UIButtonObject downButton = new UIButtonObject();
             //EventHandler downHandler = new EventHandler(downButton_Click);
@@ -569,25 +574,23 @@ namespace unilab2024
             resetStage("quit");
         }
 
-        void upButton_Click(object sender, EventArgs e)             //↑ボタン押下時処理
+        void uiButtonObject_up_Click(object sender, EventArgs e)
+        {
+            listBox_Input.Items.Add("↑");
+        }
+        void uiButtonObject_left_Click(object sender, EventArgs e)
+        {
+            listBox_Input.Items.Add("←");
+        }
+        void uiButtonObject_right_Click(object sender, EventArgs e)
         {
             listBox_Input.Items.Add("→");
         }
-
-        void downButton_Click(object sender, EventArgs e)             //↓ボタン押下時処理
+        void uiButtonObject_down_Click(object sender, EventArgs e)
         {
-
+            listBox_Input.Items.Add("↓");
         }
 
-        void leftButton_Click(object sender, EventArgs e)             //↓ボタン押下時処理
-        {
-
-        }
-
-        void rightButton_Click(object sender, EventArgs e)             //↓ボタン押下時処理
-        {
-
-        }
 
         #endregion
 
@@ -1513,6 +1516,7 @@ namespace unilab2024
             return newget_move.ToArray();
         }
 
+
         public bool Colision_detection(int x, int y, int[,] Map, List<int[]> move)
         {
             int max_x = Map.GetLength(0);
@@ -1868,11 +1872,13 @@ namespace unilab2024
         protected override void OnPaint(PaintEventArgs e)
         {
             //base.OnPaint(e);
-            Graphics graphic = e.Graphics;
-            Pen myPen = new Pen(Color.Black);
-            graphic.DrawEllipse(myPen, 0, 0, 100, 100);
-            myPen.Dispose();
+            GraphicsPath graphic = new GraphicsPath();
+            graphic.AddEllipse(0, 0, ClientSize.Width, ClientSize.Height);
+            this.Region = new Region(graphic);
+            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            e.Graphics.FillEllipse(new SolidBrush(this.BackColor), 0, 0, this.ClientSize.Width, this.ClientSize.Height);
         }
+        
     }
     #endregion
 }
