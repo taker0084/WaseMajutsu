@@ -553,10 +553,10 @@ namespace unilab2024
                 button_ToMap.Location = new Point(800, 600);
                 button_ToMap.Size = new Size(200, 50);
                 label_Info.Visible = true;
-                pictureBox4.Visible = false;
-                pictureBox5.Visible = false;
-                pictureBox6.Visible = false;
-                pictureBox7.Visible = false;
+                //pictureBox4.Visible = false;
+                //pictureBox5.Visible = false;
+                //pictureBox6.Visible = false;
+                //pictureBox7.Visible = false;
                 ClearCheck.IsCleared[_worldNumber, _level] = true;    //クリア状況管理
             }
             //else
