@@ -40,7 +40,6 @@
             this.button_NextStage = new System.Windows.Forms.Button();
             this.button_Hint = new System.Windows.Forms.Button();
             this.listBox_Input = new System.Windows.Forms.ListBox();
-            this.listBox_Options = new System.Windows.Forms.ListBox();
             this.listBox_A = new System.Windows.Forms.ListBox();
             this.listBox_B = new System.Windows.Forms.ListBox();
             this.listBox_SelectAB = new System.Windows.Forms.ListBox();
@@ -198,18 +197,6 @@
             this.listBox_Input.Name = "listBox_Input";
             this.listBox_Input.Size = new System.Drawing.Size(250, 284);
             this.listBox_Input.TabIndex = 11;
-            // 
-            // listBox_Options
-            // 
-            this.listBox_Options.BackColor = System.Drawing.SystemColors.Info;
-            this.listBox_Options.Font = new System.Drawing.Font("游明朝", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.listBox_Options.FormattingEnabled = true;
-            this.listBox_Options.ItemHeight = 70;
-            this.listBox_Options.Location = new System.Drawing.Point(2338, 771);
-            this.listBox_Options.Margin = new System.Windows.Forms.Padding(6);
-            this.listBox_Options.Name = "listBox_Options";
-            this.listBox_Options.Size = new System.Drawing.Size(250, 284);
-            this.listBox_Options.TabIndex = 12;
             // 
             // listBox_A
             // 
@@ -378,7 +365,6 @@
             this.Controls.Add(this.listBox_SelectAB);
             this.Controls.Add(this.listBox_B);
             this.Controls.Add(this.listBox_A);
-            this.Controls.Add(this.listBox_Options);
             this.Controls.Add(this.listBox_Input);
             this.Controls.Add(this.button_Hint);
             this.Controls.Add(this.button_NextStage);
@@ -418,7 +404,6 @@
         private System.Windows.Forms.Button button_NextStage;
         private System.Windows.Forms.Button button_Hint;
         private System.Windows.Forms.ListBox listBox_Input;
-        private System.Windows.Forms.ListBox listBox_Options;
         private System.Windows.Forms.ListBox listBox_A;
         private System.Windows.Forms.ListBox listBox_B;
         private System.Windows.Forms.ListBox listBox_SelectAB;
