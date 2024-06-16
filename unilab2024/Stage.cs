@@ -23,9 +23,9 @@ namespace unilab2024
         public Stage()
         {
             InitializeComponent();
-            this.AllowDrop = true;
-            this.DragDrop += new DragEventHandler(ListBox_DragDrop);          //Form全体にDrop可能にする
-            this.DragEnter += new DragEventHandler(ListBox_DragEnter);
+            //this.AllowDrop = true;
+            //this.DragDrop += new DragEventHandler(ListBox_DragDrop);          //Form全体にDrop可能にする
+            //this.DragEnter += new DragEventHandler(ListBox_DragEnter);
 
             #region ボタン表示(開発中)
             //UIButtonObject uiButtonObject_up = new UIButtonObject();
@@ -233,7 +233,7 @@ namespace unilab2024
             // 1行文の高さ
             int ItemHeight = 20;
             listBox_Input.ItemHeight = ItemHeight;
-            listBox_Options.ItemHeight = ItemHeight;
+            //listBox_Options.ItemHeight = ItemHeight;
             listBox_A.ItemHeight = ItemHeight;
             listBox_B.ItemHeight = ItemHeight;
             listBox_SelectAB.ItemHeight = ItemHeight;
@@ -292,10 +292,11 @@ namespace unilab2024
                 listBox_SelectAB.Visible = false;
             }
 
-            listBox_Options.Items.Add("→");
-            listBox_Options.Items.Add("↑");
-            listBox_Options.Items.Add("←");
-            listBox_Options.Items.Add("↓");
+            //listBox_Options.Items.Add("→");
+            //listBox_Options.Items.Add("↑");
+            //listBox_Options.Items.Add("←");
+            //listBox_Options.Items.Add("↓");
+
             //hint = null;
             //hint_character = null;
             //hint_name = null;
@@ -333,17 +334,17 @@ namespace unilab2024
             listBox_B.Height = element_height * height_LB_B;
 
             //ListBox1のイベントハンドラを追加
-            listBox_Input.SelectionMode = SelectionMode.One;
-            listBox_Input.DragEnter += new DragEventHandler(ListBox_DragEnter);
-            listBox_Input.DragDrop += new DragEventHandler(ListBox_DragDrop);
-            listBox_Options.MouseDown += new MouseEventHandler(ListBox_MouseDown);
-            listBox_A.SelectionMode = SelectionMode.One;
-            listBox_A.DragEnter += new DragEventHandler(ListBox_DragEnter);
-            listBox_A.DragDrop += new DragEventHandler(ListBox_DragDrop);
-            listBox_B.SelectionMode = SelectionMode.One;
-            listBox_B.DragEnter += new DragEventHandler(ListBox_DragEnter);
-            listBox_B.DragDrop += new DragEventHandler(ListBox_DragDrop);
-            listBox_SelectAB.MouseDown += new MouseEventHandler(ListBox_MouseDown);
+            //listBox_Input.SelectionMode = SelectionMode.One;
+            //listBox_Input.DragEnter += new DragEventHandler(ListBox_DragEnter);
+            //listBox_Input.DragDrop += new DragEventHandler(ListBox_DragDrop);
+            //listBox_Options.MouseDown += new MouseEventHandler(ListBox_MouseDown);
+            //listBox_A.SelectionMode = SelectionMode.One;
+            //listBox_A.DragEnter += new DragEventHandler(ListBox_DragEnter);
+            //listBox_A.DragDrop += new DragEventHandler(ListBox_DragDrop);
+            //listBox_B.SelectionMode = SelectionMode.One;
+            //listBox_B.DragEnter += new DragEventHandler(ListBox_DragEnter);
+            //listBox_B.DragDrop += new DragEventHandler(ListBox_DragDrop);
+            //listBox_SelectAB.MouseDown += new MouseEventHandler(ListBox_MouseDown);
 
             //    //ヒントを教えるキャラのアイコンを表示
             //    Graphics g3 = Graphics.FromImage(bmp3);
@@ -594,91 +595,91 @@ namespace unilab2024
 
         #endregion
 
-        # region ListBox要素操作
-        bool isEnableDrop = true;
-        private void ListBox_MouseDown(object sender, MouseEventArgs e)   //ドラッグ&ドロップ処理
-        {
-            //マウスの左ボタンだけが押されている時のみドラッグできるようにする
-            if (e.Button == MouseButtons.Left)
-            {
-                //ドラッグの準備
-                ListBox lbx = (ListBox)sender;
-                //ドラッグするアイテムのインデックスを取得する
-                int itemIndex = lbx.IndexFromPoint(e.X, e.Y);
-                if (itemIndex < 0) return;
-                //ドラッグするアイテムの内容を取得する
-                string itemText = (string)lbx.Items[itemIndex];
+        #region ListBox要素操作(もういらない)
+        //bool isEnableDrop = true;
+        //private void ListBox_MouseDown(object sender, MouseEventArgs e)   //ドラッグ&ドロップ処理
+        //{
+        //    //マウスの左ボタンだけが押されている時のみドラッグできるようにする
+        //    if (e.Button == MouseButtons.Left)
+        //    {
+        //        //ドラッグの準備
+        //        ListBox lbx = (ListBox)sender;
+        //        //ドラッグするアイテムのインデックスを取得する
+        //        int itemIndex = lbx.IndexFromPoint(e.X, e.Y);
+        //        if (itemIndex < 0) return;
+        //        //ドラッグするアイテムの内容を取得する
+        //        string itemText = (string)lbx.Items[itemIndex];
 
-                //ドラッグ&ドロップ処理を開始する
-                DragDropEffects dde =
-                    lbx.DoDragDrop(itemText, DragDropEffects.All);
+        //        //ドラッグ&ドロップ処理を開始する
+        //        DragDropEffects dde =
+        //            lbx.DoDragDrop(itemText, DragDropEffects.All);
 
-                ////ドロップ効果がMoveの時はもとのアイテムを削除する
-                //if (dde == DragDropEffects.Move)
-                //    lbx.Items.RemoveAt(itemIndex);
+        //        ////ドロップ効果がMoveの時はもとのアイテムを削除する
+        //        //if (dde == DragDropEffects.Move)
+        //        //    lbx.Items.RemoveAt(itemIndex);
 
-                isEnableDrop = true;
-            }
-        }
+        //        isEnableDrop = true;
+        //    }
+        //}
 
-        private ListBox GetNearestListBox(Point point)                    //ドラック先選択
-        {
-            // 3つのListBoxをリストに格納する
-            List<ListBox> listBoxes =  new List<ListBox> { listBox_Input, listBox_A, listBox_B };
+        //private ListBox GetNearestListBox(Point point)                    //ドラック先選択
+        //{
+        //    // 3つのListBoxをリストに格納する
+        //    List<ListBox> listBoxes =  new List<ListBox> { listBox_Input, listBox_A, listBox_B };
 
-            // Aボタンがないとき
-            if (limit_LB_A == 0)
-            {
-                listBoxes = new List<ListBox> { listBox_Input, listBox_B };
-            }
+        //    // Aボタンがないとき
+        //    if (limit_LB_A == 0)
+        //    {
+        //        listBoxes = new List<ListBox> { listBox_Input, listBox_B };
+        //    }
 
-            // Bボタンがないとき
-            if (limit_LB_Input == 0)
-            {
-                listBoxes = new List<ListBox> { listBox_Input, listBox_A };
-            }
+        //    // Bボタンがないとき
+        //    if (limit_LB_Input == 0)
+        //    {
+        //        listBoxes = new List<ListBox> { listBox_Input, listBox_A };
+        //    }
 
-            // A.Bボタンない時
-            if (limit_LB_Input == 0 && limit_LB_A == 0)
-            {
-                listBoxes = new List<ListBox> { listBox_Input };
-            }
+        //    // A.Bボタンない時
+        //    if (limit_LB_Input == 0 && limit_LB_A == 0)
+        //    {
+        //        listBoxes = new List<ListBox> { listBox_Input };
+        //    }
 
-            double ListBox_To_Distance(ListBox listBox)
-            {
-                Point listBox_Center = new Point(listBox.Location.X + listBox.Width / 2, listBox.Location.Y + listBox.Height / 2);      // ListBoxの中心座標を計算する
-                double distance = Math.Sqrt(Math.Pow(listBox_Center.X - point.X, 2) + Math.Pow(listBox_Center.Y - point.Y, 2));         // ドラッグされたポイントとListBoxの中心との間の距離を計算する
-                return distance;
-            }
-            
-            double minDistance = ListBox_To_Distance(listBox_Options);
-            ListBox nearestListBox = null;
+        //    double ListBox_To_Distance(ListBox listBox)
+        //    {
+        //        Point listBox_Center = new Point(listBox.Location.X + listBox.Width / 2, listBox.Location.Y + listBox.Height / 2);      // ListBoxの中心座標を計算する
+        //        double distance = Math.Sqrt(Math.Pow(listBox_Center.X - point.X, 2) + Math.Pow(listBox_Center.Y - point.Y, 2));         // ドラッグされたポイントとListBoxの中心との間の距離を計算する
+        //        return distance;
+        //    }
 
-            foreach (var listBox in listBoxes)
-            {
-                double distance = ListBox_To_Distance(listBox);
-                // これまでの最小距離よりも小さい場合は、更新する
-                if (distance < minDistance)
-                {
-                    minDistance = distance;
-                    nearestListBox = listBox;
-                }
-            }
+        //    double minDistance = ListBox_To_Distance(listBox_Options);
+        //    ListBox nearestListBox = null;
 
-            // 最も近いListBoxを返す
-            return nearestListBox;
-        }
+        //    foreach (var listBox in listBoxes)
+        //    {
+        //        double distance = ListBox_To_Distance(listBox);
+        //        // これまでの最小距離よりも小さい場合は、更新する
+        //        if (distance < minDistance)
+        //        {
+        //            minDistance = distance;
+        //            nearestListBox = listBox;
+        //        }
+        //    }
 
-        private void ListBox_DragEnter(object sender, DragEventArgs e)    //ドラックしたアイテムの中身確認
-        {
-            //ドラッグされているデータがstring型か調べ、
-            //そうであればドロップ効果をMoveにする
-            if (e.Data.GetDataPresent(typeof(string)))
-                e.Effect = DragDropEffects.Move;
-            else
-                //string型でなければ受け入れない
-                e.Effect = DragDropEffects.None;
-        }
+        //    // 最も近いListBoxを返す
+        //    return nearestListBox;
+        //}
+
+        //private void ListBox_DragEnter(object sender, DragEventArgs e)    //ドラックしたアイテムの中身確認
+        //{
+        //    //ドラッグされているデータがstring型か調べ、
+        //    //そうであればドロップ効果をMoveにする
+        //    if (e.Data.GetDataPresent(typeof(string)))
+        //        e.Effect = DragDropEffects.Move;
+        //    else
+        //        //string型でなければ受け入れない
+        //        e.Effect = DragDropEffects.None;
+        //}
 
         //private void DisplayImageAndTextOnPictureBox(PictureBox pictureBox, string image, string text)    //中身後で考える
         //{
@@ -723,50 +724,50 @@ namespace unilab2024
         //}
         */
 
-        private void ListBox_DragDrop(object sender, DragEventArgs e)     //ドロップ時処理
-        {
-            //ドロップされたデータがstring型か調べる
-            if (e.Data.GetDataPresent(typeof(string)) && isEnableDrop)
-            {
-                Point point = this.PointToClient(new Point(e.X, e.Y));
-                ListBox target = GetNearestListBox(point); // ここでマウス位置に最も近いリストボックスを取得
+        //private void ListBox_DragDrop(object sender, DragEventArgs e)     //ドロップ時処理
+        //{
+        //    //ドロップされたデータがstring型か調べる
+        //    if (e.Data.GetDataPresent(typeof(string)) && isEnableDrop)
+        //    {
+        //        Point point = this.PointToClient(new Point(e.X, e.Y));
+        //        ListBox target = GetNearestListBox(point); // ここでマウス位置に最も近いリストボックスを取得
 
-                if (target == null) // 最も近いリストボックスがない場合は何もしない
-                    return;
+        //        if (target == null) // 最も近いリストボックスがない場合は何もしない
+        //            return;
 
-                //listBoxの名前によって制限数を設定
-                int limit = 0;
-                switch (target.Name)
-                {
-                    case "listBox_Input":
-                        limit = limit_LB_Input;
-                        break;
-                    case "listBox_A":
-                        limit = limit_LB_A;
-                        break;
-                    case "listBox_B":
-                        limit = limit_LB_B;
-                        break;
-                        //default:
-                        //    throw new Exception("Unsupported ListBox name.");
-                }
+        //        //listBoxの名前によって制限数を設定
+        //        int limit = 0;
+        //        switch (target.Name)
+        //        {
+        //            case "listBox_Input":
+        //                limit = limit_LB_Input;
+        //                break;
+        //            case "listBox_A":
+        //                limit = limit_LB_A;
+        //                break;
+        //            case "listBox_B":
+        //                limit = limit_LB_B;
+        //                break;
+        //                //default:
+        //                //    throw new Exception("Unsupported ListBox name.");
+        //        }
 
-                // ドロップによってアイテム数が制限数を超える場合はドロップを拒否
-                if (target.Items.Count >= limit)
-                {
-                    MessageBox.Show($"{target.Name} can only contain up to {limit} items.");
-                    return;
-                }
+        //        // ドロップによってアイテム数が制限数を超える場合はドロップを拒否
+        //        if (target.Items.Count >= limit)
+        //        {
+        //            MessageBox.Show($"{target.Name} can only contain up to {limit} items.");
+        //            return;
+        //        }
 
-                //ドロップされたデータ(string型)を取得
-                string itemText = (string)e.Data.GetData(typeof(string));
+        //        //ドロップされたデータ(string型)を取得
+        //        string itemText = (string)e.Data.GetData(typeof(string));
 
-                //ドロップされたデータをリストボックスに追加する
-                target.Items.Add(itemText);
+        //        //ドロップされたデータをリストボックスに追加する
+        //        target.Items.Add(itemText);
 
-                isEnableDrop = false;
-            }
-        }
+        //        isEnableDrop = false;
+        //    }
+        //}
         #endregion
 
         #region for文処理
