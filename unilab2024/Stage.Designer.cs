@@ -153,12 +153,12 @@
             // 
             // button_Hint
             // 
-            this.button_Hint.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+            this.button_Hint.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.button_Hint.Font = new System.Drawing.Font("游明朝 Demibold", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.button_Hint.ForeColor = System.Drawing.Color.Black;
-            this.button_Hint.Location = new System.Drawing.Point(923, 685);
+            this.button_Hint.Location = new System.Drawing.Point(955, 12);
             this.button_Hint.Name = "button_Hint";
-            this.button_Hint.Size = new System.Drawing.Size(132, 89);
+            this.button_Hint.Size = new System.Drawing.Size(155, 46);
             this.button_Hint.TabIndex = 10;
             this.button_Hint.Text = "ヒント！";
             this.button_Hint.UseVisualStyleBackColor = false;
@@ -312,7 +312,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Black;
+            this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(1639, 824);
             this.Controls.Add(this.uiButtonObject_down);
             this.Controls.Add(this.uiButtonObject_right);
