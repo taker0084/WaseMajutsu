@@ -271,7 +271,7 @@ namespace unilab2024
             if (height_LB_Input == 1)
             {
                 //listBox_Input.Visible = false;
-                label_Info.Visible = false;
+                
                 listBox_SelectAB.Items.Remove("A");
                 button_ResetInput.Visible = false;
                 button_ResetInput.Enabled = false;
@@ -451,7 +451,7 @@ namespace unilab2024
                     label_Error.Text = "ミス！";
                     label_Error.Visible = false;
                     label_Result.Visible = false;
-                    label_Info.Visible = false;
+                    
                     break;
                 default: break;
             }
@@ -552,7 +552,7 @@ namespace unilab2024
                 button_ToMap.Visible = true;
                 button_ToMap.Location = new Point(800, 600);
                 button_ToMap.Size = new Size(200, 50);
-                label_Info.Visible = true;
+                
                 //pictureBox4.Visible = false;
                 //pictureBox5.Visible = false;
                 //pictureBox6.Visible = false;
@@ -828,7 +828,7 @@ namespace unilab2024
             Graphics g1 = Graphics.FromImage(bmp1);
             Graphics g2 = Graphics.FromImage(bmp2);
             //label_Info.BackgroundImage = Image.FromFile("focus.png");
-            label_Info.BackgroundImageLayout = ImageLayout.Stretch;
+            
 
             cell_length = pictureBox1.Width / 12;
 
