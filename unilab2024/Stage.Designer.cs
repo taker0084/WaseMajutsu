@@ -37,7 +37,6 @@
             this.button_ResetB = new System.Windows.Forms.Button();
             this.button_ToMap = new System.Windows.Forms.Button();
             this.button_Retry = new System.Windows.Forms.Button();
-            this.button_NextStage = new System.Windows.Forms.Button();
             this.button_Hint = new System.Windows.Forms.Button();
             this.listBox_Input = new System.Windows.Forms.ListBox();
             this.listBox_A = new System.Windows.Forms.ListBox();
@@ -48,7 +47,6 @@
             this.label_A = new System.Windows.Forms.Label();
             this.label_B = new System.Windows.Forms.Label();
             this.label_Error = new System.Windows.Forms.Label();
-            this.label_Info = new System.Windows.Forms.Label();
             this.uiButtonObject_down = new unilab2024.UIButtonObject();
             this.uiButtonObject_right = new unilab2024.UIButtonObject();
             this.uiButtonObject_left = new unilab2024.UIButtonObject();
@@ -153,16 +151,6 @@
             this.button_Retry.UseVisualStyleBackColor = false;
             this.button_Retry.Click += new System.EventHandler(this.button_Retry_Click);
             // 
-            // button_NextStage
-            // 
-            this.button_NextStage.Font = new System.Drawing.Font("游明朝 Demibold", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.button_NextStage.Location = new System.Drawing.Point(1243, 501);
-            this.button_NextStage.Name = "button_NextStage";
-            this.button_NextStage.Size = new System.Drawing.Size(215, 82);
-            this.button_NextStage.TabIndex = 9;
-            this.button_NextStage.Text = "次のステージへ！";
-            this.button_NextStage.UseVisualStyleBackColor = true;
-            // 
             // button_Hint
             // 
             this.button_Hint.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
@@ -177,8 +165,9 @@
             // 
             // listBox_Input
             // 
-            this.listBox_Input.BackColor = System.Drawing.SystemColors.Info;
+            this.listBox_Input.BackColor = System.Drawing.Color.Black;
             this.listBox_Input.Font = new System.Drawing.Font("游明朝", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.listBox_Input.ForeColor = System.Drawing.SystemColors.Info;
             this.listBox_Input.FormattingEnabled = true;
             this.listBox_Input.ItemHeight = 35;
             this.listBox_Input.Location = new System.Drawing.Point(800, 127);
@@ -279,16 +268,6 @@
             this.label_Error.TabIndex = 20;
             this.label_Error.Text = "ミス！";
             // 
-            // label_Info
-            // 
-            this.label_Info.AutoSize = true;
-            this.label_Info.Font = new System.Drawing.Font("游明朝", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label_Info.Location = new System.Drawing.Point(754, 290);
-            this.label_Info.Name = "label_Info";
-            this.label_Info.Size = new System.Drawing.Size(153, 62);
-            this.label_Info.TabIndex = 21;
-            this.label_Info.Text = "label4";
-            // 
             // uiButtonObject_down
             // 
             this.uiButtonObject_down.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
@@ -333,13 +312,12 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(1639, 824);
             this.Controls.Add(this.uiButtonObject_down);
             this.Controls.Add(this.uiButtonObject_right);
             this.Controls.Add(this.uiButtonObject_left);
             this.Controls.Add(this.uiButtonObject_up);
-            this.Controls.Add(this.label_Info);
             this.Controls.Add(this.label_Error);
             this.Controls.Add(this.label_B);
             this.Controls.Add(this.label_A);
@@ -350,7 +328,6 @@
             this.Controls.Add(this.listBox_A);
             this.Controls.Add(this.listBox_Input);
             this.Controls.Add(this.button_Hint);
-            this.Controls.Add(this.button_NextStage);
             this.Controls.Add(this.button_Retry);
             this.Controls.Add(this.button_ToMap);
             this.Controls.Add(this.button_ResetB);
@@ -384,7 +361,6 @@
         private System.Windows.Forms.Button button_ResetB;
         private System.Windows.Forms.Button button_ToMap;
         private System.Windows.Forms.Button button_Retry;
-        private System.Windows.Forms.Button button_NextStage;
         private System.Windows.Forms.Button button_Hint;
         private System.Windows.Forms.ListBox listBox_Input;
         private System.Windows.Forms.ListBox listBox_A;
@@ -395,7 +371,6 @@
         private System.Windows.Forms.Label label_A;
         private System.Windows.Forms.Label label_B;
         private System.Windows.Forms.Label label_Error;
-        private System.Windows.Forms.Label label_Info;
         private UIButtonObject uiButtonObject_up;
         private UIButtonObject uiButtonObject_left;
         private UIButtonObject uiButtonObject_right;
