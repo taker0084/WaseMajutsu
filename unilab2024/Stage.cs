@@ -1517,6 +1517,15 @@ namespace unilab2024
             return newget_move.ToArray();
         }
 
+        private void uiButtonObject_B_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void uiButtonObject_A_Click(object sender, EventArgs e)
+        {
+
+        }
 
         public bool Colision_detection(int x, int y, int[,] Map, List<int[]> move)
         {
