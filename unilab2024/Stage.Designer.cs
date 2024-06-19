@@ -62,7 +62,7 @@
             // 
             this.pictureBox1.Location = new System.Drawing.Point(72, 12);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(316, 342);
+            this.pictureBox1.Size = new System.Drawing.Size(684, 684);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
@@ -71,7 +71,7 @@
             this.pictureBox2.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.pictureBox2.Location = new System.Drawing.Point(72, 12);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(316, 342);
+            this.pictureBox2.Size = new System.Drawing.Size(684, 684);
             this.pictureBox2.TabIndex = 1;
             this.pictureBox2.TabStop = false;
             // 
@@ -317,6 +317,7 @@
             this.uiButtonObject_A.Name = "uiButtonObject_A";
             this.uiButtonObject_A.Size = new System.Drawing.Size(80, 80);
             this.uiButtonObject_A.TabIndex = 26;
+            this.uiButtonObject_A.Click += new System.EventHandler(this.uiButtonObject_A_Click);
             // 
             // uiButtonObject_B
             // 
@@ -325,6 +326,7 @@
             this.uiButtonObject_B.Name = "uiButtonObject_B";
             this.uiButtonObject_B.Size = new System.Drawing.Size(80, 80);
             this.uiButtonObject_B.TabIndex = 27;
+            this.uiButtonObject_B.Click += new System.EventHandler(this.uiButtonObject_B_Click);
             // 
             // Stage
             // 

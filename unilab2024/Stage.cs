@@ -180,6 +180,8 @@ namespace unilab2024
         public static int gradenum;
 
         public static List<Conversation> Conversations = new List<Conversation>();  //会話文を入れるリスト
+        public Graphics g1;
+        public Graphics g2;
         //public class Global    //グローバル変数
         //{
         //    public static int[,] map = new int[12, 12]; //map情報
@@ -429,7 +431,7 @@ namespace unilab2024
                     y_now = y_start;
 
                     //初期位置に書き換え
-                    Graphics g2 = Graphics.FromImage(bmp2);
+                    //Graphics g2 = Graphics.FromImage(bmp2);
                     g2.Clear(Color.Transparent);
                     //int cell_length = pictureBox1.Width / 12;
                     //character_me = Image.FromFile("忍者_正面.png");
@@ -591,7 +593,14 @@ namespace unilab2024
         {
             listBox_Input.Items.Add("↓");
         }
-
+        void uiButtonObject_A_Click(object sender, EventArgs e)
+        {
+            listBox_Input.Items.Add("A");
+        }
+        void uiButtonObject_B_Click(object sender, EventArgs e)
+        {
+            listBox_Input.Items.Add("B");
+        }
 
         #endregion
 
@@ -825,8 +834,8 @@ namespace unilab2024
                 }
             }
 
-            Graphics g1 = Graphics.FromImage(bmp1);
-            Graphics g2 = Graphics.FromImage(bmp2);
+            //Graphics g1 = Graphics.FromImage(bmp1);
+            //Graphics g2 = Graphics.FromImage(bmp2);
             //label_Info.BackgroundImage = Image.FromFile("focus.png");
             
 
@@ -1517,16 +1526,6 @@ namespace unilab2024
             return newget_move.ToArray();
         }
 
-        private void uiButtonObject_B_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void uiButtonObject_A_Click(object sender, EventArgs e)
-        {
-
-        }
-
         public bool Colision_detection(int x, int y, int[,] Map, List<int[]> move)
         {
             int max_x = Map.GetLength(0);
@@ -1601,7 +1600,7 @@ namespace unilab2024
 
         public void SquareMovement(int x, int y, int[,] Map, List<int[]> move)
         {
-            Graphics g2 = Graphics.FromImage(bmp2);
+            //Graphics g2 = Graphics.FromImage(bmp2);
             //cell_length = pictureBox1.Width / 12;
             if (move.Count == 0)  return;
 
