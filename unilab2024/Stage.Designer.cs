@@ -51,6 +51,8 @@
             this.uiButtonObject_right = new unilab2024.UIButtonObject();
             this.uiButtonObject_left = new unilab2024.UIButtonObject();
             this.uiButtonObject_up = new unilab2024.UIButtonObject();
+            this.uiButtonObject_A = new unilab2024.UIButtonObject();
+            this.uiButtonObject_B = new unilab2024.UIButtonObject();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -308,12 +310,30 @@
             this.uiButtonObject_up.TabIndex = 22;
             this.uiButtonObject_up.Click += new System.EventHandler(this.uiButtonObject_up_Click);
             // 
+            // uiButtonObject_A
+            // 
+            this.uiButtonObject_A.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.uiButtonObject_A.Location = new System.Drawing.Point(1104, 375);
+            this.uiButtonObject_A.Name = "uiButtonObject_A";
+            this.uiButtonObject_A.Size = new System.Drawing.Size(80, 80);
+            this.uiButtonObject_A.TabIndex = 26;
+            // 
+            // uiButtonObject_B
+            // 
+            this.uiButtonObject_B.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.uiButtonObject_B.Location = new System.Drawing.Point(1160, 461);
+            this.uiButtonObject_B.Name = "uiButtonObject_B";
+            this.uiButtonObject_B.Size = new System.Drawing.Size(80, 80);
+            this.uiButtonObject_B.TabIndex = 27;
+            // 
             // Stage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(1639, 824);
+            this.Controls.Add(this.uiButtonObject_B);
+            this.Controls.Add(this.uiButtonObject_A);
             this.Controls.Add(this.uiButtonObject_down);
             this.Controls.Add(this.uiButtonObject_right);
             this.Controls.Add(this.uiButtonObject_left);
@@ -375,5 +395,7 @@
         private UIButtonObject uiButtonObject_left;
         private UIButtonObject uiButtonObject_right;
         private UIButtonObject uiButtonObject_down;
+        private UIButtonObject uiButtonObject_A;
+        private UIButtonObject uiButtonObject_B;
     }
 }
