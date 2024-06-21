@@ -27,6 +27,9 @@ namespace unilab2024
             //this.DragDrop += new DragEventHandler(ListBox_DragDrop);          //Form全体にDrop可能にする
             //this.DragEnter += new DragEventHandler(ListBox_DragEnter);
 
+            this.KeyDown += new KeyEventHandler(Stage_KeyDown);
+            this.KeyPreview = true;
+
             #region ボタン表示(開発中)
             //UIButtonObject uiButtonObject_up = new UIButtonObject();
             //EventHandler upHandler = new EventHandler(uiButtonObject_up_Click);
@@ -79,6 +82,7 @@ namespace unilab2024
             //pictureBox4.Image = bmp4;
             //this.Load += Stage_Load;
         }
+
 
         #region メンバー変数定義
         private string _worldName;
@@ -602,6 +606,30 @@ namespace unilab2024
             listBox_Input.Items.Add("B");
         }
 
+        void Stage_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.Up:
+                    listBox_Input.Items.Add("↑");
+                    break;
+                case Keys.Left:
+                    listBox_Input.Items.Add("←");
+                    break;
+                case Keys.Right:
+                    listBox_Input.Items.Add("→");
+                    break;
+                case Keys.Down:
+                    listBox_Input.Items.Add("↓");
+                    break;
+                case Keys.A:
+                    listBox_Input.Items.Add("A");
+                    break;
+                case Keys.B:
+                    listBox_Input.Items.Add("B");
+                    break;
+            }
+        }
         #endregion
 
         #region ListBox要素操作(もういらない)
@@ -834,10 +862,10 @@ namespace unilab2024
                 }
             }
 
-            //Graphics g1 = Graphics.FromImage(bmp1);
-            //Graphics g2 = Graphics.FromImage(bmp2);
+            Graphics g1 = Graphics.FromImage(bmp1);
+            Graphics g2 = Graphics.FromImage(bmp2);
             //label_Info.BackgroundImage = Image.FromFile("focus.png");
-            
+
 
             cell_length = pictureBox1.Width / 12;
 
@@ -1446,12 +1474,9 @@ namespace unilab2024
                     //    }
                     //}
                     #endregion
-                    if (int.Parse(Move_Main_List[i]) < 4)
-                    {
-                        Func.Move(move, Move_Main_List[i]);
-                    }
-                    else if (Move_Main_List[i] == "A") move.AddRange(Move_A);
-                    else move.AddRange(Move_B);
+                    if (Move_Main_List[i] == "A") move.AddRange(Move_A);
+                    else if(Move_Main_List[i] == "B") move.AddRange(Move_B);
+                    else Func.Move(move, Move_Main_List[i]);
                 }
             }
             return move;
@@ -1469,7 +1494,7 @@ namespace unilab2024
                     newget_move[i] = "for (" + (num % 10).ToString() + ")";
                     continue;
                 }
-                if (newget_move[i].StartsWith("反復魔法"))
+                if (newget_move[i].StartsWith("反復魔法おわり"))
                 {
                     newget_move[i] = "endfor";
                     continue;
