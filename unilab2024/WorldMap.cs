@@ -32,6 +32,8 @@ namespace unilab2024
                 Cursor = Cursors.No
             };
 
+            buttonToAnotherWorld.Click += new EventHandler(this.buttonToAnotherWorld_Click);
+
             this.Controls.Add(buttonToAnotherWorld);
             buttonToAnotherWorld.BringToFront();
         }
@@ -75,6 +77,11 @@ namespace unilab2024
         private void button4_Click(object sender, EventArgs e)
         {
             Func.CreateStageSelect(this, button4.Text,4);
+        }
+
+        private void buttonToAnotherWorld_Click(object sender, EventArgs e)
+        {
+            Func.CreateAnotherWorld(this);
         }
         #endregion
 
