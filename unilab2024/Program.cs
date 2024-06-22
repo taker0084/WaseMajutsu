@@ -25,6 +25,7 @@ namespace unilab2024
             Func.LoadImg_DotPic();
             Func.LoadImg_Object();
             Func.LoadImg_Button();
+            //Func.LoadImg_Background();//これ入れたらメモリが足りなくて動かなかった
             Func.InitializeIsCleared();
 
             Application.Run(new Title());
@@ -44,6 +45,13 @@ namespace unilab2024
         public static void CreateWorldMap(Form currentForm) //呼び出し方: Func.CreateWorldMap(this);
         {
             WorldMap form = new WorldMap();
+            form.Show();
+            currentForm.Dispose();
+        }
+
+        public static void CreateAnotherWorld(Form currentForm) 
+        {
+            AnotherWorld form = new AnotherWorld();
             form.Show();
             currentForm.Dispose();
         }
@@ -125,6 +133,7 @@ namespace unilab2024
         public static Dictionary<string, Image> Img_DotPic = new Dictionary<string, Image>();
         public static List<Image> Img_Object = new List<Image>();
         public static Dictionary <string, Image> Img_Button = new Dictionary<string, Image>();
+        public static Dictionary <string, Image> Img_Background = new Dictionary<string, Image>();
     }
 
     public partial class Func
@@ -166,6 +175,16 @@ namespace unilab2024
             {
                 string key = Path.GetFileNameWithoutExtension(file).Replace("Img_Button_", "");
                 Dictionaries.Img_Button[key] = Image.FromFile(file);
+            }
+        }
+
+        public static void LoadImg_Background()
+        {
+            string[] files = Directory.GetFiles(Directory.GetCurrentDirectory(), "Img_Background_*.png");
+            foreach (string file in files)
+            {
+                string key = Path.GetFileNameWithoutExtension(file).Replace("Img_Background_", "");
+                Dictionaries.Img_Background[key] = Image.FromFile(file);
             }
         }
     }

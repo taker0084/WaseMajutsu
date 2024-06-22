@@ -20,6 +20,7 @@ namespace unilab2024
         private void buttonStart_Click(object sender, EventArgs e)
         {
             Func.CreatePrologue();
+            //Func.CreateAnotherWorld(this);
         }
     }
 }

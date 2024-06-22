@@ -46,6 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AnotherWorld.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AnotherWorld.Designer.cs">
+      <DependentUpon>AnotherWorld.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Prologue.cs">
       <SubType>Form</SubType>
@@ -78,6 +84,9 @@
     <Compile Include="WorldMap.Designer.cs">
       <DependentUpon>WorldMap.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="AnotherWorld.resx">
+      <DependentUpon>AnotherWorld.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Prologue.resx">
       <DependentUpon>Prologue.cs</DependentUpon>
     </EmbeddedResource>
