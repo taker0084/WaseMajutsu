@@ -31,37 +31,10 @@ namespace unilab2024
             this.KeyPreview = true;
 
             #region ボタン表示(開発中)
-            //UIButtonObject uiButtonObject_up = new UIButtonObject();
-            //EventHandler upHandler = new EventHandler(uiButtonObject_up_Click);
             uiButtonObject_up.Size = new Size(80, 80);
             uiButtonObject_left.Size = new Size(80, 80);
             uiButtonObject_right.Size = new Size(80, 80);
             uiButtonObject_down.Size = new Size(80, 80);
-            //upButton.Click += upHandler;
-            //upButton.Location = new System.Drawing.Point(800, 400);
-            //upButton.Size = new System.Drawing.Size(70, 70);
-            //this.Controls.Add(upButton);
-
-            //UIButtonObject downButton = new UIButtonObject();
-            //EventHandler downHandler = new EventHandler(downButton_Click);
-            //downButton.Click += downHandler;
-            //downButton.Location = new System.Drawing.Point(40, 40);
-            //downButton.Size = new System.Drawing.Size(101, 101);
-            //this.Controls.Add(downButton);
-
-            //UIButtonObject leftButton = new UIButtonObject();
-            //EventHandler leftHandler = new EventHandler(leftButton_Click);
-            //leftButton.Click += leftHandler;
-            //leftButton.Location = new System.Drawing.Point(60, 60);
-            //leftButton.Size = new System.Drawing.Size(101, 101);
-            //this.Controls.Add(leftButton);
-
-            //UIButtonObject rightButton = new UIButtonObject();
-            //EventHandler rightHandler = new EventHandler(rightButton_Click);
-            //rightButton.Click += rightHandler;
-            //rightButton.Location = new System.Drawing.Point(80, 80);
-            //rightButton.Size = new System.Drawing.Size(101, 101);
-            //this.Controls.Add(rightButton);
             #endregion
 
             //pictureBoxの設定
@@ -115,44 +88,7 @@ namespace unilab2024
         Brush goalBackgroundColor = new SolidBrush(Color.Yellow);
         Brush startBackgroundColor = new SolidBrush(Color.Blue);
 
-        //Image[] img_otomo = new Image[4] {
-        //    Image.FromFile("キャラ_たぬき.png"),
-        //    Image.FromFile("キャラ_きつね.png"),
-        //    Image.FromFile("キャラ_あざらし.png"),
-        //    Image.FromFile("キャラ_ふくろう.png")
-        //};
-
         Image character_me = Dictionaries.Img_DotPic["魔法使いサンプル"];
-
-        //Image[] character_enemy = new Image[6] {
-        //    Image.FromFile("キャラ_一つ目小僧.png"),
-        //    Image.FromFile("キャラ_唐傘一反.png"),
-        //    Image.FromFile("キャラ_カッパ.png"),
-        //    Image.FromFile("キャラ_てんぐ.png"),
-        //    Image.FromFile("キャラ_赤鬼.png"),
-        //    Image.FromFile("キャラ_ヤマタノオロチ.png")
-        //};
-
-        //Image img_maki = Image.FromFile("マップ_巻物.png");
-        //Image img_way = Image.FromFile("マップ_草原.png");
-        //Image img_noway = Image.FromFile("マップ_岩場.png");
-        //Image img_ice = Image.FromFile("マップ_氷.png");
-        //Image img_tree = Image.FromFile("マップ_木.png");
-        //Image img_jump = Image.FromFile("マップ_ジャンプ1.png");
-        //Image animatedImage_up = Image.FromFile("マップ_動く床_上.gif");
-        //Image animatedImage_right = Image.FromFile("マップ_動く床_右.gif");
-        //Image animatedImage_down = Image.FromFile("マップ_動く床_下.gif");
-        //Image animatedImage_left = Image.FromFile("マップ_動く床_左.gif");
-        //Image cloud_ul = Image.FromFile("マップ_雲_左上.png");
-        //Image cloud_left = Image.FromFile("マップ_雲_左.png");
-        //Image cloud_bl = Image.FromFile("マップ_雲_左下.png");
-        //Image cloud_bottom = Image.FromFile("マップ_雲_下.png");
-        //Image cloud_br = Image.FromFile("マップ_雲_右下.png");
-        //Image cloud_right = Image.FromFile("マップ_雲_右.png");
-        //Image cloud_ur = Image.FromFile("マップ_雲_右上.png");
-        //Image cloud_upside = Image.FromFile("マップ_雲_上.png");
-
-        //Image[] pictures = new Image[10];
 
         public static int[,] map = new int[12, 12]; //map情報
         public static int x_start; //スタート位置ｘ
@@ -163,6 +99,8 @@ namespace unilab2024
         public static int y_now; //現在位置 y
         public static int extra_length = 7;
         public static int cell_length ;
+        public static int For_count = 1; //for文のループ回数を保存
+        public static bool isEndfor = true; //forの最後が存在するか→ない場合はError
 
         public static int count = 0; //試行回数カウント
         public static int miss_count = 0; //ミスカウント
@@ -186,38 +124,6 @@ namespace unilab2024
         public static List<Conversation> Conversations = new List<Conversation>();  //会話文を入れるリスト
         public Graphics g1;
         public Graphics g2;
-        //public class Global    //グローバル変数
-        //{
-        //    public static int[,] map = new int[12, 12]; //map情報
-        //    public static int x_start; //スタート位置ｘ
-        //    public static int y_start; //スタート位置ｙ
-        //    public static int x_goal; //ゴール位置ｘ
-        //    public static int y_goal; //ゴール位置ｙ
-        //    public static int x_now; //現在位置ｘ
-        //    public static int y_now; //現在位置 y
-        //    public static int extra_length = 7;
-        //    public static int cell_length;
-
-        //    public static int count = 0; //試行回数カウント
-        //    public static int miss_count = 0; //ミスカウント
-
-        //    public static int count_walk = 0; //歩数カウント
-
-        //    public static List<int[]> move;  //プレイヤーの移動指示を入れるリスト
-
-        //    //listBoxに入れられる行数の制限
-        //    public static int limit_LB_Input;
-        //    public static int limit_LB_A;
-        //    public static int limit_LB_B;
-
-        //    public static string hint;
-        //    public static string hint_character;
-        //    public static string hint_name;
-
-        //    public static string grade;    //学年
-
-        //    public static List<Conversation> Conversations = new List<Conversation>();  //会話文を入れるリスト
-        //}
         #endregion
 
 
@@ -296,11 +202,6 @@ namespace unilab2024
             {
                 //listBox_SelectAB.Visible = false;
             }
-
-            //listBox_Options.Items.Add("→");
-            //listBox_Options.Items.Add("↑");
-            //listBox_Options.Items.Add("←");
-            //listBox_Options.Items.Add("↓");
 
             //hint = null;
             //hint_character = null;
@@ -384,17 +285,28 @@ namespace unilab2024
         }
 
         #region リセット関連
+        public static void ResetListBox(ListBox listbox)   //ListBoxの中身消去
+        {
+            if (listbox.SelectedIndex > -1)
+            {
+                listbox.Items.RemoveAt(listbox.SelectedIndex);
+            }
+            else
+            {
+                listbox.Items.Clear();
+            }
+        }
         private void button_ResetInput_Click(object sender, EventArgs e)        //起動部分リセット
         {
-            Func.ResetListBox(listBox_Input);                    //Program.CSに処理記載
+            ResetListBox(listBox_Input);                    //Program.CSに処理記載
         } 
         private void button_ResetA_Click(object sender, EventArgs e)           //Aの魔法リセット
         {
-           Func.ResetListBox(listBox_A);
+            ResetListBox(listBox_A);
         }       
         private void button_ResetB_Click(object sender, EventArgs e)           //Bの魔法リセット
         {
-            Func.ResetListBox(listBox_B);
+            ResetListBox(listBox_B);
         }
         public void resetStage(string type) // ステージリセットまとめ
         {
@@ -452,6 +364,7 @@ namespace unilab2024
                     label_Error.Visible = false;
                     count = 0;
                     miss_count = 0;
+                    isEndfor = true;
                     label_Error.Text = "ミス！";
                     label_Error.Visible = false;
                     label_Result.Visible = false;
@@ -545,6 +458,11 @@ namespace unilab2024
             button_Start.Enabled = false;
             label_Error.Visible = false;
             move = Movement(); //ユーザーの入力を読み取る
+            if (!isEndfor)
+            {
+                resetStage("retry");
+                return;
+            }
             SquareMovement(x_now, y_now, map, move); //キャラ動かす
             count += 1;
             if (x_goal == x_now && y_goal == y_now)
@@ -605,7 +523,29 @@ namespace unilab2024
         }
         void uiButtonObject_for_Click(object sender, EventArgs e)
         {
-            listBox_Input.Items.Add("反復魔法(");
+            label_ForCount.Visible = true;
+            label_ForCount.Text = "ループ回数を入力してね!";
+            textBox_ForCount.Visible = true;
+            textBox_ForCount.Focus();
+            //listBox_Input.Items.Add($"反復魔法({For_count})");
+        }
+        private void textBox_ForCount_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // 数字キーが押された場合
+            if (int.TryParse(e.KeyChar.ToString(), out For_count))
+            {
+                For_count = int.Parse(e.KeyChar.ToString());
+                // リストボックスに "Input(数字)" 形式で追加
+                listBox_Input.Items.Add($"反復魔法({For_count})");
+                e.Handled = true;
+                textBox_ForCount.Visible = false;
+                label_ForCount.Visible = false;
+            }
+            else
+            {
+                label_ForCount.Text = "数字を入力してね!";
+                e.Handled = true;
+            }
         }
         void uiButtonObject_endfor_Click(object sender, EventArgs e)
         {
@@ -635,196 +575,6 @@ namespace unilab2024
                     listBox_Input.Items.Add("B");
                     break;
             }
-        }
-        #endregion
-
-        #region ListBox要素操作(もういらない)
-        //bool isEnableDrop = true;
-        //private void ListBox_MouseDown(object sender, MouseEventArgs e)   //ドラッグ&ドロップ処理
-        //{
-        //    //マウスの左ボタンだけが押されている時のみドラッグできるようにする
-        //    if (e.Button == MouseButtons.Left)
-        //    {
-        //        //ドラッグの準備
-        //        ListBox lbx = (ListBox)sender;
-        //        //ドラッグするアイテムのインデックスを取得する
-        //        int itemIndex = lbx.IndexFromPoint(e.X, e.Y);
-        //        if (itemIndex < 0) return;
-        //        //ドラッグするアイテムの内容を取得する
-        //        string itemText = (string)lbx.Items[itemIndex];
-
-        //        //ドラッグ&ドロップ処理を開始する
-        //        DragDropEffects dde =
-        //            lbx.DoDragDrop(itemText, DragDropEffects.All);
-
-        //        ////ドロップ効果がMoveの時はもとのアイテムを削除する
-        //        //if (dde == DragDropEffects.Move)
-        //        //    lbx.Items.RemoveAt(itemIndex);
-
-        //        isEnableDrop = true;
-        //    }
-        //}
-
-        //private ListBox GetNearestListBox(Point point)                    //ドラック先選択
-        //{
-        //    // 3つのListBoxをリストに格納する
-        //    List<ListBox> listBoxes =  new List<ListBox> { listBox_Input, listBox_A, listBox_B };
-
-        //    // Aボタンがないとき
-        //    if (limit_LB_A == 0)
-        //    {
-        //        listBoxes = new List<ListBox> { listBox_Input, listBox_B };
-        //    }
-
-        //    // Bボタンがないとき
-        //    if (limit_LB_Input == 0)
-        //    {
-        //        listBoxes = new List<ListBox> { listBox_Input, listBox_A };
-        //    }
-
-        //    // A.Bボタンない時
-        //    if (limit_LB_Input == 0 && limit_LB_A == 0)
-        //    {
-        //        listBoxes = new List<ListBox> { listBox_Input };
-        //    }
-
-        //    double ListBox_To_Distance(ListBox listBox)
-        //    {
-        //        Point listBox_Center = new Point(listBox.Location.X + listBox.Width / 2, listBox.Location.Y + listBox.Height / 2);      // ListBoxの中心座標を計算する
-        //        double distance = Math.Sqrt(Math.Pow(listBox_Center.X - point.X, 2) + Math.Pow(listBox_Center.Y - point.Y, 2));         // ドラッグされたポイントとListBoxの中心との間の距離を計算する
-        //        return distance;
-        //    }
-
-        //    double minDistance = ListBox_To_Distance(listBox_Options);
-        //    ListBox nearestListBox = null;
-
-        //    foreach (var listBox in listBoxes)
-        //    {
-        //        double distance = ListBox_To_Distance(listBox);
-        //        // これまでの最小距離よりも小さい場合は、更新する
-        //        if (distance < minDistance)
-        //        {
-        //            minDistance = distance;
-        //            nearestListBox = listBox;
-        //        }
-        //    }
-
-        //    // 最も近いListBoxを返す
-        //    return nearestListBox;
-        //}
-
-        //private void ListBox_DragEnter(object sender, DragEventArgs e)    //ドラックしたアイテムの中身確認
-        //{
-        //    //ドラッグされているデータがstring型か調べ、
-        //    //そうであればドロップ効果をMoveにする
-        //    if (e.Data.GetDataPresent(typeof(string)))
-        //        e.Effect = DragDropEffects.Move;
-        //    else
-        //        //string型でなければ受け入れない
-        //        e.Effect = DragDropEffects.None;
-        //}
-
-        //private void DisplayImageAndTextOnPictureBox(PictureBox pictureBox, string image, string text)    //中身後で考える
-        //{
-        //    // 画像ファイルを読み込む。
-        //    Image img = Image.FromFile(image);
-
-        //    Bitmap bmp = new Bitmap(pictureBox3.Width, pictureBox3.Height);
-        //    Graphics g = Graphics.FromImage(bmp);
-
-        //    Font fnt = new Font("游明朝", 20);
-        //    int sp = 8;
-
-        //    g.DrawImage(img, 0, 0, bmp.Height - 1, bmp.Height - 1);
-        //    g.DrawRectangle(Pens.Black, 0, 0, bmp.Height - 1, bmp.Height - 1);
-
-        //    g.DrawRectangle(Pens.White, 100, 100, 100, 100);
-        //    g.DrawString(text, fnt, Brushes.Black, bmp.Height + sp, 0 + sp);
-
-        //    pictureBox.Image = bmp;
-        //    //label2.Text = Global.hint_name;
-
-
-        //    g.Dispose();
-        //}
-
-        /*
-        //listbox内の行数を制限しない場合
-        //private void ListBox_DragDrop(object sender, DragEventArgs e)
-        //{
-        //    //ドロップされたデータがstring型か調べる
-        //    if (e.Data.GetDataPresent(typeof(string)) && isEnableDrop)
-        //    {
-        //        ListBox target = (ListBox)sender;
-        //        //ドロップされたデータ(string型)を取得
-        //        string itemText =
-        //            (string)e.Data.GetData(typeof(string));
-        //        //ドロップされたデータをリストボックスに追加する
-        //        target.Items.Add(itemText);
-
-        //        isEnableDrop = false;
-        //    }
-        //}
-        */
-
-        //private void ListBox_DragDrop(object sender, DragEventArgs e)     //ドロップ時処理
-        //{
-        //    //ドロップされたデータがstring型か調べる
-        //    if (e.Data.GetDataPresent(typeof(string)) && isEnableDrop)
-        //    {
-        //        Point point = this.PointToClient(new Point(e.X, e.Y));
-        //        ListBox target = GetNearestListBox(point); // ここでマウス位置に最も近いリストボックスを取得
-
-        //        if (target == null) // 最も近いリストボックスがない場合は何もしない
-        //            return;
-
-        //        //listBoxの名前によって制限数を設定
-        //        int limit = 0;
-        //        switch (target.Name)
-        //        {
-        //            case "listBox_Input":
-        //                limit = limit_LB_Input;
-        //                break;
-        //            case "listBox_A":
-        //                limit = limit_LB_A;
-        //                break;
-        //            case "listBox_B":
-        //                limit = limit_LB_B;
-        //                break;
-        //                //default:
-        //                //    throw new Exception("Unsupported ListBox name.");
-        //        }
-
-        //        // ドロップによってアイテム数が制限数を超える場合はドロップを拒否
-        //        if (target.Items.Count >= limit)
-        //        {
-        //            MessageBox.Show($"{target.Name} can only contain up to {limit} items.");
-        //            return;
-        //        }
-
-        //        //ドロップされたデータ(string型)を取得
-        //        string itemText = (string)e.Data.GetData(typeof(string));
-
-        //        //ドロップされたデータをリストボックスに追加する
-        //        target.Items.Add(itemText);
-
-        //        isEnableDrop = false;
-        //    }
-        //}
-        #endregion
-
-        #region for文処理
-        private void listBox_Input_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            Func.ForLoopCount(listBox_Input);
-        }
-        private void listBox_A_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            Func.ForLoopCount(listBox_A);
-        }
-        private void listBox_B_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            Func.ForLoopCount(listBox_B);
         }
         #endregion
 
@@ -991,6 +741,120 @@ namespace unilab2024
         }
 
         #region 動作関連
+
+        /// <summary>
+        /// 入力(direction)に応じてマップ上で動きを実装
+        /// </summary>
+        /// <param name="movelist">キャラクターがどう動くかのリスト</param>
+        /// <param name="direction">動く方向</param>
+        public void MoveTo(List<int[]> movelist, string direction)    //指定方向に移動する関数
+        {
+            int Direction_Index = 10;
+            switch (direction)
+            {
+                case "↑":
+                    Direction_Index = 0;
+                    break;
+                case "→":
+                    Direction_Index = 1;
+                    break;
+                case "↓":
+                    Direction_Index = 2;
+                    break;
+                case "←":
+                    Direction_Index = 3;
+                    break;
+                default:
+                    break;
+            }
+            int[][] move = new int[4][];       // up,right.down,leftの順
+            move[0] = new int[] { 0, -1 };     //up
+            move[1] = new int[] { 1, 0 };      //right
+            move[2] = new int[] { 0, 1 };      //down 
+            move[3] = new int[] { -1, 0 };     //left
+            if (Direction_Index < 4) movelist.Add(move[Direction_Index]);
+        }
+
+        /// <summary>
+        /// ユーザーの入力Listを作成する関数(ほかの関数を呼び出す場合などの処理)
+        /// </summary>
+        /// <param name="A">自作関数Aの動き</param>
+        /// <param name="B">自作関数Bの動き</param>
+        /// <param name="Move_Input">出力先の動き</param>
+        /// <returns></returns>
+        public List<string> MakeMoveList(string[] A, string[] B, List<string> Move_Input)     //入力A・B(Move_Input)が再起の場合の処理
+        {
+            List<string> Return_List = new List<string>();          //戻り値用のList
+            for (int i = 0; i < Move_Input.Count; i++)　　　　　　　//A・Bの中身だけ探索
+            {
+
+                if (Move_Input[i] == "B")
+                {
+                    Return_List.AddRange(B);                        //Bが含まれていたらBの操作を追加
+
+                }
+                else if (Move_Input[i] == "A")
+                {
+                    Return_List.AddRange(A);                        //Aが含まれていたらAの操作を追加
+
+                }
+                else
+                {
+                    Return_List.Add(Move_Input[i]);                 //そのまま追加
+                }
+            }
+            return Return_List;
+        }
+
+        /// <summary>
+        /// for文での処理を行う関数、多重のfor文の場合にも対応
+        /// </summary>
+        /// <param name="move">キャラクターのマップ上での動き</param>
+        /// <param name="Move_Input">ユーザーの入力した方向</param>
+        /// <param name="Move_A">自作関数Aを呼び出す場合の処理</param>
+        /// <param name="Move_B">自作関数Bを呼び出す場合の処理</param>
+        /// <param name="i"></param>
+        /// <returns></returns>
+        public (List<int[]>, int a) ForLoop(List<int[]> move, List<string> Move_Input, List<int[]> Move_A, List<int[]> Move_B, int i)     //for文処理
+        {
+            int trial;                                                                                                //反復回数
+            int Now;                                                                                                  //入力したListのうち何番目の処理か
+            //List<int[]> Return_List = new List<int[]>();                                                              //出力の配列(動きを[x,y]として保存)
+            int Return_Num = i;                                                                                       //何番目までfor文処理が続いているか
+            if (Move_Input[i].StartsWith("反復魔法("))
+            {
+                trial = int.Parse(Regex.Replace(Move_Input[i], @"[^0-9]", ""));                                       //処理回数をtrialに設定
+                for (int j = 0; j < trial; j++)
+                {
+                    Now = i + 1;                                                                                          //for文の処理内容はi+1行目から
+                    while (true)
+                    {
+                        if (Now >= Move_Input.Count)                                                                 //for文の終わりが存在しない場合、エラー表示
+                        {
+                            MessageBox.Show("「反復魔法」と「反復魔法おわり」はセットで使ってください");
+                            isEndfor = false;
+                            return (move, i);
+                        }
+                        (move, Now) = ForLoop(move, Move_Input, Move_A, Move_B, Now);                                  //二重ループの探索
+                        if (Move_Input[Now] == "反復魔法終わり") break;                                                       //for文終わりが存在したら処理終了
+                        else
+                        {
+                            if (Move_Input[Now] == "A") move.AddRange(Move_A);                            //Aの魔法が入力されている場合、Aの処理内容をListに追加
+                            else if (Move_Input[Now] == "B") move.AddRange(Move_B);                        //Bの魔法の際も同様                     
+                            else MoveTo(move, Move_Input[Now]);                                        //動く方向が指定されている場合、その方向への動きをListに追加
+                            Now++;
+                        }
+                    }
+                    Return_Num = Now;
+                }
+            }
+            return (move, Return_Num);                                                                          //動きの内容(List)とどこまで処理したかを返却
+        }
+
+        /// <summary>
+        /// 実際にユーザーの入力を読み取り、動きのListを作成
+        /// </summary>
+        /// <returns></returns>
         public List<int[]> Movement()      //動作の関数
         {
             var Move_A = new List<int[]>();                                                           //Aでの動きを保存
@@ -1008,8 +872,8 @@ namespace unilab2024
             int loop_count = 0;
             while (Move_A_List.Count <= 30 || Move_B_List.Count <= 30)
             {
-                Move_A_List = Func.MakeMoveList(Get_Input_A, Get_Input_B, Move_A_List);
-                Move_B_List = Func.MakeMoveList(Get_Input_A, Get_Input_B, Move_B_List);
+                Move_A_List = MakeMoveList(Get_Input_A, Get_Input_B, Move_A_List);
+                Move_B_List = MakeMoveList(Get_Input_A, Get_Input_B, Move_B_List);
                 /*var get_move_a_list_copy = new List<string>(Move_A_List);
                 var get_move_b_list_copy = new List<string>(Move_B_List);
                 Move_A_List.Clear();
@@ -1067,7 +931,7 @@ namespace unilab2024
 
                 for (int i = 0; i < Move_A_List.Count; i++)
                 {
-                    (Move_A, i) = Func.ForLoop(Move_A,Move_A_List,Move_A,Move_B, i);
+                    (Move_A, i) = ForLoop(Move_A,Move_A_List,Move_A,Move_B, i);
                     #region 削除候補
                     //if (get_move_a_list[i].StartsWith("for"))
                     //{
@@ -1165,7 +1029,7 @@ namespace unilab2024
                     //    }
                     //}
                     #endregion
-                    Func.Move(Move_A, Get_Input_A[i]);
+                    MoveTo(Move_A, Get_Input_A[i]);
                 }
             }
 
@@ -1175,7 +1039,7 @@ namespace unilab2024
 
                 for (int i = 0; i < Move_B_List.Count; i++)
                 {
-                    (Move_B, i) = Func.ForLoop(Move_B,Move_B_List, Move_A, Move_B, i);
+                    (Move_B, i) = ForLoop(Move_B,Move_B_List, Move_A, Move_B, i);
                     #region 削除候補
                     //if (get_move_b_list[i].StartsWith("for"))
                     //{
@@ -1284,7 +1148,7 @@ namespace unilab2024
                     //    }
                     //}
                     #endregion
-                    Func.Move(Move_B, Get_Input_B[i]);
+                    MoveTo(Move_B, Get_Input_B[i]);
                 }
             }
 
@@ -1297,7 +1161,7 @@ namespace unilab2024
             {
                 for (int i = 0; i < Move_Main_List.Count; i++)
                 {
-                    (move, i) = Func.ForLoop(move,Move_Main_List,Move_A,Move_B, i);
+                    (move, i) = ForLoop(move,Move_Main_List,Move_A,Move_B, i);
                     #region 削除候補
                     //if (get_move_main[i].StartsWith("for"))
                     //{
@@ -1433,81 +1297,20 @@ namespace unilab2024
                     #endregion
                     if (Move_Main_List[i] == "A") move.AddRange(Move_A);
                     else if(Move_Main_List[i] == "B") move.AddRange(Move_B);
-                    else Func.Move(move, Move_Main_List[i]);
+                    else MoveTo(move, Move_Main_List[i]);
                 }
             }
             return move;
         }
 
-        /*public string[] exchange_move(string[] get_move)     //矢印変換→もっと削減できそう
-        {    
-            List<string> newget_move = get_move.ToList();
-            for (int i = 0; i < get_move.Length; i++)
-            {
-                if (newget_move[i].StartsWith("反復魔法 ("))
-                {
-                    string str_num = Regex.Replace(newget_move[i], @"[^0-9]", "");
-                    int num = int.Parse(str_num);
-                    newget_move[i] = "for (" + (num % 10).ToString() + ")";
-                    continue;
-                }
-                if (newget_move[i].StartsWith("反復魔法おわり"))
-                {
-                    newget_move[i] = "endfor";
-                    continue;
-                }
-
-                switch (newget_move[i])
-                {
-                    case "↑":
-                        newget_move[i] = "0";
-                        break;
-                    case "→":
-                        newget_move[i] = "1";
-                        break;
-                    case "↓":
-                        newget_move[i] = "2";
-                        break;
-                    case "←":
-                        newget_move[i] = "3";
-                        break;
-                    case "Aの術":
-                        newget_move[i] = "A";
-                        break;
-                    case "Bの術":
-                        newget_move[i] = "B";
-                        break;
-                    default:
-                        break;
-                }
-                if (newget_move[i] == "↑")
-                {
-                    newget_move[i] = "0";          // up → 0と変換
-                }
-                if (newget_move[i] == "→")
-                {
-                    newget_move[i] = "1";          // right → 1と変換
-                }
-                if (newget_move[i] == "↓")
-                {
-                    newget_move[i] = "2";          // down → 2と変換
-                }
-                if (newget_move[i] == "←")
-                {
-                    newget_move[i] = "3";          // left → 3と変換
-                }
-                if (newget_move[i] == "Aの術")
-                {
-                    newget_move[i] = "A";
-                }
-                if (newget_move[i] == "Bの術")
-                {
-                    newget_move[i] = "B";
-                }
-            }
-            return newget_move.ToArray();
-        }*/
-
+        /// <summary>
+        /// 動いた先の衝突検知(入れない部分に侵入した場合)
+        /// </summary>
+        /// <param name="x">現在位置x座標</param>
+        /// <param name="y">現在位置y座標</param>
+        /// <param name="Map">ステージのマップ情報</param>
+        /// <param name="move">動いた先の座標</param>
+        /// <returns></returns>
         public bool Colision_detection(int x, int y, int[,] Map, List<int[]> move)
         {
             int max_x = Map.GetLength(0);
@@ -1525,7 +1328,17 @@ namespace unilab2024
             }
         }
 
-        Image Ninja_Image(int x, int y, int steps, bool jump, Image Chara)  //動きにあわせてキャラの画像を返す
+        /// <summary>
+        /// 動きに応じたキャラクターの画像を表示
+        /// </summary>
+        /// <param name="x">動きのx方向</param>
+        /// <param name="y">動きのy方向</param>
+        /// <param name="steps">歩きの差分(右足→左足)</param>
+        /// <param name="jump">飛んでいる場合</param>
+        /// <param name="Chara">出力画像へのポインタ</param>
+        /// <returns></returns>
+
+        Image Character_Image(int x, int y, int steps, bool jump, Image Chara) 
         {
             int a = steps % 2;//歩き差分を識別
             int direction = x * 10 + y;
@@ -1580,11 +1393,18 @@ namespace unilab2024
             return Chara;
         }
 
+        /// <summary>
+        /// 動く際の描画や処理を行う関数
+        /// </summary>
+        /// <param name="x">現在地のx座標</param>
+        /// <param name="y">現在地のy座標</param>
+        /// <param name="Map">ステージのマップ情報</param>
+        /// <param name="move">動きのリスト</param>
         public void SquareMovement(int x, int y, int[,] Map, List<int[]> move)
         {
             Graphics g2 = Graphics.FromImage(bmp2);
             //cell_length = pictureBox1.Width / 12;
-            if (move.Count == 0)
+            if (move.Count == 0) //ゴールについていない場合(入力がない)場合のエラー処理
             {
                 resetStage("miss_end");
                 return;
@@ -1616,7 +1436,7 @@ namespace unilab2024
             (int,int) draw_move(int a,int b,ref List<int[]> move_next)
             {
                 (x_now, y_now) = place_update(a, b, move_next);
-                character_me = Ninja_Image(move_copy[0][0], move_copy[0][1], count_walk, jump, character_me);
+                character_me = Character_Image(move_copy[0][0], move_copy[0][1], count_walk, jump, character_me);
                 DrawCharacter(x_now, y_now, ref character_me);
                 this.Invoke((MethodInvoker)delegate
                 {
@@ -1861,132 +1681,6 @@ namespace unilab2024
         }
         #endregion
     }
-    #region Stage用関数
-    public static partial class Func
-    {
-        public static void ResetListBox(ListBox listbox)   //ListBoxの中身消去
-        {
-            if (listbox.SelectedIndex > -1)
-            {
-                listbox.Items.RemoveAt(listbox.SelectedIndex);
-            }
-            else
-            {
-                listbox.Items.Clear();
-            }
-        }
-
-        public static void ForLoopCount(ListBox listbox)                                 //for文回数読み込み処理
-        {
-            if (listbox.SelectedItem != null)                                            //ListBoxに入力が存在する場合                 
-            {
-                string command = listbox.SelectedItem.ToString();                        //文字として認識
-
-                if (command == "反復魔法おわり")
-                {
-                    return;
-                }
-                if (command.StartsWith("反復魔法"))
-                {
-                    string trial_str = Regex.Replace(command, @"[^0-9]", "");              //試行回数を抽出(string)
-                    int trial = int.Parse(trial_str);                                      //試行回数をintに変換
-
-                    int id = listbox.SelectedIndex;
-                    listbox.Items[id] = "反復魔法 (" + (trial % 9 + 1).ToString() + ")";   //for文として表示
-
-                    listbox.Refresh();
-                }
-            }
-        }
-
-        public static void Move(List<int[]> movelist, string direction)    //指定方向に移動する関数
-        {
-            int Direction_Index = 0;
-            switch (direction)
-            {
-                case "↑":
-                    Direction_Index = 0;
-                    break;
-                case "→":
-                    Direction_Index = 1;
-                    break;
-                case "↓":
-                    Direction_Index = 2;
-                    break;
-                case "←":
-                    Direction_Index = 3;
-                    break;
-                default:
-                    break;
-            }
-            int[][] move = new int[4][];       // up,right.down,leftの順
-            move[0] = new int[] { 0, -1 };     //up
-            move[1] = new int[] { 1, 0 };      //right
-            move[2] = new int[] { 0, 1 };      //down 
-            move[3] = new int[] { -1, 0 };     //left
-            movelist.Add(move[Direction_Index]);
-        }
-
-        public static List<string> MakeMoveList(string[] A, string[] B, List<string> Move_Input)     //入力A・B(Move_Input)が再起の場合の処理
-        {
-            List<string> Return_List = new List<string>();          //戻り値用のList
-            for (int i = 0; i < Move_Input.Count; i++)　　　　　　　//A・Bの中身だけ探索
-            {
-
-                if (Move_Input[i] == "B")
-                {
-                    Return_List.AddRange(B);                        //Bが含まれていたらBの操作を追加
-
-                }
-                else if (Move_Input[i] == "A")
-                {
-                    Return_List.AddRange(A);                        //Aが含まれていたらAの操作を追加
-
-                }
-                else
-                {
-                    Return_List.Add(Move_Input[i]);                 //そのまま追加
-                }
-            }
-            return Return_List;
-        }
-
-        public static (List<int[]>, int a) ForLoop(List<int[]> move, List<string> Move_Input, List<int[]> Move_A, List<int[]> Move_B, int i)     //for文処理
-        {
-            int trial;                                                                                                //反復回数
-            int Now;                                                                                                  //入力したListのうち何番目の処理か
-            //List<int[]> Return_List = new List<int[]>();                                                              //出力の配列(動きを[x,y]として保存)
-            int Return_Num = i;                                                                                       //何番目までfor文処理が続いているか
-            if (Move_Input[i].StartsWith("反復魔法("))
-            {
-                trial = int.Parse(Regex.Replace(Move_Input[i], @"[^0-9]", ""));                                       //処理回数をtrialに設定
-                for (int j = 0; j < trial; j++)
-                {
-                    Now = i + 1;                                                                                          //for文の処理内容はi+1行目から
-                    while (true)
-                    {
-                        if (Now >= Move_Input.Count)                                                                 //for文の終わりが存在しない場合、エラー表示
-                        {
-                            MessageBox.Show("「反復魔法」と「反復魔法おわり」はセットで使ってください");
-                            return (move, i);
-                        }
-                        (move, Now) = ForLoop(move, Move_Input, Move_A, Move_B, Now);                                  //二重ループの探索
-                        if (Move_Input[Now] == "反復魔法終わり") break;                                                       //for文終わりが存在したら処理終了
-                        else
-                        {
-                            if (Move_Input[Now] == "A") move.AddRange(Move_A);                            //Aの魔法が入力されている場合、Aの処理内容をListに追加
-                            else if (Move_Input[Now] == "B") move.AddRange(Move_B);                        //Bの魔法の際も同様                     
-                            else Func.Move(move, Move_Input[Now]);                                        //動く方向が指定されている場合、その方向への動きをListに追加
-                            Now++;
-                        }
-                    }
-                    Return_Num = Now;
-                }
-            }
-            return (move, Return_Num);                                                                          //動きの内容(List)とどこまで処理したかを返却
-        }
-    }
-    #endregion
     #region カスタム設定
     public class UIButtonObject : UserControl
     {
