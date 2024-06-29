@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.labelWorld = new System.Windows.Forms.Label();
-            this.buttonToMap = new System.Windows.Forms.Button();
-            this.button_Stage1 = new System.Windows.Forms.Button();
-            this.button_Stage2 = new System.Windows.Forms.Button();
-            this.button_Stage3 = new System.Windows.Forms.Button();
+            this.buttonToMap = new CustomButton();
+            this.button_Stage1 = new CustomButton();
+            this.button_Stage2 = new CustomButton();
+            this.button_Stage3 = new CustomButton();
             this.SuspendLayout();
             // 
             // labelWorld
@@ -55,7 +55,7 @@
             this.buttonToMap.Name = "buttonToMap";
             this.buttonToMap.Size = new System.Drawing.Size(160, 50);
             this.buttonToMap.TabIndex = 1;
-            this.buttonToMap.Text = "学年選択に戻る";
+            this.buttonToMap.Text = "マップにもどる";
             this.buttonToMap.UseVisualStyleBackColor = false;
             this.buttonToMap.Click += new System.EventHandler(this.buttonToMap_Click);
             // 
@@ -69,7 +69,7 @@
             this.button_Stage1.TabIndex = 3;
             this.button_Stage1.Text = "レベル1";
             this.button_Stage1.UseVisualStyleBackColor = true;
-            this.button_Stage1.Click += new System.EventHandler(this.button_Stage1_Click);
+            this.button_Stage1.Click += new System.EventHandler(this.button_StageI_Click);
             // 
             // button_Stage2
             // 
@@ -81,7 +81,7 @@
             this.button_Stage2.TabIndex = 4;
             this.button_Stage2.Text = "レベル2";
             this.button_Stage2.UseVisualStyleBackColor = true;
-            this.button_Stage2.Click += new System.EventHandler(this.button_Stage2_Click);
+            this.button_Stage2.Click += new System.EventHandler(this.button_StageI_Click);
             // 
             // button_Stage3
             // 
@@ -93,7 +93,7 @@
             this.button_Stage3.TabIndex = 5;
             this.button_Stage3.Text = "レベル3";
             this.button_Stage3.UseVisualStyleBackColor = true;
-            this.button_Stage3.Click += new System.EventHandler(this.button_Stage3_Click);
+            this.button_Stage3.Click += new System.EventHandler(this.button_StageI_Click);
             // 
             // StageSelect
             // 
@@ -117,9 +117,9 @@
         #endregion
 
         private System.Windows.Forms.Label labelWorld;
-        private System.Windows.Forms.Button buttonToMap;
-        private System.Windows.Forms.Button button_Stage1;
-        private System.Windows.Forms.Button button_Stage2;
-        private System.Windows.Forms.Button button_Stage3;
+        private CustomButton buttonToMap;
+        private CustomButton button_Stage1;
+        private CustomButton button_Stage2;
+        private CustomButton button_Stage3;
     }
 }

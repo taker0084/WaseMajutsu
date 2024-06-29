@@ -12,81 +12,83 @@ namespace unilab2024
 {
     public partial class WorldMap : Form
     {
-        #region ボタンの定義
-        CustomButton buttonToAnotherWorld;
+        #region キー入力の設定等
+        private bool IsButtonToAnotherWorldEnabled;
         public WorldMap()
         {
             InitializeComponent();
-            this.KeyDown += new KeyEventHandler(Prologue_KeyDown);
+            this.KeyDown += new KeyEventHandler(WorldMap_KeyDown);
             this.KeyPreview = true;
-
-            buttonToAnotherWorld = new CustomButton
-            {
-                Size = new Size(200, 60),
-                Location = new Point(1189, 537),
-                BackColor = Color.Gray,
-                ForeColor = Color.White,
-                Text = "外の世界へ",
-                Font = new Font("游ゴシック", 21.75f, FontStyle.Bold),
-                //ForeImage = Dictionaries.Img_Button["Lock"],
-                Cursor = Cursors.No
-            };
-
-            buttonToAnotherWorld.Click += new EventHandler(this.buttonToAnotherWorld_Click);
-
-            this.Controls.Add(buttonToAnotherWorld);
-            buttonToAnotherWorld.BringToFront();
         }
         #endregion
 
         #region 読み込み時
         private void WorldMap_Load(object sender, EventArgs e)
         {
-            if (ClearCheck.IsCleared[3, 1])
+            // buttonに対する処理
+            foreach (Control control in this.Controls)
             {
-                buttonToAnotherWorld.ForeImage = null;
-                buttonToAnotherWorld.Cursor = Cursors.Hand;
-                buttonToAnotherWorld.Enabled = true;
-            }
-            else
-            {
-                buttonToAnotherWorld.ForeImage = Dictionaries.Img_Button["Lock"];
-                buttonToAnotherWorld.Cursor = Cursors.No;
-                buttonToAnotherWorld.Enabled = false;
-                //Enable = falseにするとCursors.Noの設定が意味をなさないっぽい。ボタン押したときの処理変えるのはあり
+                if (control is CustomButton button)
+                {
+                    string NameWithoutButton = button.Name.Replace("button","");
+                    if (int.TryParse(NameWithoutButton, out int i))
+                    {
+                        if (ClearCheck.IsButtonEnabled[i, 0])
+                        {
+                            button.ForeImage = null;
+                            button.Cursor = Cursors.Hand;
+                        }
+                        else
+                        {
+                            button.ForeImage = Dictionaries.Img_Button["Lock"];
+                            button.Cursor = Cursors.No;
+                        }
+                    }
+                    else if(NameWithoutButton == "ToAnotherWorld")
+                    {
+                        if (ClearCheck.IsCleared[4, 0])
+                        {
+                            button.ForeImage = null;
+                            button.Cursor = Cursors.Hand;
+                            IsButtonToAnotherWorldEnabled = true;
+                        }
+                        else
+                        {
+                            button.ForeImage = Dictionaries.Img_Button["Lock"];
+                            button.Cursor = Cursors.No;
+                            IsButtonToAnotherWorldEnabled = false;
+                        }
+                    }
+                }
             }
         }
         #endregion
 
-        #region StageSelectフォームの呼び出し
-        private void button1_Click(object sender, EventArgs e)
-        {
-            Func.CreateStageSelect(this, button1.Text,1);
-        }
+        #region button押下後の処理
 
-        private void button2_Click(object sender, EventArgs e)
+        private void buttonI_Click(object sender, EventArgs e)
         {
-            Func.CreateStageSelect(this, button2.Text,2);
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            Func.CreateStageSelect(this, button3.Text,3);
-        }
-
-        private void button4_Click(object sender, EventArgs e)
-        {
-            Func.CreateStageSelect(this, button4.Text,4);
+            CustomButton button = sender as CustomButton;
+            if (button != null)
+            {
+                string NameWithoutButton = button.Name.Replace("button", "");
+                if (int.TryParse(NameWithoutButton, out int i))
+                {
+                    if (!ClearCheck.IsButtonEnabled[i, 0]) return;
+                    Func.CreateStageSelect(this, button.Text, i);
+                }
+            }
         }
 
         private void buttonToAnotherWorld_Click(object sender, EventArgs e)
         {
+            if (!IsButtonToAnotherWorldEnabled) return;
             Func.CreateAnotherWorld(this);
         }
         #endregion
 
         #region クリアチェックスキップ用
-        private void Prologue_KeyDown(object sender, KeyEventArgs e)
+        private void WorldMap_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.M)
             {
@@ -95,8 +97,10 @@ namespace unilab2024
                     for (int j = 0; j < (int)ConstNum.numStages; j++)
                     {
                         ClearCheck.IsCleared[i, j] = true;
+                        ClearCheck.IsButtonEnabled[i, j] = true;
                     }
                 }
+                
                 Func.CreateWorldMap(this);
             }
         }

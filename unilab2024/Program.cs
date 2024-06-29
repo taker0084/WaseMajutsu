@@ -26,7 +26,7 @@ namespace unilab2024
             Func.LoadImg_Object();
             Func.LoadImg_Button();
             //Func.LoadImg_Background();//これ入れたらメモリが足りなくて動かなかった
-            Func.InitializeIsCleared();
+            Func.InitializeClearCheck();
 
             Application.Run(new Title());
         }
@@ -193,25 +193,34 @@ namespace unilab2024
     #region 進行状況管理
     public enum ConstNum
     {
-        numWorlds = 7,
-        numStages = 3
+        numWorlds = 7+1,
+        numStages = 3+1
     }
     public partial class ClearCheck
     {
+        //クリアチェック配列
+        //0番目はそのWorldのレベル3つをすべてクリアしたらtrueにする。
         public static bool[,] IsCleared = new bool[(int)ConstNum.numWorlds, (int)ConstNum.numStages];
+
+        //ボタン管理配列
+        //0番目はWorldMapでそのボタンを押せるかどうか（押せる場合true）
+        public static bool[,] IsButtonEnabled = new bool[(int)ConstNum.numWorlds, (int)ConstNum.numStages];
     }
 
     public partial class Func
     {
-        public static void InitializeIsCleared()    //Main関数で呼び出す
+        public static void InitializeClearCheck()    //Main関数で呼び出す
         {
             for (int i = 0; i < (int)ConstNum.numWorlds; i++)
             {
                 for(int j = 0; j < (int)ConstNum.numStages; j++)
                 {
                     ClearCheck.IsCleared[i, j] = false;
+                    ClearCheck.IsButtonEnabled[i, j] = false;
                 }
             }
+            ClearCheck.IsButtonEnabled[1, 0] = true;
+            ClearCheck.IsButtonEnabled[1, 1] = true;
         }
     }
     #endregion

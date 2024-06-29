@@ -480,6 +480,32 @@ namespace unilab2024
                 //pictureBox6.Visible = false;
                 //pictureBox7.Visible = false;
                 ClearCheck.IsCleared[_worldNumber, _level] = true;    //クリア状況管理
+                if (_level == 3)
+                {
+                    ClearCheck.IsCleared[_worldNumber,0] = true;
+                    switch (_worldNumber)
+                    {
+                        case 1:
+                        case 2:
+                        case 3:
+                            ClearCheck.IsButtonEnabled[_worldNumber + 1, 0] = true;
+                            ClearCheck.IsButtonEnabled[_worldNumber + 1, 1] = true;
+                            break;
+                        case 4:
+                            for (int i = _worldNumber + 1; i < (int)ConstNum.numWorlds; i++)
+                            {
+                                for (int j = 0; j <= 1; j++)
+                                {
+                                    ClearCheck.IsButtonEnabled[i, j] = true;
+                                }
+                            }
+                            break;
+                    }
+                }
+                else
+                {
+                    ClearCheck.IsButtonEnabled[_worldNumber, _level + 1] = true;
+                }
             }
             //else
             //{
