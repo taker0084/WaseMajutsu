@@ -12,10 +12,14 @@ namespace unilab2024
 {
     public partial class StageSelect : Form
     {
+        #region キー入力の設定等
         public StageSelect()
         {
             InitializeComponent();
+            this.KeyDown += new KeyEventHandler(WorldMap_KeyDown);
+            this.KeyPreview = true;
         }
+        #endregion
 
         #region 各種メンバ変数の定義
         private string _worldName;  //WorldMapで選択された学年
@@ -36,30 +40,85 @@ namespace unilab2024
         }
         #endregion
 
+        #region 読み込み時
         private void StageSelect_Load(object sender, EventArgs e)
         {
             labelWorld.Text = _worldName;   //学年表示の書き換え
+            // buttonに対する処理
+            foreach (Control control in this.Controls)
+            {
+                if (control is CustomButton button)
+                {
+                    string NameWithoutButton = button.Name.Replace("button_Stage", "");
+                    if (int.TryParse(NameWithoutButton, out int j))
+                    {
+                        if (ClearCheck.IsButtonEnabled[_worldNumber, j])
+                        {
+                            button.ForeImage = null;
+                            button.Cursor = Cursors.Hand;
+                        }
+                        else
+                        {
+                            button.ForeImage = Dictionaries.Img_Button["Lock"];
+                            button.Cursor = Cursors.No;
+                        }
+                    }
+                }
+            }
         }
+        #endregion
 
         #region 各種ボタン押下後の処理
+        private void button_StageI_Click(object sender, EventArgs e)
+        {
+            CustomButton button = sender as CustomButton;
+            if (button != null)
+            {
+                string NameWithoutButton = button.Name.Replace("button_Stage", "");
+                if (int.TryParse(NameWithoutButton, out int j))
+                {
+                    if (!ClearCheck.IsButtonEnabled[_worldNumber, j]) return;
+                    Func.CreateStage(this, _worldName, _worldNumber, j);
+                }
+            }
+        }
         private void buttonToMap_Click(object sender, EventArgs e)
         {
-            Func.CreateWorldMap(this);
+            if (_worldNumber <= 4) Func.CreateWorldMap(this);
+            else Func.CreateAnotherWorld(this);
         }
+        #endregion
 
-        private void button_Stage1_Click(object sender, EventArgs e)
+        #region クリアチェックスキップ用
+        private void WorldMap_KeyDown(object sender, KeyEventArgs e)
         {
-            Func.CreateStage(this, _worldName, _worldNumber, 1);
-        }
+            if (e.KeyCode == Keys.M)
+            {
+                
+                for (int j = 0; j < (int)ConstNum.numStages; j++)
+                {
+                    ClearCheck.IsCleared[_worldNumber, j] = true;
+                    ClearCheck.IsButtonEnabled[_worldNumber, j] = true;
+                }
+                if (_worldNumber < 4)
+                {
+                    ClearCheck.IsButtonEnabled[_worldNumber + 1, 0] = true;
+                    ClearCheck.IsButtonEnabled[_worldNumber + 1, 1] = true;
+                }
+                else if( _worldNumber == 4)
+                {
+                    ClearCheck.IsCleared[4,0] = true;
+                    for (int i = 5; i < (int)ConstNum.numWorlds; i++)
+                    {
+                        for(int j = 0; j <= 1; j++)
+                        {
+                            ClearCheck.IsButtonEnabled[i, j] = true;
+                        }
+                    }
+                }
 
-        private void button_Stage2_Click(object sender, EventArgs e)
-        {
-            Func.CreateStage(this, _worldName, _worldNumber, 2);
-        }
-
-        private void button_Stage3_Click(object sender, EventArgs e)
-        {
-            Func.CreateStage(this, _worldName, _worldNumber, 3);
+                Func.CreateStageSelect(this,_worldName, _worldNumber);
+            }
         }
         #endregion
     }
