@@ -25,7 +25,7 @@ namespace unilab2024
             Func.LoadImg_DotPic();
             Func.LoadImg_Object();
             Func.LoadImg_Button();
-            //Func.LoadImg_Background();//これ入れたらメモリが足りなくて動かなかった
+            //Func.LoadImg_Background();
             Func.InitializeClearCheck();
 
             Application.Run(new Title());
@@ -85,7 +85,7 @@ namespace unilab2024
         {
             List<Conversation> Conversations = new List<Conversation>();
 
-            using (StreamReader sr = new StreamReader($"{ConvFileName}"))
+            using (StreamReader sr = new StreamReader($"Story\\{ConvFileName}"))
             {
                 bool isFirstRow = true;
 
@@ -105,6 +105,46 @@ namespace unilab2024
             }
 
             return Conversations;
+        }
+
+        public static (List<Conversation>,List<Conversation>) LoadStories(string ConvFileName)
+        {
+            List<Conversation> StartConv = new List<Conversation>();
+            List<Conversation> EndConv = new List<Conversation>();
+
+            using (StreamReader sr = new StreamReader($"Story\\{ConvFileName}"))
+            {
+                bool isFirstRow = true;
+                bool isBeforePlay = true;
+
+                while (!sr.EndOfStream)
+                {
+                    string line = sr.ReadLine();
+                    string[] values = line.Split(',');
+
+                    if (isFirstRow) //escape 1st row
+                    {
+                        isFirstRow = false;
+                        continue;
+                    }
+                    if (values[1] == "play")
+                    {
+                        isBeforePlay = false;
+                        continue;
+                    }
+
+                    if (isBeforePlay)
+                    {
+                        StartConv.Add(new Conversation(values[0], values[1], values[2]));
+                    }
+                    else
+                    {
+                        EndConv.Add(new Conversation(values[0], values[1], values[2]));
+                    }
+                }
+            }
+
+            return (StartConv, EndConv);
         }
     } 
     public struct Conversation
@@ -141,7 +181,9 @@ namespace unilab2024
         //読み込みはProgram.csのMain関数内で行っている。以下の関数は他のFormで呼び出す必要はない。
         public static void LoadImg_Character()
         {
-            string[] files = Directory.GetFiles(Directory.GetCurrentDirectory(), "Img_Character_*.png");
+            string currentDirectory = Directory.GetCurrentDirectory();
+            string imgDirectory = Path.Combine(currentDirectory, "Image");
+            string[] files = Directory.GetFiles(imgDirectory, "Img_Character_*.png");
             foreach (string file in files)
             {
                 string key = Path.GetFileNameWithoutExtension(file).Replace("Img_Character_","");
@@ -151,7 +193,9 @@ namespace unilab2024
 
         public static void LoadImg_DotPic()
         {
-            string[] files = Directory.GetFiles(Directory.GetCurrentDirectory(), "Img_DotPic_*.png");
+            string currentDirectory = Directory.GetCurrentDirectory();
+            string imgDirectory = Path.Combine(currentDirectory, "Image");
+            string[] files = Directory.GetFiles(imgDirectory, "Img_DotPic_*.png");
             foreach (string file in files)
             {
                 string key = Path.GetFileNameWithoutExtension(file).Replace("Img_DotPic_", "");
@@ -170,7 +214,9 @@ namespace unilab2024
 
         public static void LoadImg_Button()
         {
-            string[] files = Directory.GetFiles(Directory.GetCurrentDirectory(), "Img_Button_*.png");
+            string currentDirectory = Directory.GetCurrentDirectory();
+            string imgDirectory = Path.Combine(currentDirectory, "Image");
+            string[] files = Directory.GetFiles(imgDirectory, "Img_Button_*.png");
             foreach (string file in files)
             {
                 string key = Path.GetFileNameWithoutExtension(file).Replace("Img_Button_", "");
@@ -180,13 +226,22 @@ namespace unilab2024
 
         public static void LoadImg_Background()
         {
-            string[] files = Directory.GetFiles(Directory.GetCurrentDirectory(), "Img_Background_*.png");
+            string currentDirectory = Directory.GetCurrentDirectory();
+            string imgDirectory = Path.Combine(currentDirectory, "Image");
+            string[] files = Directory.GetFiles(imgDirectory, "Img_Background_*.png");
             foreach (string file in files)
             {
                 string key = Path.GetFileNameWithoutExtension(file).Replace("Img_Background_", "");
                 Dictionaries.Img_Background[key] = Image.FromFile(file);
             }
         }
+    }
+    #endregion
+
+    #region キャラ選択結果
+    public partial class MainCharacter
+    {
+        public static bool isBoy = true;
     }
     #endregion
 

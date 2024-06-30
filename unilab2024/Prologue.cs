@@ -38,7 +38,7 @@ namespace unilab2024
             buttonToMap.Visible = false;
             buttonToMap.Enabled = false;
 
-            Conversations = Func.LoadConversations("Conv_Story_Chapter0.csv");
+            Conversations = Func.LoadConversations("Story_Chapter0.csv");
             drawConversations();
         }
         #endregion

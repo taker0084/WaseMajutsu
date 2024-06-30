@@ -47,11 +47,11 @@ namespace unilab2024
 
             bmp1 = new Bitmap(pictureBox1.Width, pictureBox1.Height);
             bmp2 = new Bitmap(pictureBox2.Width, pictureBox2.Height);
-            bmp3 = new Bitmap(pictureBox3.Width, pictureBox3.Height);
+            bmpConv = new Bitmap(pictureBoxConv.Width, pictureBoxConv.Height);
             //bmp4 = new Bitmap(pictureBox4.Width, pictureBox4.Height);
             pictureBox1.Image = bmp1;
             pictureBox2.Image = bmp2;
-            pictureBox3.Image = bmp3;
+            pictureBoxConv.Image = bmpConv;
             //pictureBox4.Image = bmp4;
             //this.Load += Stage_Load;
         }
@@ -83,7 +83,7 @@ namespace unilab2024
 
         #region グローバル変数定義
         //ここに必要なBitmapやImageを作っていく
-        Bitmap bmp1, bmp2, bmp3, bmp4;
+        Bitmap bmp1, bmp2, bmpConv, bmp4;
 
         Brush goalBackgroundColor = new SolidBrush(Color.Yellow);
         Brush startBackgroundColor = new SolidBrush(Color.Blue);
@@ -121,7 +121,11 @@ namespace unilab2024
         public static string grade;    //学年
         public static int gradenum;
 
-        public static List<Conversation> Conversations = new List<Conversation>();  //会話文を入れるリスト
+        //public static List<Conversation> Conversations = new List<Conversation>();  //会話文を入れるリスト
+        List<Conversation> StartConv; 
+        List<Conversation> EndConv;
+        bool isStartConv;
+        int convIndex;
         public Graphics g1;
         public Graphics g2;
         #endregion
@@ -135,11 +139,7 @@ namespace unilab2024
             map = CreateStage(stageName); //ステージ作成
 
             grade = Regex.Replace(stageName, @"[^0-9]", "");
-            int chapter_num = int.Parse(grade) / 10;
-
-            string file_name = "わせマジ" + grade.ToString() + "章.csv";
-
-            //Global.Conversations = LoadConversation(file_name); //会話読み込み
+            int chapter_num = int.Parse(grade) / 10;        
 
             #region リストボックス・ボタンの設定
             // 1行文の高さ
@@ -282,6 +282,15 @@ namespace unilab2024
             label_Result.Visible = false;
             //drawConversation();
             #endregion
+
+            string convFileName = "Story_Chapter" + _worldNumber + "-" + _level + ".csv";
+            (StartConv, EndConv) = Func.LoadStories(convFileName); //会話読み込み
+            pictureBoxConv.Visible = true;
+            pictureBoxConv.Enabled = true;
+            pictureBoxConv.BringToFront();
+            convIndex = 0;
+            isStartConv = true;
+            drawConversations(isStartConv);
         }
 
         #region リセット関連
@@ -1706,7 +1715,109 @@ namespace unilab2024
             }
         }
         #endregion
+
+        #region 会話の表示（Form依存なのでこの位置）
+        private void drawConversations(bool isStart)
+        {
+            Graphics gConv = Graphics.FromImage(bmpConv);
+
+            //Pen pen = new Pen(Color.FromArgb(100, 255, 100), 2);
+            Font fnt_name = new Font("游ゴシック", 33, FontStyle.Bold);
+            Font fnt_dia = new Font("游ゴシック", 33);
+            Brush Color_BackConv = new SolidBrush(ColorTranslator.FromHtml("#f8e58c"));
+            Brush Color_BackName = new SolidBrush(ColorTranslator.FromHtml("#856859"));
+            int sp = 5;
+
+            int face = 300;
+            int name_x = 300;
+            int name_y = 60;
+
+            int dia_x = 1500;
+            int dia_y = 200;
+
+            int adjust_y = 0;
+
+            int lineHeight = fnt_dia.Height;
+
+            gConv.FillRectangle(Color_BackName, 15, adjust_y + face, name_x, name_y);
+            //g1.DrawRectangle(pen, 15, adjust_y + face, name_x, name_y);
+
+            gConv.FillRectangle(Color_BackConv, 15, adjust_y + face + name_y, dia_x, dia_y);
+            //g1.DrawRectangle(pen, 15, adjust_y + face + name_y, dia_x, dia_y);
+
+            List<Conversation> Conversations = new List<Conversation>();
+            if (isStart)
+            {
+                Conversations = StartConv;
+            }
+            else
+            {
+                Conversations = EndConv;
+            }
+
+            if (convIndex >= Conversations.Count)
+            {
+                pictureBoxConv.Visible = false;
+                pictureBoxConv.Enabled = false;
+                pictureBoxConv.SendToBack();
+                return;
+            }
+
+            string charaName = "";
+            if (Conversations[convIndex].Character == "主人公")
+            {
+                if (MainCharacter.isBoy)
+                {
+                    charaName = "タロウ";
+                }
+                else
+                {
+                    charaName = "ハナコ";
+                }
+            }
+
+            gConv.DrawString(charaName, fnt_name, Brushes.White, 15 + sp, adjust_y + face + sp);
+
+            //改行の処理はこう書かないとうまくいかない
+            char[] lineBreak = new char[] { '\\' };
+            string[] DialogueLines = Conversations[convIndex].Dialogue.Replace("\\n", "\\").Split(lineBreak);
+            for (int i = 0; i < DialogueLines.Length; i++)
+            {
+                gConv.DrawString(DialogueLines[i], fnt_dia, Brushes.Black, 15 + sp, adjust_y + face + name_y + sp + i * lineHeight);
+            }
+
+            Image charaImage = null;
+            if (Conversations[convIndex].Img == "Main")
+            {
+                if (MainCharacter.isBoy)
+                {
+                    charaImage = Dictionaries.Img_Character["Boy"];
+                }
+                else
+                {
+                    charaImage = Dictionaries.Img_Character["Girl"];
+                }
+            }
+
+            gConv.DrawImage(charaImage, 15, adjust_y, face, face);
+
+            pictureBoxConv.Image = bmpConv;
+            gConv.Dispose();
+
+            if (convIndex < Conversations.Count)
+            {
+                convIndex++;
+            }
+           
+        }
+
+        private void pictureBoxConv_Click(object sender, EventArgs e)
+        {
+            drawConversations(isStartConv);
+        }
+        #endregion
     }
+
     #region カスタム設定
     public class UIButtonObject : UserControl
     {
