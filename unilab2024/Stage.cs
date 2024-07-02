@@ -1798,6 +1798,10 @@ namespace unilab2024
                     charaImage = Dictionaries.Img_Character["Girl"];
                 }
             }
+            else
+            {
+                charaImage = Dictionaries.Img_Character[Conversations[convIndex].Img];
+            }
 
             gConv.DrawImage(charaImage, 15, adjust_y, face, face);
 
