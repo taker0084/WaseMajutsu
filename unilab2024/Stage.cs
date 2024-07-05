@@ -90,6 +90,11 @@ namespace unilab2024
 
         Image character_me = Dictionaries.Img_DotPic["魔法使いサンプル"];
 
+        public static List<ListBox> ListBoxes = new List<ListBox>();
+        public static List<ComboBox> ComboBoxes = new List<ComboBox>();
+        public static ListBox ChooseListbox;  //1画面表示の時のリストボックス
+        public static ListBox ChooseListbox2; //2画面表示の時のリストボックス
+        public static ListBox InputListBox;   //入力先のリストボックス
         public static int[,] map = new int[12, 12]; //map情報
         public static int x_start; //スタート位置ｘ
         public static int y_start; //スタート位置ｙ
@@ -152,9 +157,9 @@ namespace unilab2024
             int element_height = listBox_Input.ItemHeight;
 
             // それぞれの枠の高さ
-            int height_LB_Input = 5;
-            int height_LB_A = 5;
-            int height_LB_B = 5;
+            int height_LB_Input = 10;
+            int height_LB_A = 10;
+            int height_LB_B = 10;
 
             //using (StreamReader sr = new StreamReader($"stage_frame.csv"))
             //{
@@ -239,6 +244,13 @@ namespace unilab2024
             listBox_A.Height = element_height * height_LB_A;
             listBox_B.Height = element_height * height_LB_B;
 
+            ChooseListbox = listBox_Input;  //デフォルトで表示するリストボックス
+            ChooseListbox2 = listBox_A;
+            InputListBox = listBox_Input;
+            ShowListBox(ChooseListbox,ChooseListbox2);
+            ListBoxes.Add(listBox_Input);
+            ListBoxes.Add(listBox_A);
+            ListBoxes.Add(listBox_B);
             //ListBox1のイベントハンドラを追加
             //listBox_Input.SelectionMode = SelectionMode.One;
             //listBox_Input.DragEnter += new DragEventHandler(ListBox_DragEnter);
@@ -261,10 +273,10 @@ namespace unilab2024
             //    g3.Dispose();
 
             //チュートリアルステージでは、マップに戻るボタンを消す。ゴールしたら見える
-            //if (stageName == "stage1-1")
-            //{
-            //    button_ToMap.Visible = false;
-            //}
+            if (stageName == "stage1-1")
+            {
+                button_ToMap.Visible = false;
+            }
             ////for文をステージ1-1,1-2で消す
             //if (stageName == "stage1-1" || stageName == "stage1-2")
             //{
@@ -272,6 +284,19 @@ namespace unilab2024
             //    listBox_options.Items.Remove("連チャンの術おわり");
             //}
 
+            //ChooseInput.Items.Clear();
+            ComboBoxes.Add(comboBox_Select);
+            ComboBoxes.Add(comboBox_SecondSelect);
+            ComboBoxes.Add(comboBox_InputTo);
+            foreach (ComboBox combobox in ComboBoxes)
+            {
+                combobox.Items.Add("起動魔法");
+                combobox.Items.Add("Aの魔法");
+                combobox.Items.Add("Bの魔法");
+                if (combobox == comboBox_SecondSelect) combobox.SelectedIndex = 1;
+                else combobox.SelectedIndex = 0;
+            }
+           
             //ストーリー強制視聴
             //listBox_Options.Visible = false;
             //listBox_SelectAB.Visible = false;
@@ -293,6 +318,69 @@ namespace unilab2024
             drawConversations(isStartConv);
         }
 
+        #region 各コントロール機能設定
+        public void ComboBox_Changed(String Choose, ListBox Change)
+        {
+            if (Choose.Contains("A")) Change = listBox_A;
+            else if (Choose.Contains("B")) Change = listBox_B;
+            else Change = listBox_Input;
+        }
+
+        public void Select_Changed(object sender, EventArgs e)
+        {
+            string Choose = comboBox_Select.SelectedItem.ToString();
+            if (Choose.Contains("A")) ChooseListbox = listBox_A;
+            else if (Choose.Contains("B")) ChooseListbox = listBox_B;
+            else ChooseListbox = listBox_Input;
+            ShowListBox(ChooseListbox,ChooseListbox2);
+        }
+
+        public void SecondSelect_Changed(object sender, EventArgs e)
+        {
+            string Choose = comboBox_SecondSelect.SelectedItem.ToString();
+            if (Choose.Contains("A")) ChooseListbox2 = listBox_A;
+            else if (Choose.Contains("B")) ChooseListbox2 = listBox_B;
+            else ChooseListbox2 = listBox_Input;
+            ShowListBox(ChooseListbox,ChooseListbox2);
+        }
+
+        public void Dual_Checked(object sender, EventArgs e)
+        {
+            ShowListBox(ChooseListbox,ChooseListbox2);
+        }
+
+        public void Input_Changed(object sender, EventArgs e)
+        {
+            string Choose = comboBox_InputTo.SelectedItem.ToString();
+            if (Choose.Contains("A")) InputListBox = listBox_A;
+            else if (Choose.Contains("B")) InputListBox = listBox_B;
+            else InputListBox = listBox_Input;
+            ComboBox_Changed(Choose,InputListBox);
+        }
+
+        public void ShowListBox(ListBox listBox,ListBox listBox2)
+        {
+            foreach (ListBox listbox in ListBoxes)
+            {
+                listbox.Visible = false;
+                listbox.Location = new Point(800, 150);
+            }
+            if (checkBox_Dual.Checked)
+            {
+                listBox.Width = 200;
+                listBox.Visible = true;
+
+                comboBox_SecondSelect.Visible = true;
+                button_SecondReset.Visible = true;
+                listBox2.Location = new Point(listBox.Location.X + 250, listBox.Location.Y) ;
+                listBox2.Width = 200;
+                listBox2.Visible = true;
+
+            }
+            else listBox.Visible = true;
+        }
+        #endregion
+
         #region リセット関連
         public static void ResetListBox(ListBox listbox)   //ListBoxの中身消去
         {
@@ -307,15 +395,11 @@ namespace unilab2024
         }
         private void button_ResetInput_Click(object sender, EventArgs e)        //起動部分リセット
         {
-            ResetListBox(listBox_Input);                    //Program.CSに処理記載
-        } 
-        private void button_ResetA_Click(object sender, EventArgs e)           //Aの魔法リセット
+            ResetListBox(ChooseListbox);                    //Program.CSに処理記載
+        }      
+        private void button_ResetSecond_Click(object sender, EventArgs e)           //Bの魔法リセット
         {
-            ResetListBox(listBox_A);
-        }       
-        private void button_ResetB_Click(object sender, EventArgs e)           //Bの魔法リセット
-        {
-            ResetListBox(listBox_B);
+            ResetListBox(ChooseListbox2);
         }
         public void resetStage(string type) // ステージリセットまとめ
         {
@@ -534,27 +618,27 @@ namespace unilab2024
 
         void uiButtonObject_up_Click(object sender, EventArgs e)
         {
-            listBox_Input.Items.Add("↑");
+            InputListBox.Items.Add("↑");
         }
         void uiButtonObject_left_Click(object sender, EventArgs e)
         {
-            listBox_Input.Items.Add("←");
+            InputListBox.Items.Add("←");
         }
         void uiButtonObject_right_Click(object sender, EventArgs e)
         {
-            listBox_Input.Items.Add("→");
+            InputListBox.Items.Add("→");
         }
         void uiButtonObject_down_Click(object sender, EventArgs e)
         {
-            listBox_Input.Items.Add("↓");
+            InputListBox.Items.Add("↓");
         }
         void uiButtonObject_A_Click(object sender, EventArgs e)
         {
-            listBox_Input.Items.Add("A");
+            InputListBox.Items.Add("A");
         }
         void uiButtonObject_B_Click(object sender, EventArgs e)
         {
-            listBox_Input.Items.Add("B");
+            InputListBox.Items.Add("B");
         }
         void uiButtonObject_for_Click(object sender, EventArgs e)
         {
@@ -571,7 +655,7 @@ namespace unilab2024
             {
                 For_count = int.Parse(e.KeyChar.ToString());
                 // リストボックスに "Input(数字)" 形式で追加
-                listBox_Input.Items.Add($"反復魔法({For_count})");
+                InputListBox.Items.Add($"反復魔法({For_count})");
                 e.Handled = true;
                 textBox_ForCount.Visible = false;
                 label_ForCount.Visible = false;
@@ -584,7 +668,7 @@ namespace unilab2024
         }
         void uiButtonObject_endfor_Click(object sender, EventArgs e)
         {
-            listBox_Input.Items.Add("反復魔法終わり");
+            InputListBox.Items.Add("反復魔法終わり");
         }
 
         void Stage_KeyDown(object sender, KeyEventArgs e)
@@ -592,22 +676,22 @@ namespace unilab2024
             switch (e.KeyCode)
             {
                 case Keys.Up:
-                    listBox_Input.Items.Add("↑");
+                    InputListBox.Items.Add("↑");
                     break;
                 case Keys.Left:
-                    listBox_Input.Items.Add("←");
+                    InputListBox.Items.Add("←");
                     break;
                 case Keys.Right:
-                    listBox_Input.Items.Add("→");
+                    InputListBox.Items.Add("→");
                     break;
                 case Keys.Down:
-                    listBox_Input.Items.Add("↓");
+                    InputListBox.Items.Add("↓");
                     break;
                 case Keys.A:
-                    listBox_Input.Items.Add("A");
+                    InputListBox.Items.Add("A");
                     break;
                 case Keys.B:
-                    listBox_Input.Items.Add("B");
+                    InputListBox.Items.Add("B");
                     break;
             }
         }
@@ -1427,7 +1511,8 @@ namespace unilab2024
             //}
             return Chara;
         }
-
+        
+       
         /// <summary>
         /// 動く際の描画や処理を行う関数
         /// </summary>
