@@ -33,8 +33,7 @@
             this.pictureBoxConv = new System.Windows.Forms.PictureBox();
             this.button_Start = new System.Windows.Forms.Button();
             this.button_ResetInput = new System.Windows.Forms.Button();
-            this.button_ResetA = new System.Windows.Forms.Button();
-            this.button_ResetB = new System.Windows.Forms.Button();
+            this.button_SecondReset = new System.Windows.Forms.Button();
             this.button_ToMap = new System.Windows.Forms.Button();
             this.button_Retry = new System.Windows.Forms.Button();
             this.button_Hint = new System.Windows.Forms.Button();
@@ -42,12 +41,13 @@
             this.listBox_A = new System.Windows.Forms.ListBox();
             this.listBox_B = new System.Windows.Forms.ListBox();
             this.label_Result = new System.Windows.Forms.Label();
-            this.label_Input = new System.Windows.Forms.Label();
-            this.label_A = new System.Windows.Forms.Label();
-            this.label_B = new System.Windows.Forms.Label();
             this.label_Error = new System.Windows.Forms.Label();
             this.textBox_ForCount = new System.Windows.Forms.TextBox();
             this.label_ForCount = new System.Windows.Forms.Label();
+            this.comboBox_Select = new System.Windows.Forms.ComboBox();
+            this.checkBox_Dual = new System.Windows.Forms.CheckBox();
+            this.comboBox_SecondSelect = new System.Windows.Forms.ComboBox();
+            this.comboBox_InputTo = new System.Windows.Forms.ComboBox();
             this.uiButtonObject_for = new unilab2024.UIButtonObject();
             this.uiButtonObject_endfor = new unilab2024.UIButtonObject();
             this.uiButtonObject_B = new unilab2024.UIButtonObject();
@@ -63,30 +63,30 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(72, 12);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.pictureBox1.Location = new System.Drawing.Point(120, 18);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(684, 684);
+            this.pictureBox1.Size = new System.Drawing.Size(1140, 1026);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
             // pictureBox2
             // 
             this.pictureBox2.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.pictureBox2.Location = new System.Drawing.Point(72, 12);
-            this.pictureBox2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.pictureBox2.Location = new System.Drawing.Point(120, 18);
+            this.pictureBox2.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(684, 684);
+            this.pictureBox2.Size = new System.Drawing.Size(1140, 1026);
             this.pictureBox2.TabIndex = 1;
             this.pictureBox2.TabStop = false;
             // 
             // pictureBoxConv
             // 
             this.pictureBoxConv.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBoxConv.Location = new System.Drawing.Point(0, 300);
-            this.pictureBoxConv.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.pictureBoxConv.Location = new System.Drawing.Point(0, 450);
+            this.pictureBoxConv.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
             this.pictureBoxConv.Name = "pictureBoxConv";
-            this.pictureBoxConv.Size = new System.Drawing.Size(1536, 600);
+            this.pictureBoxConv.Size = new System.Drawing.Size(2560, 900);
             this.pictureBoxConv.TabIndex = 2;
             this.pictureBoxConv.TabStop = false;
             this.pictureBoxConv.Click += new System.EventHandler(this.pictureBoxConv_Click);
@@ -96,10 +96,10 @@
             this.button_Start.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
             this.button_Start.Font = new System.Drawing.Font("游明朝 Demibold", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.button_Start.ForeColor = System.Drawing.Color.Navy;
-            this.button_Start.Location = new System.Drawing.Point(975, 674);
-            this.button_Start.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.button_Start.Location = new System.Drawing.Point(1625, 1011);
+            this.button_Start.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
             this.button_Start.Name = "button_Start";
-            this.button_Start.Size = new System.Drawing.Size(223, 100);
+            this.button_Start.Size = new System.Drawing.Size(372, 150);
             this.button_Start.TabIndex = 3;
             this.button_Start.Text = "出発！";
             this.button_Start.UseVisualStyleBackColor = false;
@@ -107,46 +107,36 @@
             // 
             // button_ResetInput
             // 
-            this.button_ResetInput.Location = new System.Drawing.Point(800, 98);
-            this.button_ResetInput.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.button_ResetInput.Location = new System.Drawing.Point(1333, 147);
+            this.button_ResetInput.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
             this.button_ResetInput.Name = "button_ResetInput";
-            this.button_ResetInput.Size = new System.Drawing.Size(54, 24);
+            this.button_ResetInput.Size = new System.Drawing.Size(90, 36);
             this.button_ResetInput.TabIndex = 4;
             this.button_ResetInput.Text = "リセット";
             this.button_ResetInput.UseVisualStyleBackColor = true;
             this.button_ResetInput.Click += new System.EventHandler(this.button_ResetInput_Click);
             // 
-            // button_ResetA
+            // button_SecondReset
             // 
-            this.button_ResetA.Location = new System.Drawing.Point(955, 98);
-            this.button_ResetA.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.button_ResetA.Name = "button_ResetA";
-            this.button_ResetA.Size = new System.Drawing.Size(54, 24);
-            this.button_ResetA.TabIndex = 5;
-            this.button_ResetA.Text = "リセット";
-            this.button_ResetA.UseVisualStyleBackColor = true;
-            this.button_ResetA.Click += new System.EventHandler(this.button_ResetA_Click);
-            // 
-            // button_ResetB
-            // 
-            this.button_ResetB.Location = new System.Drawing.Point(1104, 98);
-            this.button_ResetB.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.button_ResetB.Name = "button_ResetB";
-            this.button_ResetB.Size = new System.Drawing.Size(54, 24);
-            this.button_ResetB.TabIndex = 6;
-            this.button_ResetB.Text = "リセット";
-            this.button_ResetB.UseVisualStyleBackColor = true;
-            this.button_ResetB.Click += new System.EventHandler(this.button_ResetB_Click);
+            this.button_SecondReset.Location = new System.Drawing.Point(1840, 147);
+            this.button_SecondReset.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
+            this.button_SecondReset.Name = "button_SecondReset";
+            this.button_SecondReset.Size = new System.Drawing.Size(90, 36);
+            this.button_SecondReset.TabIndex = 6;
+            this.button_SecondReset.Text = "リセット";
+            this.button_SecondReset.UseVisualStyleBackColor = true;
+            this.button_SecondReset.Visible = false;
+            this.button_SecondReset.Click += new System.EventHandler(this.button_ResetSecond_Click);
             // 
             // button_ToMap
             // 
             this.button_ToMap.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.button_ToMap.Font = new System.Drawing.Font("游明朝 Demibold", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.button_ToMap.ForeColor = System.Drawing.Color.White;
-            this.button_ToMap.Location = new System.Drawing.Point(1148, 12);
-            this.button_ToMap.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.button_ToMap.Location = new System.Drawing.Point(2057, 1011);
+            this.button_ToMap.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
             this.button_ToMap.Name = "button_ToMap";
-            this.button_ToMap.Size = new System.Drawing.Size(158, 46);
+            this.button_ToMap.Size = new System.Drawing.Size(372, 69);
             this.button_ToMap.TabIndex = 7;
             this.button_ToMap.Text = "マップに戻る";
             this.button_ToMap.UseVisualStyleBackColor = false;
@@ -157,10 +147,10 @@
             this.button_Retry.BackColor = System.Drawing.Color.Tomato;
             this.button_Retry.Font = new System.Drawing.Font("游明朝 Demibold", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.button_Retry.ForeColor = System.Drawing.Color.White;
-            this.button_Retry.Location = new System.Drawing.Point(1234, 702);
-            this.button_Retry.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.button_Retry.Location = new System.Drawing.Point(2057, 1086);
+            this.button_Retry.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
             this.button_Retry.Name = "button_Retry";
-            this.button_Retry.Size = new System.Drawing.Size(223, 50);
+            this.button_Retry.Size = new System.Drawing.Size(372, 75);
             this.button_Retry.TabIndex = 8;
             this.button_Retry.Text = "リトライ！";
             this.button_Retry.UseVisualStyleBackColor = false;
@@ -171,10 +161,10 @@
             this.button_Hint.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.button_Hint.Font = new System.Drawing.Font("游明朝 Demibold", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.button_Hint.ForeColor = System.Drawing.Color.Black;
-            this.button_Hint.Location = new System.Drawing.Point(955, 12);
-            this.button_Hint.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.button_Hint.Location = new System.Drawing.Point(120, 1057);
+            this.button_Hint.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
             this.button_Hint.Name = "button_Hint";
-            this.button_Hint.Size = new System.Drawing.Size(155, 46);
+            this.button_Hint.Size = new System.Drawing.Size(258, 69);
             this.button_Hint.TabIndex = 10;
             this.button_Hint.Text = "ヒント！";
             this.button_Hint.UseVisualStyleBackColor = false;
@@ -185,36 +175,39 @@
             this.listBox_Input.Font = new System.Drawing.Font("游明朝", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.listBox_Input.ForeColor = System.Drawing.SystemColors.Info;
             this.listBox_Input.FormattingEnabled = true;
-            this.listBox_Input.ItemHeight = 35;
-            this.listBox_Input.Location = new System.Drawing.Point(800, 126);
-            this.listBox_Input.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.listBox_Input.ItemHeight = 53;
+            this.listBox_Input.Location = new System.Drawing.Point(1333, 189);
+            this.listBox_Input.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
             this.listBox_Input.Name = "listBox_Input";
-            this.listBox_Input.Size = new System.Drawing.Size(163, 109);
+            this.listBox_Input.Size = new System.Drawing.Size(700, 216);
             this.listBox_Input.TabIndex = 11;
+            this.listBox_Input.Visible = false;
             // 
             // listBox_A
             // 
             this.listBox_A.BackColor = System.Drawing.SystemColors.Info;
             this.listBox_A.Font = new System.Drawing.Font("游明朝", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.listBox_A.FormattingEnabled = true;
-            this.listBox_A.ItemHeight = 35;
-            this.listBox_A.Location = new System.Drawing.Point(955, 126);
-            this.listBox_A.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.listBox_A.ItemHeight = 53;
+            this.listBox_A.Location = new System.Drawing.Point(1333, 189);
+            this.listBox_A.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
             this.listBox_A.Name = "listBox_A";
-            this.listBox_A.Size = new System.Drawing.Size(118, 109);
+            this.listBox_A.Size = new System.Drawing.Size(700, 216);
             this.listBox_A.TabIndex = 13;
+            this.listBox_A.Visible = false;
             // 
             // listBox_B
             // 
             this.listBox_B.BackColor = System.Drawing.SystemColors.Info;
             this.listBox_B.Font = new System.Drawing.Font("游明朝", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.listBox_B.FormattingEnabled = true;
-            this.listBox_B.ItemHeight = 35;
-            this.listBox_B.Location = new System.Drawing.Point(1104, 126);
-            this.listBox_B.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.listBox_B.ItemHeight = 53;
+            this.listBox_B.Location = new System.Drawing.Point(1333, 189);
+            this.listBox_B.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
             this.listBox_B.Name = "listBox_B";
-            this.listBox_B.Size = new System.Drawing.Size(118, 109);
+            this.listBox_B.Size = new System.Drawing.Size(700, 216);
             this.listBox_B.TabIndex = 14;
+            this.listBox_B.Visible = false;
             // 
             // label_Result
             // 
@@ -222,47 +215,12 @@
             this.label_Result.BackColor = System.Drawing.Color.White;
             this.label_Result.Font = new System.Drawing.Font("游明朝 Demibold", 48F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.label_Result.ForeColor = System.Drawing.Color.Red;
-            this.label_Result.Location = new System.Drawing.Point(236, 334);
+            this.label_Result.Location = new System.Drawing.Point(393, 501);
+            this.label_Result.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label_Result.Name = "label_Result";
-            this.label_Result.Size = new System.Drawing.Size(227, 83);
+            this.label_Result.Size = new System.Drawing.Size(340, 124);
             this.label_Result.TabIndex = 16;
             this.label_Result.Text = "ミス！";
-            // 
-            // label_Input
-            // 
-            this.label_Input.AutoSize = true;
-            this.label_Input.BackColor = System.Drawing.Color.White;
-            this.label_Input.Font = new System.Drawing.Font("游明朝 Demibold", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label_Input.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label_Input.Location = new System.Drawing.Point(813, 66);
-            this.label_Input.Name = "label_Input";
-            this.label_Input.Size = new System.Drawing.Size(96, 27);
-            this.label_Input.TabIndex = 17;
-            this.label_Input.Text = "起動の術";
-            // 
-            // label_A
-            // 
-            this.label_A.AutoSize = true;
-            this.label_A.BackColor = System.Drawing.Color.White;
-            this.label_A.Font = new System.Drawing.Font("游明朝 Demibold", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label_A.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label_A.Location = new System.Drawing.Point(972, 66);
-            this.label_A.Name = "label_A";
-            this.label_A.Size = new System.Drawing.Size(90, 27);
-            this.label_A.TabIndex = 18;
-            this.label_A.Text = "Aの魔法";
-            // 
-            // label_B
-            // 
-            this.label_B.AutoSize = true;
-            this.label_B.BackColor = System.Drawing.Color.White;
-            this.label_B.Font = new System.Drawing.Font("游明朝 Demibold", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label_B.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label_B.Location = new System.Drawing.Point(1116, 66);
-            this.label_B.Name = "label_B";
-            this.label_B.Size = new System.Drawing.Size(90, 27);
-            this.label_B.TabIndex = 19;
-            this.label_B.Text = "Bの魔法";
             // 
             // label_Error
             // 
@@ -270,19 +228,20 @@
             this.label_Error.BackColor = System.Drawing.Color.White;
             this.label_Error.Font = new System.Drawing.Font("游明朝 Demibold", 48F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.label_Error.ForeColor = System.Drawing.Color.Red;
-            this.label_Error.Location = new System.Drawing.Point(48, 240);
+            this.label_Error.Location = new System.Drawing.Point(80, 360);
+            this.label_Error.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label_Error.Name = "label_Error";
-            this.label_Error.Size = new System.Drawing.Size(227, 83);
+            this.label_Error.Size = new System.Drawing.Size(340, 124);
             this.label_Error.TabIndex = 20;
             this.label_Error.Text = "ミス！";
             // 
             // textBox_ForCount
             // 
             this.textBox_ForCount.Font = new System.Drawing.Font("游明朝 Demibold", 22F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.textBox_ForCount.Location = new System.Drawing.Point(828, 334);
-            this.textBox_ForCount.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
+            this.textBox_ForCount.Location = new System.Drawing.Point(1380, 501);
+            this.textBox_ForCount.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.textBox_ForCount.Name = "textBox_ForCount";
-            this.textBox_ForCount.Size = new System.Drawing.Size(48, 54);
+            this.textBox_ForCount.Size = new System.Drawing.Size(77, 78);
             this.textBox_ForCount.TabIndex = 30;
             this.textBox_ForCount.Visible = false;
             this.textBox_ForCount.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox_ForCount_KeyPress);
@@ -291,100 +250,147 @@
             // 
             this.label_ForCount.AutoSize = true;
             this.label_ForCount.Font = new System.Drawing.Font("游明朝 Demibold", 22F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label_ForCount.Location = new System.Drawing.Point(802, 288);
-            this.label_ForCount.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
+            this.label_ForCount.Location = new System.Drawing.Point(1337, 432);
+            this.label_ForCount.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label_ForCount.Name = "label_ForCount";
-            this.label_ForCount.Size = new System.Drawing.Size(96, 38);
+            this.label_ForCount.Size = new System.Drawing.Size(140, 57);
             this.label_ForCount.TabIndex = 31;
             this.label_ForCount.Text = "label1";
             this.label_ForCount.Visible = false;
             // 
+            // comboBox_Select
+            // 
+            this.comboBox_Select.Font = new System.Drawing.Font("游明朝 Demibold", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.comboBox_Select.FormattingEnabled = true;
+            this.comboBox_Select.Location = new System.Drawing.Point(1347, 91);
+            this.comboBox_Select.Name = "comboBox_Select";
+            this.comboBox_Select.Size = new System.Drawing.Size(203, 49);
+            this.comboBox_Select.TabIndex = 32;
+            this.comboBox_Select.SelectedIndexChanged += new System.EventHandler(this.Select_Changed);
+            // 
+            // checkBox_Dual
+            // 
+            this.checkBox_Dual.AutoSize = true;
+            this.checkBox_Dual.Font = new System.Drawing.Font("游明朝 Demibold", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.checkBox_Dual.Location = new System.Drawing.Point(1857, 40);
+            this.checkBox_Dual.Name = "checkBox_Dual";
+            this.checkBox_Dual.Size = new System.Drawing.Size(140, 45);
+            this.checkBox_Dual.TabIndex = 33;
+            this.checkBox_Dual.Text = "二画面";
+            this.checkBox_Dual.UseVisualStyleBackColor = true;
+            this.checkBox_Dual.CheckedChanged += new System.EventHandler(this.Dual_Checked);
+            // 
+            // comboBox_SecondSelect
+            // 
+            this.comboBox_SecondSelect.Font = new System.Drawing.Font("游明朝 Demibold", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.comboBox_SecondSelect.FormattingEnabled = true;
+            this.comboBox_SecondSelect.Location = new System.Drawing.Point(1830, 91);
+            this.comboBox_SecondSelect.Name = "comboBox_SecondSelect";
+            this.comboBox_SecondSelect.Size = new System.Drawing.Size(203, 49);
+            this.comboBox_SecondSelect.TabIndex = 34;
+            this.comboBox_SecondSelect.Visible = false;
+            this.comboBox_SecondSelect.SelectedIndexChanged += new System.EventHandler(this.SecondSelect_Changed);
+            // 
+            // comboBox_InputTo
+            // 
+            this.comboBox_InputTo.Font = new System.Drawing.Font("游明朝 Demibold", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.comboBox_InputTo.FormattingEnabled = true;
+            this.comboBox_InputTo.Location = new System.Drawing.Point(1347, 491);
+            this.comboBox_InputTo.Name = "comboBox_InputTo";
+            this.comboBox_InputTo.Size = new System.Drawing.Size(213, 49);
+            this.comboBox_InputTo.TabIndex = 35;
+            this.comboBox_InputTo.SelectedIndexChanged += new System.EventHandler(this.Input_Changed);
+            // 
             // uiButtonObject_for
             // 
             this.uiButtonObject_for.BackColor = System.Drawing.Color.Blue;
-            this.uiButtonObject_for.Location = new System.Drawing.Point(1200, 374);
-            this.uiButtonObject_for.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.uiButtonObject_for.Location = new System.Drawing.Point(2000, 561);
+            this.uiButtonObject_for.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
             this.uiButtonObject_for.Name = "uiButtonObject_for";
-            this.uiButtonObject_for.Size = new System.Drawing.Size(80, 80);
+            this.uiButtonObject_for.Size = new System.Drawing.Size(133, 120);
             this.uiButtonObject_for.TabIndex = 29;
             this.uiButtonObject_for.Click += new System.EventHandler(this.uiButtonObject_for_Click);
             // 
             // uiButtonObject_endfor
             // 
             this.uiButtonObject_endfor.BackColor = System.Drawing.Color.Fuchsia;
-            this.uiButtonObject_endfor.Location = new System.Drawing.Point(1125, 450);
-            this.uiButtonObject_endfor.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.uiButtonObject_endfor.Location = new System.Drawing.Point(1875, 675);
+            this.uiButtonObject_endfor.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
             this.uiButtonObject_endfor.Name = "uiButtonObject_endfor";
-            this.uiButtonObject_endfor.Size = new System.Drawing.Size(80, 80);
+            this.uiButtonObject_endfor.Size = new System.Drawing.Size(133, 120);
             this.uiButtonObject_endfor.TabIndex = 28;
             this.uiButtonObject_endfor.Click += new System.EventHandler(this.uiButtonObject_endfor_Click);
             // 
             // uiButtonObject_B
             // 
             this.uiButtonObject_B.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.uiButtonObject_B.Location = new System.Drawing.Point(1200, 526);
-            this.uiButtonObject_B.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.uiButtonObject_B.Location = new System.Drawing.Point(2000, 789);
+            this.uiButtonObject_B.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
             this.uiButtonObject_B.Name = "uiButtonObject_B";
-            this.uiButtonObject_B.Size = new System.Drawing.Size(80, 80);
+            this.uiButtonObject_B.Size = new System.Drawing.Size(133, 120);
             this.uiButtonObject_B.TabIndex = 27;
             this.uiButtonObject_B.Click += new System.EventHandler(this.uiButtonObject_B_Click);
             // 
             // uiButtonObject_A
             // 
             this.uiButtonObject_A.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.uiButtonObject_A.Location = new System.Drawing.Point(1275, 450);
-            this.uiButtonObject_A.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.uiButtonObject_A.Location = new System.Drawing.Point(2125, 675);
+            this.uiButtonObject_A.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
             this.uiButtonObject_A.Name = "uiButtonObject_A";
-            this.uiButtonObject_A.Size = new System.Drawing.Size(80, 80);
+            this.uiButtonObject_A.Size = new System.Drawing.Size(133, 120);
             this.uiButtonObject_A.TabIndex = 26;
             this.uiButtonObject_A.Click += new System.EventHandler(this.uiButtonObject_A_Click);
             // 
             // uiButtonObject_down
             // 
             this.uiButtonObject_down.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-            this.uiButtonObject_down.Location = new System.Drawing.Point(925, 526);
-            this.uiButtonObject_down.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
+            this.uiButtonObject_down.Location = new System.Drawing.Point(1542, 789);
+            this.uiButtonObject_down.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.uiButtonObject_down.Name = "uiButtonObject_down";
-            this.uiButtonObject_down.Size = new System.Drawing.Size(80, 80);
+            this.uiButtonObject_down.Size = new System.Drawing.Size(133, 120);
             this.uiButtonObject_down.TabIndex = 25;
             this.uiButtonObject_down.Click += new System.EventHandler(this.uiButtonObject_down_Click);
             // 
             // uiButtonObject_right
             // 
             this.uiButtonObject_right.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-            this.uiButtonObject_right.Location = new System.Drawing.Point(1000, 450);
-            this.uiButtonObject_right.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
+            this.uiButtonObject_right.Location = new System.Drawing.Point(1667, 675);
+            this.uiButtonObject_right.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.uiButtonObject_right.Name = "uiButtonObject_right";
-            this.uiButtonObject_right.Size = new System.Drawing.Size(80, 80);
+            this.uiButtonObject_right.Size = new System.Drawing.Size(133, 120);
             this.uiButtonObject_right.TabIndex = 24;
             this.uiButtonObject_right.Click += new System.EventHandler(this.uiButtonObject_right_Click);
             // 
             // uiButtonObject_left
             // 
             this.uiButtonObject_left.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-            this.uiButtonObject_left.Location = new System.Drawing.Point(850, 450);
-            this.uiButtonObject_left.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
+            this.uiButtonObject_left.Location = new System.Drawing.Point(1417, 675);
+            this.uiButtonObject_left.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.uiButtonObject_left.Name = "uiButtonObject_left";
-            this.uiButtonObject_left.Size = new System.Drawing.Size(80, 80);
+            this.uiButtonObject_left.Size = new System.Drawing.Size(133, 120);
             this.uiButtonObject_left.TabIndex = 23;
             this.uiButtonObject_left.Click += new System.EventHandler(this.uiButtonObject_left_Click);
             // 
             // uiButtonObject_up
             // 
             this.uiButtonObject_up.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-            this.uiButtonObject_up.Location = new System.Drawing.Point(925, 374);
-            this.uiButtonObject_up.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
+            this.uiButtonObject_up.Location = new System.Drawing.Point(1542, 561);
+            this.uiButtonObject_up.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.uiButtonObject_up.Name = "uiButtonObject_up";
-            this.uiButtonObject_up.Size = new System.Drawing.Size(80, 80);
+            this.uiButtonObject_up.Size = new System.Drawing.Size(133, 120);
             this.uiButtonObject_up.TabIndex = 22;
             this.uiButtonObject_up.Click += new System.EventHandler(this.uiButtonObject_up_Click);
             // 
             // Stage
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.ClientSize = new System.Drawing.Size(1520, 861);
+            this.ClientSize = new System.Drawing.Size(2533, 1292);
+            this.Controls.Add(this.comboBox_InputTo);
+            this.Controls.Add(this.comboBox_SecondSelect);
+            this.Controls.Add(this.checkBox_Dual);
+            this.Controls.Add(this.comboBox_Select);
             this.Controls.Add(this.label_ForCount);
             this.Controls.Add(this.textBox_ForCount);
             this.Controls.Add(this.uiButtonObject_for);
@@ -396,9 +402,6 @@
             this.Controls.Add(this.uiButtonObject_left);
             this.Controls.Add(this.uiButtonObject_up);
             this.Controls.Add(this.label_Error);
-            this.Controls.Add(this.label_B);
-            this.Controls.Add(this.label_A);
-            this.Controls.Add(this.label_Input);
             this.Controls.Add(this.label_Result);
             this.Controls.Add(this.listBox_B);
             this.Controls.Add(this.listBox_A);
@@ -406,14 +409,13 @@
             this.Controls.Add(this.button_Hint);
             this.Controls.Add(this.button_Retry);
             this.Controls.Add(this.button_ToMap);
-            this.Controls.Add(this.button_ResetB);
-            this.Controls.Add(this.button_ResetA);
+            this.Controls.Add(this.button_SecondReset);
             this.Controls.Add(this.button_ResetInput);
             this.Controls.Add(this.button_Start);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.pictureBoxConv);
-            this.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
+            this.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.Name = "Stage";
             this.Text = "ゲーム画面";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
@@ -433,8 +435,7 @@
         private System.Windows.Forms.PictureBox pictureBoxConv;
         private System.Windows.Forms.Button button_Start;
         private System.Windows.Forms.Button button_ResetInput;
-        private System.Windows.Forms.Button button_ResetA;
-        private System.Windows.Forms.Button button_ResetB;
+        private System.Windows.Forms.Button button_SecondReset;
         private System.Windows.Forms.Button button_ToMap;
         private System.Windows.Forms.Button button_Retry;
         private System.Windows.Forms.Button button_Hint;
@@ -442,9 +443,6 @@
         private System.Windows.Forms.ListBox listBox_A;
         private System.Windows.Forms.ListBox listBox_B;
         private System.Windows.Forms.Label label_Result;
-        private System.Windows.Forms.Label label_Input;
-        private System.Windows.Forms.Label label_A;
-        private System.Windows.Forms.Label label_B;
         private System.Windows.Forms.Label label_Error;
         private UIButtonObject uiButtonObject_up;
         private UIButtonObject uiButtonObject_left;
@@ -456,5 +454,9 @@
         private UIButtonObject uiButtonObject_for;
         private System.Windows.Forms.TextBox textBox_ForCount;
         private System.Windows.Forms.Label label_ForCount;
+        private System.Windows.Forms.ComboBox comboBox_Select;
+        private System.Windows.Forms.CheckBox checkBox_Dual;
+        private System.Windows.Forms.ComboBox comboBox_SecondSelect;
+        private System.Windows.Forms.ComboBox comboBox_InputTo;
     }
 }
