@@ -252,6 +252,22 @@ public class StageSelect : Form
 
 ### Stage.cs
 
-このフォームにゲーム機能本体を実装します。
-
+`StageSelect.cs`でステージを選択することで立ち上がるフォームです。選択したステージごとに描画を変更するため、classとしての**メンバ変数**を定義しています。
+またボタンなどのコントロール毎に動作を定義しています。例えば次のような感じです。
+```csharp
+public static void ResetListBox(ListBox listbox)   //ListBoxの中身消去
+{
+        if (listbox.SelectedIndex > -1)
+        {
+                listbox.Items.RemoveAt(listbox.SelectedIndex);
+        }
+        else
+        {
+                listbox.Items.Clear();
+        }
+}
+```
+またキャラクターの動作をボタン入力によって実装し、ユーザからの入力を変換することでMap上で動きとして表現してあります。
+衝突検知は`colision_detection`という関数で実装してあります。
+また会話機能が実装してあり、画面に入力のヒントや操作方法などが表示されます。
 </details>
