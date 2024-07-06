@@ -43,6 +43,7 @@ namespace unilab2024
         #region 読み込み時
         private void StageSelect_Load(object sender, EventArgs e)
         {
+            pictureBox_Background.BackgroundImage = Dictionaries.Img_Background["StageSelect" + _worldNumber];
             labelWorld.Text = _worldName;   //学年表示の書き換え
             // buttonに対する処理
             foreach (Control control in this.Controls)

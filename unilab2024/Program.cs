@@ -22,10 +22,9 @@ namespace unilab2024
             Application.SetCompatibleTextRenderingDefault(false);
 
             Func.LoadImg_Character();
-            Func.LoadImg_DotPic();
             Func.LoadImg_Object();
             Func.LoadImg_Button();
-            //Func.LoadImg_Background();
+            Func.LoadImg_Background();
             Func.InitializeClearCheck();
 
             Application.Run(new Title());
@@ -181,9 +180,7 @@ namespace unilab2024
         //読み込みはProgram.csのMain関数内で行っている。以下の関数は他のFormで呼び出す必要はない。
         public static void LoadImg_Character()
         {
-            string currentDirectory = Directory.GetCurrentDirectory();
-            string imgDirectory = Path.Combine(currentDirectory, "Image");
-            string[] files = Directory.GetFiles(imgDirectory, "Img_Character_*.png");
+            string[] files = Directory.GetFiles(@"Image\\Character");
             foreach (string file in files)
             {
                 string key = Path.GetFileNameWithoutExtension(file).Replace("Img_Character_","");
@@ -193,9 +190,16 @@ namespace unilab2024
 
         public static void LoadImg_DotPic()
         {
-            string currentDirectory = Directory.GetCurrentDirectory();
-            string imgDirectory = Path.Combine(currentDirectory, "Image");
-            string[] files = Directory.GetFiles(imgDirectory, "Img_DotPic_*.png");
+            string charaDirectory = "";
+            if (MainCharacter.isBoy)
+            {
+                charaDirectory = @"Image\\DotPic\\Boy";
+            }
+            else
+            {
+                charaDirectory = @"Image\\DotPic\\Girl";
+            }
+            string[] files = Directory.GetFiles(charaDirectory);
             foreach (string file in files)
             {
                 string key = Path.GetFileNameWithoutExtension(file).Replace("Img_DotPic_", "");
@@ -214,9 +218,7 @@ namespace unilab2024
 
         public static void LoadImg_Button()
         {
-            string currentDirectory = Directory.GetCurrentDirectory();
-            string imgDirectory = Path.Combine(currentDirectory, "Image");
-            string[] files = Directory.GetFiles(imgDirectory, "Img_Button_*.png");
+            string[] files = Directory.GetFiles(@"Image\\Button");
             foreach (string file in files)
             {
                 string key = Path.GetFileNameWithoutExtension(file).Replace("Img_Button_", "");
@@ -226,9 +228,7 @@ namespace unilab2024
 
         public static void LoadImg_Background()
         {
-            string currentDirectory = Directory.GetCurrentDirectory();
-            string imgDirectory = Path.Combine(currentDirectory, "Image");
-            string[] files = Directory.GetFiles(imgDirectory, "Img_Background_*.png");
+            string[] files = Directory.GetFiles(@"Image\\Background");
             foreach (string file in files)
             {
                 string key = Path.GetFileNameWithoutExtension(file).Replace("Img_Background_", "");

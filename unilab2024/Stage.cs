@@ -47,11 +47,13 @@ namespace unilab2024
 
             bmp1 = new Bitmap(pictureBox1.Width, pictureBox1.Height);
             bmp2 = new Bitmap(pictureBox2.Width, pictureBox2.Height);
-            bmpConv = new Bitmap(pictureBoxConv.Width, pictureBoxConv.Height);
+            bmp_CharaImage = new Bitmap(pictureBox_CharaImage.Width, pictureBox_CharaImage.Height);
+            bmp_CharaName = new Bitmap(pictureBox_CharaName.Width, pictureBox_CharaName.Height);
+            bmp_Dialogue = new Bitmap(pictureBox_Dialogue.Width, pictureBox_Dialogue.Height);
             //bmp4 = new Bitmap(pictureBox4.Width, pictureBox4.Height);
             pictureBox1.Image = bmp1;
             pictureBox2.Image = bmp2;
-            pictureBoxConv.Image = bmpConv;
+            pictureBox_Dialogue.Image = bmp_Dialogue;
             //pictureBox4.Image = bmp4;
             //this.Load += Stage_Load;
         }
@@ -83,7 +85,7 @@ namespace unilab2024
 
         #region グローバル変数定義
         //ここに必要なBitmapやImageを作っていく
-        Bitmap bmp1, bmp2, bmpConv, bmp4;
+        Bitmap bmp1, bmp2, bmp_CharaImage, bmp_CharaName, bmp_Dialogue, bmp4;
 
         Brush goalBackgroundColor = new SolidBrush(Color.Yellow);
         Brush startBackgroundColor = new SolidBrush(Color.Blue);
@@ -144,7 +146,9 @@ namespace unilab2024
             map = CreateStage(stageName); //ステージ作成
 
             grade = Regex.Replace(stageName, @"[^0-9]", "");
-            int chapter_num = int.Parse(grade) / 10;        
+            int chapter_num = int.Parse(grade) / 10;
+
+            labelStageName.Text = _worldName + " レベル" + _level;
 
             #region リストボックス・ボタンの設定
             // 1行文の高さ
@@ -310,9 +314,16 @@ namespace unilab2024
 
             string convFileName = "Story_Chapter" + _worldNumber + "-" + _level + ".csv";
             (StartConv, EndConv) = Func.LoadStories(convFileName); //会話読み込み
-            pictureBoxConv.Visible = true;
-            pictureBoxConv.Enabled = true;
-            pictureBoxConv.BringToFront();
+            pictureBox_CharaImage.Visible = true;
+            pictureBox_CharaImage.Enabled = true;
+            pictureBox_CharaImage.BringToFront();
+            pictureBox_CharaName.Visible = true;
+            pictureBox_CharaName.Enabled = true;
+            pictureBox_CharaName.BringToFront();
+            pictureBox_Dialogue.Visible = true;
+            pictureBox_Dialogue.Enabled = true;
+            pictureBox_Dialogue.BringToFront();
+            pictureBox_Dialogue.Cursor = Cursors.Hand;
             convIndex = 0;
             isStartConv = true;
             drawConversations(isStartConv);
@@ -599,6 +610,20 @@ namespace unilab2024
                 {
                     ClearCheck.IsButtonEnabled[_worldNumber, _level + 1] = true;
                 }
+
+                pictureBox_CharaImage.Visible = true;
+                pictureBox_CharaImage.Enabled = true;
+                pictureBox_CharaImage.BringToFront();
+                pictureBox_CharaName.Visible = true;
+                pictureBox_CharaName.Enabled = true;
+                pictureBox_CharaName.BringToFront();
+                pictureBox_Dialogue.Visible = true;
+                pictureBox_Dialogue.Enabled = true;
+                pictureBox_Dialogue.BringToFront();
+                pictureBox_Dialogue.Cursor = Cursors.Hand;
+                convIndex = 0;
+                isStartConv = false;
+                drawConversations(isStartConv);
             }
             //else
             //{
@@ -1804,7 +1829,9 @@ namespace unilab2024
         #region 会話の表示（Form依存なのでこの位置）
         private void drawConversations(bool isStart)
         {
-            Graphics gConv = Graphics.FromImage(bmpConv);
+            Graphics g_CharaImage = Graphics.FromImage(bmp_CharaImage);
+            Graphics g_CharaName = Graphics.FromImage(bmp_CharaName);
+            Graphics g_Dialogue = Graphics.FromImage(bmp_Dialogue);
 
             //Pen pen = new Pen(Color.FromArgb(100, 255, 100), 2);
             Font fnt_name = new Font("游ゴシック", 33, FontStyle.Bold);
@@ -1820,14 +1847,12 @@ namespace unilab2024
             int dia_x = 1500;
             int dia_y = 200;
 
-            int adjust_y = 0;
-
             int lineHeight = fnt_dia.Height;
 
-            gConv.FillRectangle(Color_BackName, 15, adjust_y + face, name_x, name_y);
+            g_CharaName.FillRectangle(Color_BackName, 0, 0, name_x, name_y);
             //g1.DrawRectangle(pen, 15, adjust_y + face, name_x, name_y);
 
-            gConv.FillRectangle(Color_BackConv, 15, adjust_y + face + name_y, dia_x, dia_y);
+            g_Dialogue.FillRectangle(Color_BackConv, 0, 0, dia_x, dia_y);
             //g1.DrawRectangle(pen, 15, adjust_y + face + name_y, dia_x, dia_y);
 
             List<Conversation> Conversations = new List<Conversation>();
@@ -1842,9 +1867,16 @@ namespace unilab2024
 
             if (convIndex >= Conversations.Count)
             {
-                pictureBoxConv.Visible = false;
-                pictureBoxConv.Enabled = false;
-                pictureBoxConv.SendToBack();
+                pictureBox_CharaImage.Visible = false;
+                pictureBox_CharaImage.Enabled = false;
+                pictureBox_CharaImage.SendToBack();
+                pictureBox_CharaName.Visible = false;
+                pictureBox_CharaName.Enabled = false;
+                pictureBox_CharaName.SendToBack();
+                pictureBox_Dialogue.Visible = false;
+                pictureBox_Dialogue.Enabled = false;
+                pictureBox_Dialogue.Cursor = Cursors.Default;
+                pictureBox_Dialogue.SendToBack();
                 return;
             }
 
@@ -1861,14 +1893,14 @@ namespace unilab2024
                 }
             }
 
-            gConv.DrawString(charaName, fnt_name, Brushes.White, 15 + sp, adjust_y + face + sp);
+            g_CharaName.DrawString(charaName, fnt_name, Brushes.White, sp, sp);
 
             //改行の処理はこう書かないとうまくいかない
             char[] lineBreak = new char[] { '\\' };
             string[] DialogueLines = Conversations[convIndex].Dialogue.Replace("\\n", "\\").Split(lineBreak);
             for (int i = 0; i < DialogueLines.Length; i++)
             {
-                gConv.DrawString(DialogueLines[i], fnt_dia, Brushes.Black, 15 + sp, adjust_y + face + name_y + sp + i * lineHeight);
+                g_Dialogue.DrawString(DialogueLines[i], fnt_dia, Brushes.Black, sp, sp + i * lineHeight);
             }
 
             Image charaImage = null;
@@ -1888,10 +1920,15 @@ namespace unilab2024
                 charaImage = Dictionaries.Img_Character[Conversations[convIndex].Img];
             }
 
-            gConv.DrawImage(charaImage, 15, adjust_y, face, face);
+            g_CharaImage.Clear(Color.Transparent);
+            g_CharaImage.DrawImage(charaImage, 0, 0, face, face);
 
-            pictureBoxConv.Image = bmpConv;
-            gConv.Dispose();
+            pictureBox_CharaImage.Image = bmp_CharaImage;
+            g_CharaImage.Dispose();
+            pictureBox_CharaName.Image = bmp_CharaName;
+            g_CharaName.Dispose();
+            pictureBox_Dialogue.Image = bmp_Dialogue;
+            g_Dialogue.Dispose();
 
             if (convIndex < Conversations.Count)
             {
@@ -1900,7 +1937,7 @@ namespace unilab2024
            
         }
 
-        private void pictureBoxConv_Click(object sender, EventArgs e)
+        private void pictureBox_Dialogue_Click(object sender, EventArgs e)
         {
             drawConversations(isStartConv);
         }

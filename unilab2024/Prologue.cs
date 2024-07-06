@@ -37,6 +37,10 @@ namespace unilab2024
             Graphics g1 = Graphics.FromImage(bmpPB1);
             buttonToMap.Visible = false;
             buttonToMap.Enabled = false;
+            button_Boy.Visible = false;
+            button_Boy.Enabled = false;
+            button_Girl.Visible = false;
+            button_Girl.Enabled = false;
 
             Conversations = Func.LoadConversations("Story_Chapter0.csv");
             drawConversations();
@@ -92,8 +96,16 @@ namespace unilab2024
             }
             else
             {
-                buttonToMap.Visible = true;
-                buttonToMap.Enabled = true;
+                //buttonToMap.Visible = true;
+                //buttonToMap.Enabled = true;
+                button_Boy.Visible = true;
+                button_Boy.Enabled = true;
+                button_Girl.Visible = true;
+                button_Girl.Enabled = true;
+                button_Boy.ForeImage = Dictionaries.Img_Character["Boy"];
+                button_Girl.ForeImage = Dictionaries.Img_Character["Girl"];
+                button_Boy.Cursor = Cursors.Hand;
+                button_Girl.Cursor = Cursors.Hand;
                 return;
             }
         }
@@ -109,6 +121,26 @@ namespace unilab2024
         {
             Func.CreateWorldMap(this);
         }
+
+        private void button_CharaSelect_Click(object sender, EventArgs e)
+        {
+            CustomButton button = sender as CustomButton;
+            if (button != null)
+            {
+                string NameWithoutButton = button.Name.Replace("button_", "");
+                if (NameWithoutButton == "Boy")
+                {
+                    MainCharacter.isBoy = true;
+                }
+                else if (NameWithoutButton == "Girl")
+                {
+                    MainCharacter.isBoy = false;
+                }
+            }
+
+            Func.LoadImg_DotPic();
+            Func.CreateStage(this, "1年生", 1, 1);
+        }
         #endregion
 
         #region ストーリースキップ用
@@ -119,9 +151,8 @@ namespace unilab2024
         {
             if (e.KeyCode == Keys.M)
             {
-                buttonToMap.Visible = true;
-                buttonToMap.Enabled = true;
-                return;
+                Func.LoadImg_DotPic();
+                Func.CreateStage(this, "1年生", 1, 1);
             }
         }
         #endregion
