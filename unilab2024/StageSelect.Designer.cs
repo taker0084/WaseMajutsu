@@ -54,6 +54,7 @@
             this.buttonToMap.Font = new System.Drawing.Font("游明朝 Demibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.buttonToMap.ForeColor = System.Drawing.Color.White;
             this.buttonToMap.ForeImage = null;
+            this.buttonToMap.ConditionImage = null;
             this.buttonToMap.Location = new System.Drawing.Point(1350, 10);
             this.buttonToMap.Name = "buttonToMap";
             this.buttonToMap.Size = new System.Drawing.Size(160, 50);
@@ -67,6 +68,7 @@
             this.button_Stage1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button_Stage1.Font = new System.Drawing.Font("游ゴシック", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.button_Stage1.ForeImage = null;
+            this.button_Stage1.ConditionImage = null;
             this.button_Stage1.Location = new System.Drawing.Point(243, 600);
             this.button_Stage1.Name = "button_Stage1";
             this.button_Stage1.Size = new System.Drawing.Size(250, 80);
@@ -80,6 +82,7 @@
             this.button_Stage2.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button_Stage2.Font = new System.Drawing.Font("游ゴシック", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.button_Stage2.ForeImage = null;
+            this.button_Stage2.ConditionImage = null;
             this.button_Stage2.Location = new System.Drawing.Point(643, 600);
             this.button_Stage2.Name = "button_Stage2";
             this.button_Stage2.Size = new System.Drawing.Size(250, 80);
@@ -93,6 +96,7 @@
             this.button_Stage3.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button_Stage3.Font = new System.Drawing.Font("游ゴシック", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.button_Stage3.ForeImage = null;
+            this.button_Stage3.ConditionImage = null;
             this.button_Stage3.Location = new System.Drawing.Point(1043, 600);
             this.button_Stage3.Name = "button_Stage3";
             this.button_Stage3.Size = new System.Drawing.Size(250, 80);

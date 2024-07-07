@@ -15,6 +15,8 @@ namespace unilab2024
         public AnotherWorld()
         {
             InitializeComponent();
+            this.KeyDown += new KeyEventHandler(WorldMap_KeyDown);
+            this.KeyPreview = true;
         }   
 
         #region 読み込み時
@@ -32,6 +34,39 @@ namespace unilab2024
                         {
                             button.ForeImage = null;
                             button.Cursor = Cursors.Hand;
+                            if (ClearCheck.IsNew[i, 0])
+                            {
+                                button.ConditionImage = Dictionaries.Img_Button["New"];
+                            }
+                            else if (ClearCheck.IsCleared[i, 0])
+                            {
+                                button.ConditionImage = Dictionaries.Img_Button["Clear"];
+                            }
+                            else
+                            {
+                                button.ConditionImage = null;
+                            }
+                        }
+                        else
+                        {
+                            button.ForeImage = Dictionaries.Img_Button["Lock"];
+                            button.Cursor = Cursors.No;
+                        }
+                    }
+                    else if (NameWithoutButton == "ToWorldMap")
+                    {
+                        if (ClearCheck.IsCleared[4, 0])
+                        {
+                            button.ForeImage = null;
+                            button.Cursor = Cursors.Hand;
+                            if (Func.HasNewStageInWorld(true))
+                            {
+                                button.ConditionImage = Dictionaries.Img_Button["New"];
+                            }
+                            else if (Func.IsAllStageClearedInWorld(true))
+                            {
+                                button.ConditionImage = Dictionaries.Img_Button["Clear"];
+                            }
                         }
                         else
                         {
@@ -61,6 +96,26 @@ namespace unilab2024
         private void buttonToWorldMap_Click(object sender, EventArgs e)
         {
             Func.CreateWorldMap(this);
+        }
+        #endregion
+        
+        #region クリアチェックスキップ用
+        private void WorldMap_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.M)
+            {
+                for (int i = 5; i < (int)ConstNum.numWorlds; i++)
+                {
+                    for (int j = 0; j < (int)ConstNum.numStages; j++)
+                    {   
+                        ClearCheck.IsNew[i, j] = false;
+                        ClearCheck.IsCleared[i, j] = true;
+                        ClearCheck.IsButtonEnabled[i, j] = true;
+                    }
+                }
+
+                Func.CreateWorldMap(this);
+            }
         }
         #endregion
     }
