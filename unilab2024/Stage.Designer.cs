@@ -34,7 +34,7 @@
             this.button_Start = new System.Windows.Forms.Button();
             this.button_ResetInput = new System.Windows.Forms.Button();
             this.button_SecondReset = new System.Windows.Forms.Button();
-            this.button_ToMap = new System.Windows.Forms.Button();
+            this.button_ToMap = new CustomButton();
             this.button_Retry = new System.Windows.Forms.Button();
             this.button_Hint = new System.Windows.Forms.Button();
             this.listBox_Input = new System.Windows.Forms.ListBox();
@@ -478,7 +478,7 @@
         private System.Windows.Forms.Button button_Start;
         private System.Windows.Forms.Button button_ResetInput;
         private System.Windows.Forms.Button button_SecondReset;
-        private System.Windows.Forms.Button button_ToMap;
+        private CustomButton button_ToMap;
         private System.Windows.Forms.Button button_Retry;
         private System.Windows.Forms.Button button_Hint;
         private System.Windows.Forms.ListBox listBox_Input;
