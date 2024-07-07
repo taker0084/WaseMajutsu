@@ -366,6 +366,26 @@ namespace unilab2024
             return hasNewStage;
         }
 
+        public static bool HasNewStageInAllWorld()
+        {
+            // 新ステージがあるかどうか
+            bool hasNewStage = false;
+
+            for (int i = 1; i < (int)ConstNum.numWorlds; i++)
+            {
+                for (int j = 0; j < (int)ConstNum.numStages; j++)
+                {
+                    if (ClearCheck.IsNew[i, j])
+                    {
+                        hasNewStage = true;
+                        break;
+                    }
+                }
+            }
+
+            return hasNewStage;
+        }
+
         public static bool IsAllStageClearedInWorld(bool isWorldMap)
         {
             // WorldMapまたはAnotherWorldがすべてクリアされているかどうか

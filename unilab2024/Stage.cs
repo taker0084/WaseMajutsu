@@ -616,6 +616,11 @@ namespace unilab2024
                     Func.UpdateIsNew();
                 }
 
+                if (Func.HasNewStageInAllWorld())
+                {
+                    button_ToMap.ConditionImage = Dictionaries.Img_Button["New"];
+                }
+
                 pictureBox_CharaImage.Visible = true;
                 pictureBox_CharaImage.Enabled = true;
                 pictureBox_CharaImage.BringToFront();
