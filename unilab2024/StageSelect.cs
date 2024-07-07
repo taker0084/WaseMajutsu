@@ -57,11 +57,32 @@ namespace unilab2024
                         {
                             button.ForeImage = null;
                             button.Cursor = Cursors.Hand;
+                            if (ClearCheck.IsNew[_worldNumber, j])
+                            {
+                                button.ConditionImage = Dictionaries.Img_Button["New"];
+                            }
+                            else if (ClearCheck.IsCleared[_worldNumber, j])
+                            {
+                                button.ConditionImage = Dictionaries.Img_Button["Clear"];
+                            }
+                            else
+                            {
+                                button.ConditionImage = null;
+                            }
                         }
                         else
                         {
                             button.ForeImage = Dictionaries.Img_Button["Lock"];
                             button.Cursor = Cursors.No;
+                        }
+                    }
+                    else
+                    {
+                        bool isWorldMap = true;
+                        if (_worldNumber >= 5) isWorldMap = false;
+                        if (Func.HasNewStageFromStageSelect(isWorldMap, _worldNumber))
+                        {
+                            button.ConditionImage = Dictionaries.Img_Button["New"];
                         }
                     }
                 }
@@ -79,6 +100,8 @@ namespace unilab2024
                 if (int.TryParse(NameWithoutButton, out int j))
                 {
                     if (!ClearCheck.IsButtonEnabled[_worldNumber, j]) return;
+                    ClearCheck.IsNew[_worldNumber, j] = false;
+                    Func.UpdateIsNew();
                     Func.CreateStage(this, _worldName, _worldNumber, j);
                 }
             }
@@ -98,13 +121,17 @@ namespace unilab2024
                 
                 for (int j = 0; j < (int)ConstNum.numStages; j++)
                 {
+                    ClearCheck.IsNew[_worldNumber, j] = false;
                     ClearCheck.IsCleared[_worldNumber, j] = true;
                     ClearCheck.IsButtonEnabled[_worldNumber, j] = true;
                 }
                 if (_worldNumber < 4)
                 {
-                    ClearCheck.IsButtonEnabled[_worldNumber + 1, 0] = true;
-                    ClearCheck.IsButtonEnabled[_worldNumber + 1, 1] = true;
+                    for (int j = 0; j <= 1; j++)
+                    {
+                        ClearCheck.IsButtonEnabled[_worldNumber + 1, j] = true;
+                        ClearCheck.IsNew[_worldNumber + 1, j] = true;
+                    }
                 }
                 else if( _worldNumber == 4)
                 {
@@ -114,6 +141,7 @@ namespace unilab2024
                         for(int j = 0; j <= 1; j++)
                         {
                             ClearCheck.IsButtonEnabled[i, j] = true;
+                            ClearCheck.IsNew[i, j] = true;
                         }
                     }
                 }

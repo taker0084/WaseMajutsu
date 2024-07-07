@@ -43,6 +43,7 @@
             this.button1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button1.Font = new System.Drawing.Font("游ゴシック", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.button1.ForeImage = null;
+            this.button1.ConditionImage = null;
             this.button1.Location = new System.Drawing.Point(470, 582);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(150, 50);
@@ -56,6 +57,7 @@
             this.button2.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button2.Font = new System.Drawing.Font("游ゴシック", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.button2.ForeImage = null;
+            this.button2.ConditionImage = null;
             this.button2.Location = new System.Drawing.Point(848, 478);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(150, 50);
@@ -69,6 +71,7 @@
             this.button3.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button3.Font = new System.Drawing.Font("游ゴシック", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.button3.ForeImage = null;
+            this.button3.ConditionImage = null;
             this.button3.Location = new System.Drawing.Point(561, 280);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(150, 50);
@@ -82,6 +85,7 @@
             this.button4.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button4.Font = new System.Drawing.Font("游ゴシック", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.button4.ForeImage = null;
+            this.button4.ConditionImage = null;
             this.button4.Location = new System.Drawing.Point(682, 378);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(150, 50);
@@ -97,6 +101,7 @@
             this.buttonToAnotherWorld.Font = new System.Drawing.Font("游ゴシック", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.buttonToAnotherWorld.ForeColor = System.Drawing.Color.White;
             this.buttonToAnotherWorld.ForeImage = null;
+            this.buttonToAnotherWorld.ConditionImage = null;
             this.buttonToAnotherWorld.Location = new System.Drawing.Point(1189, 537);
             this.buttonToAnotherWorld.Name = "buttonToAnotherWorld";
             this.buttonToAnotherWorld.Size = new System.Drawing.Size(200, 60);

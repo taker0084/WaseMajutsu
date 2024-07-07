@@ -37,6 +37,18 @@ namespace unilab2024
                         {
                             button.ForeImage = null;
                             button.Cursor = Cursors.Hand;
+                            if (ClearCheck.IsNew[i, 0])
+                            {
+                                button.ConditionImage = Dictionaries.Img_Button["New"];
+                            }
+                            else if (ClearCheck.IsCleared[i, 0])
+                            {
+                                button.ConditionImage = Dictionaries.Img_Button["Clear"];
+                            }
+                            else
+                            {
+                                button.ConditionImage = null;
+                            }
                         }
                         else
                         {
@@ -51,6 +63,14 @@ namespace unilab2024
                             button.ForeImage = null;
                             button.Cursor = Cursors.Hand;
                             IsButtonToAnotherWorldEnabled = true;
+                            if (Func.HasNewStageInWorld(false))
+                            {
+                                button.ConditionImage = Dictionaries.Img_Button["New"];
+                            }
+                            else if (Func.IsAllStageClearedInWorld(false))
+                            {
+                                button.ConditionImage = Dictionaries.Img_Button["Clear"];
+                            }
                         }
                         else
                         {
@@ -92,13 +112,23 @@ namespace unilab2024
         {
             if (e.KeyCode == Keys.M)
             {
-                for (int i = 0; i < (int)ConstNum.numWorlds; i++)
+                for (int i = 1; i <= 4; i++)
                 {
                     for (int j = 0; j < (int)ConstNum.numStages; j++)
                     {
+                        ClearCheck.IsNew[i, j] = false;
                         ClearCheck.IsCleared[i, j] = true;
                         ClearCheck.IsButtonEnabled[i, j] = true;
                     }
+                }
+
+                for (int i = 5; i < (int)ConstNum.numWorlds; i++)
+                {
+                    for (int j = 0; j <=1; j++)
+                    {
+                        ClearCheck.IsNew[i, j] = true;
+                        ClearCheck.IsButtonEnabled[i, j] = true;
+                    } 
                 }
                 
                 Func.CreateWorldMap(this);

@@ -594,6 +594,8 @@ namespace unilab2024
                         case 3:
                             ClearCheck.IsButtonEnabled[_worldNumber + 1, 0] = true;
                             ClearCheck.IsButtonEnabled[_worldNumber + 1, 1] = true;
+                            ClearCheck.IsNew[_worldNumber + 1, 0] = true;
+                            ClearCheck.IsNew[_worldNumber + 1, 1] = true;
                             break;
                         case 4:
                             for (int i = _worldNumber + 1; i < (int)ConstNum.numWorlds; i++)
@@ -601,6 +603,7 @@ namespace unilab2024
                                 for (int j = 0; j <= 1; j++)
                                 {
                                     ClearCheck.IsButtonEnabled[i, j] = true;
+                                    ClearCheck.IsNew[i, j] = true;
                                 }
                             }
                             break;
@@ -609,6 +612,8 @@ namespace unilab2024
                 else
                 {
                     ClearCheck.IsButtonEnabled[_worldNumber, _level + 1] = true;
+                    ClearCheck.IsNew[_worldNumber, _level + 1] = true;
+                    Func.UpdateIsNew();
                 }
 
                 pictureBox_CharaImage.Visible = true;

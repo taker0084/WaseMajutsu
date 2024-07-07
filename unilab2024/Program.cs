@@ -260,6 +260,10 @@ namespace unilab2024
         //ボタン管理配列
         //0番目はWorldMapでそのボタンを押せるかどうか（押せる場合true）
         public static bool[,] IsButtonEnabled = new bool[(int)ConstNum.numWorlds, (int)ConstNum.numStages];
+
+        //新ステージ出現チェック配列
+        //0番目はWorldMapでそのワールドの中に新ステージがあるかどうか
+        public static bool[,] IsNew = new bool[(int)ConstNum.numWorlds, (int)ConstNum.numStages];
     }
 
     public partial class Func
@@ -272,10 +276,125 @@ namespace unilab2024
                 {
                     ClearCheck.IsCleared[i, j] = false;
                     ClearCheck.IsButtonEnabled[i, j] = false;
+                    ClearCheck.IsNew[i, j] = false;
                 }
             }
             ClearCheck.IsButtonEnabled[1, 0] = true;
             ClearCheck.IsButtonEnabled[1, 1] = true;
+        }
+
+        public static void UpdateIsNew()    //IsNew配列の更新
+        {
+            for (int i = 1; i < (int)ConstNum.numWorlds; i++)
+            {
+                bool isNew0 = false;
+                for (int j = 1; j < (int)ConstNum.numStages; j++)
+                {
+                    if (ClearCheck.IsNew[i, j])
+                    {
+                        isNew0 = true;
+                        break;
+                    }
+                }
+                ClearCheck.IsNew[i, 0] = isNew0;
+            }
+        }
+
+        public static bool HasNewStageInWorld(bool isWorldMap)
+        {
+            // WorldMapまたはAnotherWorldに新ステージがあるかどうか
+            bool hasNewStage = false;
+
+            if (isWorldMap)
+            {
+                for (int i = 1; i <= 4; i++)
+                {
+                    if (ClearCheck.IsNew[i, 0])
+                    {
+                        hasNewStage = true;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 5; i <= 7; i++)
+                {
+                    if (ClearCheck.IsNew[i, 0])
+                    {
+                        hasNewStage = true;
+                        break;
+                    }
+                }
+            }
+
+            return hasNewStage;
+        }
+
+        public static bool HasNewStageFromStageSelect(bool isWorldMap, int worldNumber)
+        {
+            // StageSelectからWorld選択に戻った時に新ステージがあるかどうか
+            if (Func.HasNewStageInWorld(!isWorldMap)) return true;
+
+            bool hasNewStage = false;
+
+            if (isWorldMap)
+            {
+                for (int i = 1; i <= 4; i++)
+                {
+                    if (i == worldNumber) continue;
+                    if (ClearCheck.IsNew[i, 0])
+                    {
+                        hasNewStage = true;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 5; i <= 7; i++)
+                {
+                    if (i == worldNumber) continue;
+                    if (ClearCheck.IsNew[i, 0])
+                    {
+                        hasNewStage = true;
+                        break;
+                    }
+                }
+            }
+
+            return hasNewStage;
+        }
+
+        public static bool IsAllStageClearedInWorld(bool isWorldMap)
+        {
+            // WorldMapまたはAnotherWorldがすべてクリアされているかどうか
+            bool isAllStageCleared = true;
+
+            if (isWorldMap)
+            {
+                for (int i = 1; i <= 4; i++)
+                {
+                    if (!ClearCheck.IsCleared[i, 0])
+                    {
+                        isAllStageCleared = false;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 5; i <= 7; i++)
+                {
+                    if (!ClearCheck.IsCleared[i, 0])
+                    {
+                        isAllStageCleared = false;
+                        break;
+                    }
+                }
+            }
+
+            return isAllStageCleared;
         }
     }
     #endregion
@@ -294,6 +413,18 @@ namespace unilab2024
                 Invalidate();
             }
         }
+
+        private Image conditionImage;
+
+        public Image ConditionImage
+        {
+            get { return conditionImage; }
+            set
+            {
+                conditionImage = value;
+                Invalidate();
+            }
+        }
         protected override void OnPaint(PaintEventArgs pevent)
         {
             //ボタンのベース描画
@@ -302,13 +433,14 @@ namespace unilab2024
             //文字の描画
             TextRenderer.DrawText(pevent.Graphics, this.Text, this.Font, this.ClientRectangle, this.ForeColor, TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);
 
+            //ボタンサイズ
+            int buttonWidth = this.Width;
+            int buttonHeight = this.Height;
+
             //背景画像を文字の上に描画
             if (this.ForeImage != null)
             {
                 //Zoomレイアウトで背景画像を描画
-                //ボタンサイズ
-                int buttonWidth = this.Width;
-                int buttonHeight = this.Height;
                 //画像サイズ
                 int imageWidth = this.ForeImage.Width;
                 int imageHeight = this.ForeImage.Height;
@@ -325,24 +457,19 @@ namespace unilab2024
                
                 pevent.Graphics.DrawImage(this.ForeImage, destRect);
             }
-        }
-
-        private Rectangle GetZoomedRectangle(Image img, Rectangle bounds)
-        {
-            float imageAspect = (float)img.Width / img.Height;
-            float controlAspect = (float)bounds.Width / bounds.Height;
-
-            if (imageAspect > controlAspect)
+            else if (this.ConditionImage != null)
             {
-                int newHeight = (int)(bounds.Width / imageAspect);
-                int yOffset = (bounds.Height - newHeight) / 2;
-                return new Rectangle(0, yOffset, bounds.Width, newHeight);
-            }
-            else
-            {
-                int newWidth = (int)(bounds.Height * imageAspect);
-                int xOffset = (bounds.Width - newWidth) / 2;
-                return new Rectangle(xOffset, 0, newWidth, bounds.Height);
+                //画像サイズ
+                int imageWidth = this.ConditionImage.Width;
+                int imageHeight = this.ConditionImage.Height;
+
+                // 表示領域の大きさ指定
+                int scaleHeight = buttonHeight / 4;
+                double scale = (double)scaleHeight / imageHeight;
+                int scaleWidth = (int)(scale * imageWidth);
+                Rectangle destRect = new Rectangle(0, 0, scaleWidth, scaleHeight);
+
+                pevent.Graphics.DrawImage(this.ConditionImage, destRect);
             }
         }
     }
