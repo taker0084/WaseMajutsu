@@ -1890,8 +1890,8 @@ namespace unilab2024
                 return;
             }
 
-            string charaName = "";
-            if (Conversations[convIndex].Character == "主人公")
+            string charaName = Conversations[convIndex].Character;
+            if (charaName == "主人公")
             {
                 if (MainCharacter.isBoy)
                 {
