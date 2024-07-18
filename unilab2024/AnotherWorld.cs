@@ -114,7 +114,7 @@ namespace unilab2024
                     }
                 }
 
-                Func.CreateWorldMap(this);
+                Func.CreateAnotherWorld(this);
             }
         }
         #endregion

@@ -584,7 +584,22 @@ namespace unilab2024
                 //pictureBox6.Visible = false;
                 //pictureBox7.Visible = false;
                 ClearCheck.IsCleared[_worldNumber, _level] = true;    //クリア状況管理
-                if (_level == 3)
+                if (_worldNumber == 4)
+                {
+                    for (int j = 0; j < (int)ConstNum.numStages; j++)
+                    {
+                        ClearCheck.IsCleared[_worldNumber, j] = true;
+                    }
+                    for (int i = _worldNumber + 1; i < (int)ConstNum.numWorlds; i++)
+                    {
+                        for (int j = 0; j <= 1; j++)
+                        {
+                            ClearCheck.IsButtonEnabled[i, j] = true;
+                            ClearCheck.IsNew[i, j] = true;
+                        }
+                    }
+                }
+                else if (_level == 3)
                 {
                     ClearCheck.IsCleared[_worldNumber,0] = true;
                     switch (_worldNumber)
@@ -592,21 +607,12 @@ namespace unilab2024
                         case 1:
                         case 2:
                         case 3:
-                            ClearCheck.IsButtonEnabled[_worldNumber + 1, 0] = true;
-                            ClearCheck.IsButtonEnabled[_worldNumber + 1, 1] = true;
-                            ClearCheck.IsNew[_worldNumber + 1, 0] = true;
-                            ClearCheck.IsNew[_worldNumber + 1, 1] = true;
-                            break;
-                        case 4:
-                            for (int i = _worldNumber + 1; i < (int)ConstNum.numWorlds; i++)
+                            for (int j = 0; j <= 1; j++)
                             {
-                                for (int j = 0; j <= 1; j++)
-                                {
-                                    ClearCheck.IsButtonEnabled[i, j] = true;
-                                    ClearCheck.IsNew[i, j] = true;
-                                }
+                                ClearCheck.IsButtonEnabled[_worldNumber + 1, j] = true;
+                                ClearCheck.IsNew[_worldNumber + 1, j] = true;
                             }
-                            break;
+                            break;;
                     }
                 }
                 else
