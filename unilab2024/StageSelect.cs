@@ -53,6 +53,21 @@ namespace unilab2024
                     string NameWithoutButton = button.Name.Replace("button_Stage", "");
                     if (int.TryParse(NameWithoutButton, out int j))
                     {
+                        if (_worldNumber == 4)
+                        {
+                            switch (j)
+                            {
+                                case 1:
+                                    button.Location = new Point(643, 600);
+                                    button.Text = "卒業試験";
+                                    break;
+                                case 2:
+                                case 3:
+                                    button.Enabled = false;
+                                    button.Visible = false;
+                                    break;
+                            }
+                        }
                         if (ClearCheck.IsButtonEnabled[_worldNumber, j])
                         {
                             button.ForeImage = null;
