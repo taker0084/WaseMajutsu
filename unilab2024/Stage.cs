@@ -383,12 +383,18 @@ namespace unilab2024
 
                 comboBox_SecondSelect.Visible = true;
                 button_SecondReset.Visible = true;
-                listBox2.Location = new Point(listBox.Location.X + 250, listBox.Location.Y) ;
+                listBox2.Location = new Point(listBox.Location.X + 250, listBox.Location.Y);
                 listBox2.Width = 200;
                 listBox2.Visible = true;
 
             }
-            else listBox.Visible = true;
+            else
+            {
+                comboBox_SecondSelect.Visible = false;
+                button_SecondReset.Visible = false;
+                listBox.Visible = true;
+                listBox.Width = 400;
+            }
         }
         #endregion
 
@@ -576,13 +582,9 @@ namespace unilab2024
                 button_ToMap.Enabled = true;
                 button_Retry.Enabled = false;
                 button_ToMap.Visible = true;
-                button_ToMap.Location = new Point(800, 600);
-                button_ToMap.Size = new Size(200, 50);
+                //button_ToMap.Location = new Point(800, 600);
+                //button_ToMap.Size = new Size(200, 50);
                 
-                //pictureBox4.Visible = false;
-                //pictureBox5.Visible = false;
-                //pictureBox6.Visible = false;
-                //pictureBox7.Visible = false;
                 ClearCheck.IsCleared[_worldNumber, _level] = true;    //クリア状況管理
                 if (_worldNumber == 4)
                 {
@@ -816,80 +818,6 @@ namespace unilab2024
                         default:
                             break;
                     }
-                    /*switch (map[y, x]) //配列に画像を保存し表示で十分
-                    {
-
-                        case 0:
-                            g1.DrawImage(img_noway, placeX, placeY, Global.cell_length, Global.cell_length);
-                            break;
-                        case 1:
-                            g1.DrawImage(img_way, placeX, placeY, Global.cell_length, Global.cell_length);
-                            break;
-                        case 2:
-                            g1.DrawImage(img_ice, placeX, placeY, Global.cell_length, Global.cell_length);
-                            break;
-                        case 3:
-                            g1.DrawImage(img_jump, placeX, placeY, Global.cell_length, Global.cell_length);
-                            break;
-                        case 4:
-                            ImageAnimator.UpdateFrames(animatedImage_up);
-                            g1.DrawImage(animatedImage_up, placeX, placeY, Global.cell_length, Global.cell_length);
-                            break;
-                        case 5:
-                            ImageAnimator.UpdateFrames(animatedImage_right);
-                            g1.DrawImage(animatedImage_right, placeX, placeY, Global.cell_length, Global.cell_length);
-                            break;
-                        case 6:
-                            ImageAnimator.UpdateFrames(animatedImage_down);
-                            g1.DrawImage(animatedImage_down, placeX, placeY, Global.cell_length, Global.cell_length);
-                            break;
-                        case 7:
-                            ImageAnimator.UpdateFrames(animatedImage_left);
-                            g1.DrawImage(animatedImage_left, placeX, placeY, Global.cell_length, Global.cell_length);
-                            break;
-                        case 8:
-                            g1.DrawImage(img_tree, placeX, placeY, Global.cell_length, Global.cell_length);
-                            break;
-                        case 20:
-                            g1.DrawImage(cloud_ul, placeX, placeY, Global.cell_length, Global.cell_length);
-                            break;
-                        case 21:
-                            g1.DrawImage(cloud_left, placeX, placeY, Global.cell_length, Global.cell_length);
-                            break;
-                        case 22:
-                            g1.DrawImage(cloud_bl, placeX, placeY, Global.cell_length, Global.cell_length);
-                            break;
-                        case 23:
-                            g1.DrawImage(cloud_bottom, placeX, placeY, Global.cell_length, Global.cell_length);
-                            break;
-                        case 24:
-                            g1.DrawImage(cloud_br, placeX, placeY, Global.cell_length, Global.cell_length);
-                            break;
-                        case 25:
-                            g1.DrawImage(cloud_right, placeX, placeY, Global.cell_length, Global.cell_length);
-                            break;
-                        case 26:
-                            g1.DrawImage(cloud_ur, placeX, placeY, Global.cell_length, Global.cell_length);
-                            break;
-                        case 27:
-                            g1.DrawImage(cloud_upside, placeX, placeY, Global.cell_length, Global.cell_length);
-                            break;
-                        case 100:
-                            g1.FillRectangle(startBackgroundColor, placeX, placeY, Global.cell_length, Global.cell_length);
-                            Global.x_start = x;
-                            Global.y_start = y;
-                            Global.x_now = x;
-                            Global.y_now = y;
-                            g2.DrawImage(character_me, placeX - Global.extra_length, placeY - 2 * Global.extra_length, Global.cell_length + 2 * Global.extra_length, Global.cell_length + 2 * Global.extra_length);
-                            break;
-                        case 101:
-                            g1.FillRectangle(goalBackgroundColor, placeX, placeY, Global.cell_length, Global.cell_length);
-                            //ステージごとにゴールのキャラを変えたい
-                            g2.DrawImage(goal_obj(_stageName), placeX - Global.extra_length, placeY - 2 * Global.extra_length, Global.cell_length + 2 * Global.extra_length, Global.cell_length + 2 * Global.extra_length);
-                            Global.x_goal = x;
-                            Global.y_goal = y;
-                            break;
-                    }*/  //削除候補
                 }
             }
             this.Invoke((MethodInvoker)delegate
@@ -1574,9 +1502,10 @@ namespace unilab2024
             List<int[]> move_copy = new List<int[]>(move);
             
             int jump = 0;
-            bool move_floor = false;
+            //bool move_floor = false;
             int waittime = 250; //ミリ秒
             count_walk = 1;//何マス歩いたか、歩き差分用
+            bool isWarp = false;
 
             (int, int) place_update(int a, int b, List<int[]> move_next)
             {
@@ -1694,16 +1623,15 @@ namespace unilab2024
                     continue;
                 }
 
-                //移動先がジャンプ台なら同じ方向に二回進む（１個先の障害物は無視）
-                if (Map[x, y] == 9 || jump != 0)                           //ジャンプ台の番号も決める(いまは一旦9)
+                if ((Map[x, y] == 5) || (Map[x, y] == 6))
                 {
-                    if (move_floor)
-                    {
-                        move_floor = false;
-                        move_copy.RemoveAt(0);
-                    }
+                    jump = Map[x, y] - 3;
+                }
+                //移動先がジャンプ台なら同じ方向に二回進む（１個先の障害物は無視）
+                if ( jump != 0)                           //ジャンプ台の番号も決める(いまは一旦9)
+                {
 
-                    jump = jump--;
+                    jump--;
                     //if (jump) //次の移動で着地
                     //{
                     //    jump = false;
@@ -1717,46 +1645,25 @@ namespace unilab2024
                     Thread.Sleep(waittime);
                     continue;
                 }
-
-                //switch (Map[x, y])       //動く床
-                //{
-                //    case 4: move_copy[0] = new int[2] { 0, -1 }; break;
-                //    case 5: move_copy[0] = new int[2] { 1, 0 }; break;
-                //    case 6: move_copy[0] = new int[2] { 0, 1 }; break;
-                //    case 7: move_copy[0] = new int[2] { -1, 0 }; break;
-                //}
-                ////上に移動するマスを踏んだ場合1つ上に進む
-                //if (Map[y, x] == 4)
-                //{
-                //    move_copy[0] = new int[2] { 0, -1 };
-                //    Thread.Sleep(waittime);
-                //    continue;
-                //}
-
-                ////右に移動するマスを踏んだ場合1つ右に進む
-                //if (Map[y, x] == 5)
-                //{
-                //    move_copy[0] = new int[2] { 1, 0 };
-                //    Thread.Sleep(waittime);
-                //    continue;
-                //}
-
-                ////下に移動するマスを踏んだ場合1つ下に進む
-                //if (Map[y, x] == 6)
-                //{
-                //    move_copy[0] = new int[2] { 0, 1 };
-                //    Thread.Sleep(waittime);
-                //    continue;
-                //}
-
-                ////左に移動するマスを踏んだ場合1つ左に進む
-                //if (Map[y, x] == 7)
-                //{
-                //    move_copy[0] = new int[2] { -1, 0 };
-                //    Thread.Sleep(waittime);
-                //    continue;
-                //}
-
+                //ワープの処理
+                if( Map[x, y] == 7)
+                {
+                    for(int i = 0; i < 12; i++)
+                    {
+                        for (int j = 0; j < 12; j++)
+                        {
+                            if (Map[i,j] == 7 && (i != x || j != y))
+                            {
+                                x = i;
+                                y = j;
+                                isWarp = true;
+                            }
+                        }
+                        if (isWarp) break;
+                    }
+                    Thread.Sleep(waittime);
+                }
+                
                 move_copy.RemoveAt(0);
 
                 if (move_copy.Count == 0)//動作がすべて終了した場合

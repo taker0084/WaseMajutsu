@@ -50,6 +50,7 @@
             this.labelStageName = new System.Windows.Forms.Label();
             this.pictureBox_CharaName = new System.Windows.Forms.PictureBox();
             this.pictureBox_CharaImage = new System.Windows.Forms.PictureBox();
+            this.label_InputTo = new System.Windows.Forms.Label();
             this.uiButtonObject_for = new unilab2024.UIButtonObject();
             this.uiButtonObject_endfor = new unilab2024.UIButtonObject();
             this.uiButtonObject_B = new unilab2024.UIButtonObject();
@@ -123,7 +124,7 @@
             // 
             // button_SecondReset
             // 
-            this.button_SecondReset.Location = new System.Drawing.Point(1840, 147);
+            this.button_SecondReset.Location = new System.Drawing.Point(1790, 147);
             this.button_SecondReset.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
             this.button_SecondReset.Name = "button_SecondReset";
             this.button_SecondReset.Size = new System.Drawing.Size(90, 36);
@@ -229,7 +230,7 @@
             // textBox_ForCount
             // 
             this.textBox_ForCount.Font = new System.Drawing.Font("游明朝 Demibold", 22F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.textBox_ForCount.Location = new System.Drawing.Point(1380, 501);
+            this.textBox_ForCount.Location = new System.Drawing.Point(1381, 549);
             this.textBox_ForCount.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.textBox_ForCount.Name = "textBox_ForCount";
             this.textBox_ForCount.Size = new System.Drawing.Size(77, 78);
@@ -254,7 +255,7 @@
             this.comboBox_Select.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox_Select.Font = new System.Drawing.Font("游明朝 Demibold", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.comboBox_Select.FormattingEnabled = true;
-            this.comboBox_Select.Location = new System.Drawing.Point(1347, 92);
+            this.comboBox_Select.Location = new System.Drawing.Point(1333, 92);
             this.comboBox_Select.Name = "comboBox_Select";
             this.comboBox_Select.Size = new System.Drawing.Size(202, 49);
             this.comboBox_Select.TabIndex = 32;
@@ -277,7 +278,7 @@
             this.comboBox_SecondSelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox_SecondSelect.Font = new System.Drawing.Font("游明朝 Demibold", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.comboBox_SecondSelect.FormattingEnabled = true;
-            this.comboBox_SecondSelect.Location = new System.Drawing.Point(1830, 92);
+            this.comboBox_SecondSelect.Location = new System.Drawing.Point(1777, 91);
             this.comboBox_SecondSelect.Name = "comboBox_SecondSelect";
             this.comboBox_SecondSelect.Size = new System.Drawing.Size(202, 49);
             this.comboBox_SecondSelect.TabIndex = 34;
@@ -289,7 +290,7 @@
             this.comboBox_InputTo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox_InputTo.Font = new System.Drawing.Font("游明朝 Demibold", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.comboBox_InputTo.FormattingEnabled = true;
-            this.comboBox_InputTo.Location = new System.Drawing.Point(1347, 490);
+            this.comboBox_InputTo.Location = new System.Drawing.Point(1482, 493);
             this.comboBox_InputTo.Name = "comboBox_InputTo";
             this.comboBox_InputTo.Size = new System.Drawing.Size(212, 49);
             this.comboBox_InputTo.TabIndex = 35;
@@ -325,6 +326,16 @@
             this.pictureBox_CharaImage.Size = new System.Drawing.Size(500, 450);
             this.pictureBox_CharaImage.TabIndex = 38;
             this.pictureBox_CharaImage.TabStop = false;
+            // 
+            // label_InputTo
+            // 
+            this.label_InputTo.AutoSize = true;
+            this.label_InputTo.Font = new System.Drawing.Font("游明朝 Demibold", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.label_InputTo.Location = new System.Drawing.Point(1344, 501);
+            this.label_InputTo.Name = "label_InputTo";
+            this.label_InputTo.Size = new System.Drawing.Size(114, 41);
+            this.label_InputTo.TabIndex = 39;
+            this.label_InputTo.Text = "入力先";
             // 
             // uiButtonObject_for
             // 
@@ -428,6 +439,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(1923, 1292);
+            this.Controls.Add(this.label_InputTo);
             this.Controls.Add(this.labelStageName);
             this.Controls.Add(this.comboBox_InputTo);
             this.Controls.Add(this.comboBox_SecondSelect);
@@ -507,5 +519,6 @@
         private System.Windows.Forms.Label labelStageName;
         private System.Windows.Forms.PictureBox pictureBox_CharaName;
         private System.Windows.Forms.PictureBox pictureBox_CharaImage;
+        private System.Windows.Forms.Label label_InputTo;
     }
 }
