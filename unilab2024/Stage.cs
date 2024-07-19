@@ -1479,12 +1479,12 @@ namespace unilab2024
             int new_x = x + move[0][0];
             int new_y = y + move[0][1];
 
-            if (new_x <= 0 || (max_x - new_x) <= 1 || new_y <= 0 || (max_y - new_y) <= 1) return false;
-            else if (Map[new_x,new_y] == 2) return false;
+            if (new_x <= 0 || (max_x - new_x) <= 1 || new_y <= 0 || (max_y - new_y) <= 1) return true;
+            else if (Map[new_x,new_y] == 2) return true;
             else
             {
                 //move.RemoveAt(0);
-                return true;
+                return false;
             }
         }
 
@@ -1498,7 +1498,7 @@ namespace unilab2024
         /// <param name="Chara">出力画像へのポインタ</param>
         /// <returns></returns>
 
-        Image Character_Image(int x, int y, int steps, bool jump, Image Chara) 
+        Image Character_Image(int x, int y, int steps, int jump, Image Chara) 
         {
             int a = steps % 2;//歩き差分を識別
             int direction = x * 10 + y;
@@ -1573,7 +1573,7 @@ namespace unilab2024
 
             List<int[]> move_copy = new List<int[]>(move);
             
-            bool jump = false;
+            int jump = 0;
             bool move_floor = false;
             int waittime = 250; //ミリ秒
             count_walk = 1;//何マス歩いたか、歩き差分用
@@ -1610,104 +1610,41 @@ namespace unilab2024
             {
                 if (move_copy.Count > 0)
                 {
-                    //int max_x = Map.GetLength(0);
-                    //int max_y = Map.GetLength(1);
-                    //int new_x = x + move[0][0];
-                    //int new_y = y + move[0][1];
-                    //bool a = Colision_detection(x, y, Map, move_copy);
-                    if (!Colision_detection(x, y, Map, move_copy) && !jump)
+                    if (Colision_detection(x, y, Map, move_copy) && jump==0)
                     {
                         //忍者を動かしてからミスの表示を出す
                         (x_now, y_now) = draw_move(x, y, ref move_copy);
-                        //x += move_copy[0][0];
-                        //y += move_copy[0][1];
-                        //x_now = x;
-                        //y_now = y;
-                        //g2.Clear(Color.Transparent);
-
-                        //character_me = Ninja_Image(move_copy[0][0], move_copy[0][1], count, jump, character_me);
-                        //DrawCharacter(x, y, ref character_me);
-
-                        //g2.DrawImage(character_me, x * cell_length - extra_length, y * cell_length - 2 * extra_length, cell_length + 2 * extra_length, cell_length + 2 * extra_length);
-                        //ステージごとにゴールのキャラを変えたい
-                        //g2.DrawImage(goal_obj(_stageName), x_goal * cell_length - extra_length, y_goal * cell_length - 2 * extra_length, cell_length + 2 * extra_length, cell_length + 2 * extra_length);
-
-                        //pictureBoxの中身を塗り替える
-                        //this.Invoke((MethodInvoker)delegate
-                        //{
-                        //    // pictureBox2を同期的にRefreshする
-                        //    pictureBox2.Refresh();
-                        //});
                         resetStage("miss_out");
-                        //character_me = Image.FromFile("忍者_正面.png");
-                        //g2.DrawImage(character_me, x * cell_length - extra_length, y * cell_length - 2 * extra_length, cell_length + 2 * extra_length, cell_length + 2 * extra_length);
                         DrawCharacter(x, y, ref character_me);
                         break;
                     }
-                    if (jump && Map[x + move_copy[0][1] * 2, y + move_copy[0][0] * 2] == 8) //jumpの時着地先が木の場合、ゲームオーバー
+                    if (jump != 0 && Map[x + move_copy[0][1] * 2, y + move_copy[0][0] * 2] == 8) //jumpの時着地先が木の場合、ゲームオーバー
                     {
                         (x_now, y_now) = draw_move(x, y, ref move_copy);
-                        //x += move_copy[0][0];
-                        //y += move_copy[0][1];
-                        //x_now = x;
-                        //y_now = y;
-                        //g2.Clear(Color.Transparent);
-                        //ステージごとにゴールのキャラを変えたい
-                        //g2.DrawImage(goal_obj(_stageName), x_goal * cell_length - extra_length, y_goal * cell_length - 2 * extra_length, cell_length + 2 * extra_length, cell_length + 2 * extra_length);
-
-                        //忍者の動きに合わせて向きが変わる
-                        //character_me = Ninja_Image(move_copy[0][0], move_copy[0][1], count, jump, character_me);
-
-                        //g2.DrawImage(character_me, x * cell_length - extra_length, y * cell_length - 2 * extra_length, cell_length + 2 * extra_length, cell_length + 2 * extra_length);
-                        //DrawCharacter(x, y, ref character_me);
-
-                        //pictureBox2.Refresh();
                         Thread.Sleep(waittime);
-                        //bool J = false;
-                        //x += move_copy[0][0];
-                        //y += move_copy[0][1];
-                        //x_now = x;
-                        //y_now = y;
-                        //g2.Clear(Color.Transparent);
                         (x_now, y_now) = draw_move(x, y, ref move_copy);
-
-                        //ステージごとにゴールのキャラを変えたい
-                        //g2.DrawImage(goal_obj(_stageName), x_goal * cell_length - extra_length, y_goal * cell_length - 2 * extra_length, cell_length + 2 * extra_length, cell_length + 2 * extra_length);
-                        //忍者の動きに合わせて向きが変わる
-                        //character_me = Ninja_Image(move_copy[0][0], move_copy[0][1], count, J, character_me);
-                        //g2.DrawImage(character_me, x * cell_length - extra_length, y * cell_length - 2 * extra_length, cell_length + 2 * extra_length, cell_length + 2 * extra_length);
-                        //pictureBox2.Refresh();
 
                         resetStage("miss_tree");
                         DrawCharacter(x, y, ref character_me);
-                        //character_me = Image.FromFile("忍者_正面.png");
-                        //g2.DrawImage(character_me, x * cell_length - extra_length, y * cell_length - 2 * extra_length, cell_length + 2 * extra_length, cell_length + 2 * extra_length);
                         break;
                     }
                     if (count_walk > 50) //無限ループ対策
                     {
                         resetStage("miss_countover");
                         DrawCharacter(x, y, ref character_me);
-                        //character_me = Image.FromFile("忍者_正面.png");
-                        //g2.DrawImage(character_me, x * cell_length - extra_length, y * cell_length - 2 * extra_length, cell_length + 2 * extra_length, cell_length + 2 * extra_length);
                         break;
                     }
                 }
                 else
                 {
                     DrawCharacter(x, y, ref character_me);
-                    //character_me = Image.FromFile("忍者_正面.png");
-                    //g2.DrawImage(character_me, x * cell_length - extra_length, y * cell_length - 2 * extra_length, cell_length + 2 * extra_length, cell_length + 2 *    extra_length);
                     break;
                 }
 
                 //jumpでない時移動先が木の場合、木の方向には進めない
-                if (!jump && Map[x + move_copy[0][0], y + move_copy[0][1]] == 2)
+                if (jump == 0 && Map[x + move_copy[0][0], y + move_copy[0][1]] == 2)
                 {
                     DrawCharacter(x, y, ref character_me);
-                    //character_me = Ninja_Image(move_copy[0][0], move_copy[0][1], count_walk, jump, character_me);
-                    //g2.DrawImage(character_me, x * cell_length - extra_length, y * cell_length - 2 * extra_length, cell_length + 2 * extra_length, cell_length + 2 * extra_length);
-                    //move_copy[0] = new int[] { 0, 0 };
                     move_copy.RemoveAt(0);
                     //500ミリ秒=0.5秒待機する
                     Thread.Sleep(waittime);
@@ -1750,7 +1687,7 @@ namespace unilab2024
                 }
 
                 //移動先が氷の上なら同じ方向にもう一回進む
-                if (!jump && Map[x, y] == 8)                         //氷ステージ出来たら数字きめる(いまは一旦8)
+                if (jump == 0 && Map[x, y] == 8)                         //氷ステージ出来たら数字きめる(いまは一旦8)
                 {
                     //500ミリ秒=0.5秒待機する
                     Thread.Sleep(waittime);
@@ -1758,7 +1695,7 @@ namespace unilab2024
                 }
 
                 //移動先がジャンプ台なら同じ方向に二回進む（１個先の障害物は無視）
-                if (Map[x, y] == 9 || jump)                           //ジャンプ台の番号も決める(いまは一旦9)
+                if (Map[x, y] == 9 || jump != 0)                           //ジャンプ台の番号も決める(いまは一旦9)
                 {
                     if (move_floor)
                     {
@@ -1766,7 +1703,7 @@ namespace unilab2024
                         move_copy.RemoveAt(0);
                     }
 
-                    jump = !jump;
+                    jump = jump--;
                     //if (jump) //次の移動で着地
                     //{
                     //    jump = false;
@@ -1781,13 +1718,13 @@ namespace unilab2024
                     continue;
                 }
 
-                switch (Map[x, y])       //動く床
-                {
-                    case 4: move_copy[0] = new int[2] { 0, -1 }; break;
-                    case 5: move_copy[0] = new int[2] { 1, 0 }; break;
-                    case 6: move_copy[0] = new int[2] { 0, 1 }; break;
-                    case 7: move_copy[0] = new int[2] { -1, 0 }; break;
-                }
+                //switch (Map[x, y])       //動く床
+                //{
+                //    case 4: move_copy[0] = new int[2] { 0, -1 }; break;
+                //    case 5: move_copy[0] = new int[2] { 1, 0 }; break;
+                //    case 6: move_copy[0] = new int[2] { 0, 1 }; break;
+                //    case 7: move_copy[0] = new int[2] { -1, 0 }; break;
+                //}
                 ////上に移動するマスを踏んだ場合1つ上に進む
                 //if (Map[y, x] == 4)
                 //{
