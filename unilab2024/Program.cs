@@ -10,6 +10,7 @@ using System.Drawing;
 
 namespace unilab2024
 {
+    #region Main関数
     internal static class Program
     {
         /// <summary>
@@ -30,48 +31,85 @@ namespace unilab2024
             Application.Run(new Title());
         }
     }
+    #endregion
 
     #region フォーム呼び出し
     public static partial class Func
     {
         
-        public static void CreatePrologue ()
+        public static void CreatePrologue (Form currentForm)
         {
+            CurrentFormState.FormName = "Prologue";
+            CurrentFormState.StateData.Clear();
+
             Prologue form = new Prologue();
             form.Show();
+            if (!(currentForm is Title))
+            {
+                currentForm.Dispose();
+            }
         }
         
         public static void CreateWorldMap(Form currentForm) //呼び出し方: Func.CreateWorldMap(this);
         {
+            CurrentFormState.FormName = "WorldMap";
+            CurrentFormState.StateData.Clear();
+
             WorldMap form = new WorldMap();
             form.Show();
-            currentForm.Dispose();
+            if (!(currentForm is Title))
+            {
+                currentForm.Dispose();
+            }
         }
 
         public static void CreateAnotherWorld(Form currentForm) 
         {
+            CurrentFormState.FormName = "AnotherWorld";
+            CurrentFormState.StateData.Clear();
+
             AnotherWorld form = new AnotherWorld();
             form.Show();
-            currentForm.Dispose();
+            if (!(currentForm is Title))
+            {
+                currentForm.Dispose();
+            }
         }
 
         public static void CreateStageSelect(Form currentForm,string worldName, int worldNumber) //呼び出し方: Func.CreateStageSelect(this,"1年生",1);
         {
+            CurrentFormState.FormName = "StageSelect";
+            CurrentFormState.StateData.Clear();
+            CurrentFormState.StateData["WorldName"] = worldName;
+            CurrentFormState.StateData["WorldNumber"] = worldNumber;
+
             StageSelect form = new StageSelect();
             form.WorldName = worldName;
             form.WorldNumber = worldNumber;
             form.Show();
-            currentForm.Dispose();
+            if (!(currentForm is Title))
+            {
+                currentForm.Dispose();
+            }
         }
 
         public static void CreateStage(Form currentForm, string worldName,int worldNumber, int level) //呼び出し方: Func.CreateStageSelect(this,"1");  各ステージどう名付けるか決めたい
         {
+            CurrentFormState.FormName = "Stage";
+            CurrentFormState.StateData.Clear();
+            CurrentFormState.StateData["WorldName"] = worldName;
+            CurrentFormState.StateData["WorldNumber"] = worldNumber;
+            CurrentFormState.StateData["Level"] = level;
+
             Stage form = new Stage();
             form.WorldName = worldName;
             form.WorldNumber = worldNumber;
             form.Level = level;
             form.Show();
-            currentForm.Dispose();
+            if(!(currentForm is Title))
+            {
+                currentForm.Dispose();
+            }
         }
         
     }
@@ -180,6 +218,7 @@ namespace unilab2024
         //読み込みはProgram.csのMain関数内で行っている。以下の関数は他のFormで呼び出す必要はない。
         public static void LoadImg_Character()
         {
+            Dictionaries.Img_Character.Clear();
             string[] files = Directory.GetFiles(@"Image\\Character");
             foreach (string file in files)
             {
@@ -190,6 +229,7 @@ namespace unilab2024
 
         public static void LoadImg_DotPic()
         {
+            Dictionaries.Img_DotPic.Clear();
             string charaDirectory = "";
             if (MainCharacter.isBoy)
             {
@@ -208,6 +248,7 @@ namespace unilab2024
         }
         public static void LoadImg_Object()
         {
+            Dictionaries.Img_Object.Clear();
             string[] files = Directory.GetFiles(@"Object");
             foreach (string file in files)
             {
@@ -218,6 +259,7 @@ namespace unilab2024
 
         public static void LoadImg_Button()
         {
+            Dictionaries.Img_Button.Clear();
             string[] files = Directory.GetFiles(@"Image\\Button");
             foreach (string file in files)
             {
@@ -228,6 +270,7 @@ namespace unilab2024
 
         public static void LoadImg_Background()
         {
+            Dictionaries.Img_Background.Clear();
             string[] files = Directory.GetFiles(@"Image\\Background");
             foreach (string file in files)
             {
@@ -250,6 +293,12 @@ namespace unilab2024
     {
         numWorlds = 7+1,
         numStages = 3+1
+    }
+
+    public partial class CurrentFormState
+    {
+        public static string FormName = "Prologue";
+        public static Dictionary<string,object>StateData = new Dictionary<string,object>();
     }
     public partial class ClearCheck
     {
