@@ -19,8 +19,32 @@ namespace unilab2024
 
         private void buttonStart_Click(object sender, EventArgs e)
         {
-            Func.CreatePrologue();
-            //Func.CreateAnotherWorld(this);
+            string worldName;
+            int worldNumber;
+            int level;
+            switch (CurrentFormState.FormName)
+            {
+                case "Prologue":
+                    Func.CreatePrologue(this);
+                    break;
+                case "WorldMap":
+                    Func.CreateWorldMap(this);
+                    break;
+                case "AnotherWorld":
+                    Func.CreateAnotherWorld(this);
+                    break;
+                case "StageSelect":
+                    worldName = (string)CurrentFormState.StateData["WorldName"];
+                    worldNumber = (int)CurrentFormState.StateData["WorldNumber"];
+                    Func.CreateStageSelect(this,worldName, worldNumber);
+                    break;
+                case "Stage":
+                    worldName = (string)CurrentFormState.StateData["WorldName"];
+                    worldNumber = (int)CurrentFormState.StateData["WorldNumber"];
+                    level = (int)CurrentFormState.StateData["Level"];
+                    Func.CreateStage(this, worldName, worldNumber, level);
+                    break;
+            }
         }
     }
 }
