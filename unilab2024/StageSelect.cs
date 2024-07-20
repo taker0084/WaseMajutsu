@@ -53,7 +53,11 @@ namespace unilab2024
                     string NameWithoutButton = button.Name.Replace("button_Stage", "");
                     if (int.TryParse(NameWithoutButton, out int j))
                     {
-                        if (_worldNumber == 4)
+                        if (_worldNumber < 4)
+                        {
+                            button.Text = j + "科目め";
+                        }
+                        else if (_worldNumber == 4)
                         {
                             switch (j)
                             {
@@ -68,16 +72,22 @@ namespace unilab2024
                                     break;
                             }
                         }
+                        else
+                        {
+                            button.Text = "ステージ" + j;
+                        }
                         if (ClearCheck.IsButtonEnabled[_worldNumber, j])
                         {
                             button.ForeImage = null;
                             button.Cursor = Cursors.Hand;
                             if (ClearCheck.IsNew[_worldNumber, j])
                             {
+                                button.BackColor = Color.FromArgb(255, 128, 128);
                                 button.ConditionImage = Dictionaries.Img_Button["New"];
                             }
                             else if (ClearCheck.IsCleared[_worldNumber, j])
                             {
+                                button.BackColor = Color.FromArgb(128, 255, 255);
                                 button.ConditionImage = Dictionaries.Img_Button["Clear"];
                             }
                             else
