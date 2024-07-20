@@ -131,6 +131,7 @@ namespace unilab2024
         //public static List<Conversation> Conversations = new List<Conversation>();  //会話文を入れるリスト
         List<Conversation> StartConv; 
         List<Conversation> EndConv;
+        bool isBefore;
         bool isStartConv;
         int convIndex;
         public Graphics g1;
@@ -142,13 +143,26 @@ namespace unilab2024
         {
             //button5.Visible = false;
             //_stageName = "stage2-3";
+            isBefore = true;
             string stageName = "stage"+_worldNumber + "-" + _level;
             map = CreateStage(stageName); //ステージ作成
 
             grade = Regex.Replace(stageName, @"[^0-9]", "");
             int chapter_num = int.Parse(grade) / 10;
 
-            labelStageName.Text = _worldName + " レベル" + _level;
+            if (_worldNumber < 4)
+            {
+                labelStageName.Text = _worldName + " " + _level + "科目め";
+            }
+            else if (_worldNumber == 4)
+            {
+                labelStageName.Text = _worldName;
+            }
+            else
+            {
+                labelStageName.Text = _worldName + " ステージ" + _level;
+                button_ToMap.Text = "ステージ選択に戻る";
+            }
 
             #region リストボックス・ボタンの設定
             // 1行文の高さ
@@ -314,22 +328,42 @@ namespace unilab2024
 
             string convFileName = "Story_Chapter" + _worldNumber + "-" + _level + ".csv";
             (StartConv, EndConv) = Func.LoadStories(convFileName); //会話読み込み
-            pictureBox_CharaImage.Visible = true;
-            pictureBox_CharaImage.Enabled = true;
-            pictureBox_CharaImage.BringToFront();
-            pictureBox_CharaName.Visible = true;
-            pictureBox_CharaName.Enabled = true;
-            pictureBox_CharaName.BringToFront();
-            pictureBox_Dialogue.Visible = true;
-            pictureBox_Dialogue.Enabled = true;
-            pictureBox_Dialogue.BringToFront();
-            pictureBox_Dialogue.Cursor = Cursors.Hand;
-            convIndex = 0;
-            isStartConv = true;
-            drawConversations(isStartConv);
+            StartConversations(true);
         }
 
         #region 各コントロール機能設定
+        private void ChangeControlEnable(bool isStartConv)//会話用
+        {
+            foreach (Control control in this.Controls)
+            {
+                control.Enabled = !isStartConv;
+            }
+
+            pictureBox_CharaImage.Visible = isStartConv;
+            pictureBox_CharaImage.Enabled = isStartConv;
+            
+            pictureBox_CharaName.Visible = isStartConv;
+            pictureBox_CharaName.Enabled = isStartConv;
+            
+            pictureBox_Dialogue.Visible = isStartConv;
+            pictureBox_Dialogue.Enabled = isStartConv;
+            
+            if (isStartConv)
+            {
+                pictureBox_CharaImage.BringToFront();
+                pictureBox_CharaName.BringToFront();
+                pictureBox_Dialogue.BringToFront();
+                pictureBox_Dialogue.Cursor = Cursors.Hand;
+            }
+            else
+            {
+                pictureBox_CharaImage.SendToBack();
+                pictureBox_CharaName.SendToBack();
+                pictureBox_Dialogue.SendToBack();
+                pictureBox_Dialogue.Cursor = Cursors.Default;
+            }
+        }
+
         public void ComboBox_Changed(String Choose, ListBox Change)
         {
             if (Choose.Contains("A")) Change = listBox_A;
@@ -582,6 +616,7 @@ namespace unilab2024
                 button_ToMap.Enabled = true;
                 button_Retry.Enabled = false;
                 button_ToMap.Visible = true;
+                isBefore = false;
                 //button_ToMap.Location = new Point(800, 600);
                 //button_ToMap.Size = new Size(200, 50);
                 
@@ -629,19 +664,7 @@ namespace unilab2024
                     button_ToMap.ConditionImage = Dictionaries.Img_Button["New"];
                 }
 
-                pictureBox_CharaImage.Visible = true;
-                pictureBox_CharaImage.Enabled = true;
-                pictureBox_CharaImage.BringToFront();
-                pictureBox_CharaName.Visible = true;
-                pictureBox_CharaName.Enabled = true;
-                pictureBox_CharaName.BringToFront();
-                pictureBox_Dialogue.Visible = true;
-                pictureBox_Dialogue.Enabled = true;
-                pictureBox_Dialogue.BringToFront();
-                pictureBox_Dialogue.Cursor = Cursors.Hand;
-                convIndex = 0;
-                isStartConv = false;
-                drawConversations(isStartConv);
+                StartConversations(false);
             }
             //else
             //{
@@ -1687,6 +1710,12 @@ namespace unilab2024
         #endregion
 
         #region 会話の表示（Form依存なのでこの位置）
+        private void StartConversations(bool isStartConv)
+        {
+            ChangeControlEnable(true);
+            convIndex = 0;
+            drawConversations(isStartConv);
+        }
         private void drawConversations(bool isStart)
         {
             Graphics g_CharaImage = Graphics.FromImage(bmp_CharaImage);
@@ -1727,16 +1756,7 @@ namespace unilab2024
 
             if (convIndex >= Conversations.Count)
             {
-                pictureBox_CharaImage.Visible = false;
-                pictureBox_CharaImage.Enabled = false;
-                pictureBox_CharaImage.SendToBack();
-                pictureBox_CharaName.Visible = false;
-                pictureBox_CharaName.Enabled = false;
-                pictureBox_CharaName.SendToBack();
-                pictureBox_Dialogue.Visible = false;
-                pictureBox_Dialogue.Enabled = false;
-                pictureBox_Dialogue.Cursor = Cursors.Default;
-                pictureBox_Dialogue.SendToBack();
+                ChangeControlEnable(false);
                 return;
             }
 
@@ -1800,6 +1820,11 @@ namespace unilab2024
         private void pictureBox_Dialogue_Click(object sender, EventArgs e)
         {
             drawConversations(isStartConv);
+        }
+
+        private void button_Explain_Click(object sender, EventArgs e)
+        {
+            StartConversations(isBefore);
         }
         #endregion
     }

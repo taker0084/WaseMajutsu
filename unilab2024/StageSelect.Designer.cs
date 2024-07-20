@@ -50,11 +50,11 @@
             // buttonToMap
             // 
             this.buttonToMap.BackColor = System.Drawing.Color.Gray;
+            this.buttonToMap.ConditionImage = null;
             this.buttonToMap.Cursor = System.Windows.Forms.Cursors.Hand;
             this.buttonToMap.Font = new System.Drawing.Font("游明朝 Demibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.buttonToMap.ForeColor = System.Drawing.Color.White;
             this.buttonToMap.ForeImage = null;
-            this.buttonToMap.ConditionImage = null;
             this.buttonToMap.Location = new System.Drawing.Point(1350, 10);
             this.buttonToMap.Name = "buttonToMap";
             this.buttonToMap.Size = new System.Drawing.Size(160, 50);
@@ -65,43 +65,43 @@
             // 
             // button_Stage1
             // 
+            this.button_Stage1.ConditionImage = null;
             this.button_Stage1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button_Stage1.Font = new System.Drawing.Font("游ゴシック", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.button_Stage1.ForeImage = null;
-            this.button_Stage1.ConditionImage = null;
-            this.button_Stage1.Location = new System.Drawing.Point(243, 600);
+            this.button_Stage1.Location = new System.Drawing.Point(218, 600);
             this.button_Stage1.Name = "button_Stage1";
-            this.button_Stage1.Size = new System.Drawing.Size(250, 80);
+            this.button_Stage1.Size = new System.Drawing.Size(300, 80);
             this.button_Stage1.TabIndex = 3;
-            this.button_Stage1.Text = "レベル1";
+            this.button_Stage1.Text = "ステージ1";
             this.button_Stage1.UseVisualStyleBackColor = true;
             this.button_Stage1.Click += new System.EventHandler(this.button_StageI_Click);
             // 
             // button_Stage2
             // 
+            this.button_Stage2.ConditionImage = null;
             this.button_Stage2.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button_Stage2.Font = new System.Drawing.Font("游ゴシック", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.button_Stage2.ForeImage = null;
-            this.button_Stage2.ConditionImage = null;
-            this.button_Stage2.Location = new System.Drawing.Point(643, 600);
+            this.button_Stage2.Location = new System.Drawing.Point(618, 600);
             this.button_Stage2.Name = "button_Stage2";
-            this.button_Stage2.Size = new System.Drawing.Size(250, 80);
+            this.button_Stage2.Size = new System.Drawing.Size(300, 80);
             this.button_Stage2.TabIndex = 4;
-            this.button_Stage2.Text = "レベル2";
+            this.button_Stage2.Text = "ステージ2";
             this.button_Stage2.UseVisualStyleBackColor = true;
             this.button_Stage2.Click += new System.EventHandler(this.button_StageI_Click);
             // 
             // button_Stage3
             // 
+            this.button_Stage3.ConditionImage = null;
             this.button_Stage3.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button_Stage3.Font = new System.Drawing.Font("游ゴシック", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.button_Stage3.ForeImage = null;
-            this.button_Stage3.ConditionImage = null;
-            this.button_Stage3.Location = new System.Drawing.Point(1043, 600);
+            this.button_Stage3.Location = new System.Drawing.Point(1018, 600);
             this.button_Stage3.Name = "button_Stage3";
-            this.button_Stage3.Size = new System.Drawing.Size(250, 80);
+            this.button_Stage3.Size = new System.Drawing.Size(300, 80);
             this.button_Stage3.TabIndex = 5;
-            this.button_Stage3.Text = "レベル3";
+            this.button_Stage3.Text = "ステージ3";
             this.button_Stage3.UseVisualStyleBackColor = true;
             this.button_Stage3.Click += new System.EventHandler(this.button_StageI_Click);
             // 
