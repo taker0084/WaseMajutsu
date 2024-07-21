@@ -105,7 +105,12 @@ namespace unilab2024
                     {
                         bool isWorldMap = true;
                         if (_worldNumber >= 5) isWorldMap = false;
-                        if (Func.HasNewStageFromStageSelect(isWorldMap, _worldNumber))
+                        if (!ClearCheck.IsCleared[1, 0])
+                        {
+                            button.Enabled = false;
+                            button.Visible = false;
+                        }
+                        else if (Func.HasNewStageFromStageSelect(isWorldMap, _worldNumber))
                         {
                             button.ConditionImage = Dictionaries.Img_Button["New"];
                         }

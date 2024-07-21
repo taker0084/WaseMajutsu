@@ -132,7 +132,7 @@ namespace unilab2024
         //public static List<Conversation> Conversations = new List<Conversation>();  //会話文を入れるリスト
         List<Conversation> StartConv; 
         List<Conversation> EndConv;
-        bool isBefore;
+        //bool isBefore;
         bool isStartConv;
         int convIndex;
         public Graphics g1;
@@ -144,7 +144,7 @@ namespace unilab2024
         {
             //button5.Visible = false;
             //_stageName = "stage2-3";
-            isBefore = true;
+            //isBefore = true;
             string stageName = "stage"+_worldNumber + "-" + _level;
             map = CreateStage(stageName); //ステージ作成
 
@@ -330,28 +330,29 @@ namespace unilab2024
             #endregion
 
             string convFileName = "Story_Chapter" + _worldNumber + "-" + _level + ".csv";
-            (StartConv, EndConv) = Func.LoadStories(convFileName); //会話読み込み
-            StartConversations(true);
+            (StartConv, EndConv) = Func.LoadStories(convFileName, "play"); //会話読み込み
+            isStartConv = true;
+            StartConversations();
         }
 
         #region 各コントロール機能設定
-        private void ChangeControlEnable(bool isStartConv)//会話用
+        private void ChangeControlEnable(bool isStart)//会話用
         {
             foreach (Control control in this.Controls)
             {
-                control.Enabled = !isStartConv;
+                control.Enabled = !isStart;
             }
 
-            pictureBox_CharaImage.Visible = isStartConv;
-            pictureBox_CharaImage.Enabled = isStartConv;
+            pictureBox_CharaImage.Visible = isStart;
+            pictureBox_CharaImage.Enabled = isStart;
             
-            pictureBox_CharaName.Visible = isStartConv;
-            pictureBox_CharaName.Enabled = isStartConv;
+            pictureBox_CharaName.Visible = isStart;
+            pictureBox_CharaName.Enabled = isStart;
             
-            pictureBox_Dialogue.Visible = isStartConv;
-            pictureBox_Dialogue.Enabled = isStartConv;
+            pictureBox_Dialogue.Visible = isStart;
+            pictureBox_Dialogue.Enabled = isStart;
             
-            if (isStartConv)
+            if (isStart)
             {
                 pictureBox_CharaImage.BringToFront();
                 pictureBox_CharaName.BringToFront();
@@ -645,7 +646,7 @@ namespace unilab2024
                 button_ToMap.Enabled = true;
                 button_Retry.Enabled = false;
                 button_ToMap.Visible = true;
-                isBefore = false;
+                isStartConv = false;
                 //button_ToMap.Location = new Point(800, 600);
                 //button_ToMap.Size = new Size(200, 50);
                 
@@ -693,7 +694,7 @@ namespace unilab2024
                     button_ToMap.ConditionImage = Dictionaries.Img_Button["New"];
                 }
 
-                StartConversations(false);
+                StartConversations();
             }
             //else
             //{
@@ -1749,7 +1750,7 @@ namespace unilab2024
         #endregion
 
         #region 会話の表示（Form依存なのでこの位置）
-        private void StartConversations(bool isStartConv)
+        private void StartConversations()
         {
             ChangeControlEnable(true);
             convIndex = 0;
@@ -1863,7 +1864,7 @@ namespace unilab2024
 
         private void button_Explain_Click(object sender, EventArgs e)
         {
-            StartConversations(isBefore);
+            StartConversations();
         }
         #endregion
     }
