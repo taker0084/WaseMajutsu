@@ -144,7 +144,7 @@ namespace unilab2024
             return Conversations;
         }
 
-        public static (List<Conversation>,List<Conversation>) LoadStories(string ConvFileName)
+        public static (List<Conversation>,List<Conversation>) LoadStories(string ConvFileName, string cutWord)
         {
             List<Conversation> StartConv = new List<Conversation>();
             List<Conversation> EndConv = new List<Conversation>();
@@ -164,7 +164,7 @@ namespace unilab2024
                         isFirstRow = false;
                         continue;
                     }
-                    if (values[1] == "play")
+                    if (values[1] == cutWord)
                     {
                         isBeforePlay = false;
                         continue;

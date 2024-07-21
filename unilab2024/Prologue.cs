@@ -15,15 +15,20 @@ namespace unilab2024
     {
 
         #region メンバ変数の定義など
-        Bitmap bmpPB1;
-        List<Conversation> Conversations;
-        int convIndex = 0;
+        Bitmap bmpPB1, bmp_CharaImage, bmp_CharaName, bmp_Dialogue;
+        List<Conversation> StartConv;
+        List<Conversation> EndConv;
+        bool isStartConv;
+        int convIndex;
 
         public Prologue()
         {
             InitializeComponent();
 
             bmpPB1 = new Bitmap(pictureBox1.Width, pictureBox1.Height);
+            bmp_CharaImage = new Bitmap(pictureBox_CharaImage.Width, pictureBox_CharaImage.Height);
+            bmp_CharaName = new Bitmap(pictureBox_CharaName.Width, pictureBox_CharaName.Height);
+            bmp_Dialogue = new Bitmap(pictureBox_Dialogue.Width, pictureBox_Dialogue.Height);
             pictureBox1.Image = bmpPB1;
 
             this.KeyDown += new KeyEventHandler(Prologue_KeyDown);
@@ -35,22 +40,21 @@ namespace unilab2024
         private void Prologue_Load(object sender, EventArgs e)
         {
             Graphics g1 = Graphics.FromImage(bmpPB1);
-            buttonToMap.Visible = false;
-            buttonToMap.Enabled = false;
-            button_Boy.Visible = false;
-            button_Boy.Enabled = false;
-            button_Girl.Visible = false;
-            button_Girl.Enabled = false;
 
-            Conversations = Func.LoadConversations("Story_Chapter0.csv");
-            drawConversations();
+            string convFileName = "Story_Chapter0.csv";
+            (StartConv, EndConv) = Func.LoadStories(convFileName, "Select"); //会話読み込み
+            isStartConv = true;
+            StartConversations();
         }
         #endregion
 
         #region 会話の表示（Form依存なのでこの位置）
-        private void drawConversations()
+
+        private void drawConversations(bool isStart)
         {
-            Graphics g1 = Graphics.FromImage(bmpPB1);
+            Graphics g_CharaImage = Graphics.FromImage(bmp_CharaImage);
+            Graphics g_CharaName = Graphics.FromImage(bmp_CharaName);
+            Graphics g_Dialogue = Graphics.FromImage(bmp_Dialogue);
 
             //Pen pen = new Pen(Color.FromArgb(100, 255, 100), 2);
             Font fnt_name = new Font("游ゴシック", 33, FontStyle.Bold);
@@ -66,38 +70,91 @@ namespace unilab2024
             int dia_x = 1500;
             int dia_y = 200;
 
-            int adjust_y = 300;
-
             int lineHeight = fnt_dia.Height;
 
-            g1.FillRectangle(Color_BackName, 15, adjust_y + face, name_x, name_y);
+            g_CharaName.FillRectangle(Color_BackName, 0, 0, name_x, name_y);
             //g1.DrawRectangle(pen, 15, adjust_y + face, name_x, name_y);
 
-            g1.FillRectangle(Color_BackConv, 15, adjust_y + face + name_y, dia_x, dia_y);
+            g_Dialogue.FillRectangle(Color_BackConv, 0, 0, dia_x, dia_y);
             //g1.DrawRectangle(pen, 15, adjust_y + face + name_y, dia_x, dia_y);
 
-            g1.DrawString(Conversations[convIndex].Character, fnt_name, Brushes.White, 15 + sp, adjust_y + face + sp);
-
-            //改行の処理はこう書かないとうまくいかない
-            char[] lineBreak = new char[]{ '\\' };
-            string[] DialogueLines = Conversations[convIndex].Dialogue.Replace("\\n","\\").Split(lineBreak);
-            for (int i = 0; i < DialogueLines.Length; i++)
+            List<Conversation> Conversations = new List<Conversation>();
+            if (isStart)
             {
-                g1.DrawString(DialogueLines[i], fnt_dia, Brushes.Black, 15 + sp, adjust_y + face + name_y + sp + i*lineHeight);
-            }
-            g1.DrawImage(Dictionaries.Img_Character[Conversations[convIndex].Img], 15, adjust_y, face, face);
-
-            pictureBox1.Image = bmpPB1;
-            g1.Dispose();
-
-            if (convIndex < Conversations.Count - 1)
-            {
-                convIndex++;
+                Conversations = StartConv;
             }
             else
             {
-                //buttonToMap.Visible = true;
-                //buttonToMap.Enabled = true;
+                Conversations = EndConv;
+            }
+
+            if (convIndex >= Conversations.Count)
+            {
+                if (!isStart)
+                {
+                    Func.CreateStage(this, "1年生", 1, 1);
+                    return;
+                }
+            }
+
+            string charaName = Conversations[convIndex].Character;
+            if (charaName == "主人公")
+            {
+                if (MainCharacter.isBoy)
+                {
+                    charaName = "タロウ";
+                }
+                else
+                {
+                    charaName = "ハナコ";
+                }
+            }
+
+            g_CharaName.DrawString(charaName, fnt_name, Brushes.White, sp, sp);
+
+            //改行の処理はこう書かないとうまくいかない
+            char[] lineBreak = new char[] { '\\' };
+            string[] DialogueLines = Conversations[convIndex].Dialogue.Replace("\\n", "\\").Split(lineBreak);
+            for (int i = 0; i < DialogueLines.Length; i++)
+            {
+                g_Dialogue.DrawString(DialogueLines[i], fnt_dia, Brushes.Black, sp, sp + i * lineHeight);
+            }
+
+            Image charaImage = null;
+            if (Conversations[convIndex].Img == "Main")
+            {
+                if (MainCharacter.isBoy)
+                {
+                    charaImage = Dictionaries.Img_Character["Boy"];
+                }
+                else
+                {
+                    charaImage = Dictionaries.Img_Character["Girl"];
+                }
+            }
+            else
+            {
+                charaImage = Dictionaries.Img_Character[Conversations[convIndex].Img];
+            }
+
+            g_CharaImage.Clear(Color.Transparent);
+            g_CharaImage.DrawImage(charaImage, 0, 0, face, face);
+
+            pictureBox_CharaImage.Image = bmp_CharaImage;
+            g_CharaImage.Dispose();
+            pictureBox_CharaName.Image = bmp_CharaName;
+            g_CharaName.Dispose();
+            pictureBox_Dialogue.Image = bmp_Dialogue;
+            g_Dialogue.Dispose();
+
+            if (convIndex < Conversations.Count)
+            {
+                convIndex++;
+            }
+            if (isStart && convIndex == Conversations.Count)
+            {
+                ChangeControlEnable(false);
+                isStartConv = false;
                 button_Boy.Visible = true;
                 button_Boy.Enabled = true;
                 button_Girl.Visible = true;
@@ -108,18 +165,44 @@ namespace unilab2024
                 button_Girl.Cursor = Cursors.Hand;
                 return;
             }
+
+        }
+
+        private void ChangeControlEnable(bool isStart)//会話用
+        {
+            foreach (Control control in this.Controls)
+            {
+                control.Enabled = !isStart;
+            }
+            button_Boy.Visible = !isStart;
+            button_Girl.Visible = !isStart;
+
+            pictureBox_CharaImage.Enabled = isStart;
+            pictureBox_CharaName.Enabled = isStart;
+            pictureBox_Dialogue.Enabled = isStart;
+
+            if (isStart)
+            {
+                pictureBox_Dialogue.Cursor = Cursors.Hand;
+            }
+            else
+            {
+                pictureBox_Dialogue.Cursor = Cursors.Default;
+            }
+        }
+
+        private void StartConversations()
+        {
+            ChangeControlEnable(true);
+            convIndex = 0;
+            drawConversations(isStartConv);
         }
         #endregion
 
         #region 諸々クリックの処理
-        private void pictureBox1_Click(object sender, EventArgs e)
+        private void pictureBox_Dialogue_Click(object sender, EventArgs e)
         {
-            drawConversations();
-        }
-
-        private void buttonToMap_Click(object sender, EventArgs e)
-        {
-            Func.CreateWorldMap(this);
+            drawConversations(isStartConv);
         }
 
         private void button_CharaSelect_Click(object sender, EventArgs e)
@@ -139,7 +222,7 @@ namespace unilab2024
             }
 
             Func.LoadImg_DotPic();
-            Func.CreateStage(this, "1年生", 1, 1);
+            StartConversations();
         }
         #endregion
 

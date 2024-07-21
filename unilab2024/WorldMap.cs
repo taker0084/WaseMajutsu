@@ -76,9 +76,11 @@ namespace unilab2024
                         }
                         else
                         {
-                            button.ForeImage = Dictionaries.Img_Button["Lock"];
-                            button.Cursor = Cursors.No;
-                            IsButtonToAnotherWorldEnabled = false;
+                            //button.ForeImage = Dictionaries.Img_Button["Lock"];
+                            //button.Cursor = Cursors.No;
+                            //IsButtonToAnotherWorldEnabled = false;
+                            button.Visible = false;
+                            button.Enabled = false;
                         }
                     }
                 }
