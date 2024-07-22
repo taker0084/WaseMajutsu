@@ -30,7 +30,6 @@
         {
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.pictureBox_Dialogue = new System.Windows.Forms.PictureBox();
             this.button_Start = new System.Windows.Forms.Button();
             this.button_ResetInput = new System.Windows.Forms.Button();
             this.button_SecondReset = new System.Windows.Forms.Button();
@@ -46,8 +45,6 @@
             this.checkBox_Dual = new System.Windows.Forms.CheckBox();
             this.comboBox_InputTo = new System.Windows.Forms.ComboBox();
             this.labelStageName = new System.Windows.Forms.Label();
-            this.pictureBox_CharaName = new System.Windows.Forms.PictureBox();
-            this.pictureBox_CharaImage = new System.Windows.Forms.PictureBox();
             this.label_InputTo = new System.Windows.Forms.Label();
             this.button_Explain = new System.Windows.Forms.Button();
             this.label_Input = new System.Windows.Forms.Label();
@@ -63,9 +60,6 @@
             this.button_ToMap = new unilab2024.CustomButton();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Dialogue)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_CharaName)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_CharaImage)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -86,17 +80,6 @@
             this.pictureBox2.Size = new System.Drawing.Size(684, 684);
             this.pictureBox2.TabIndex = 1;
             this.pictureBox2.TabStop = false;
-            // 
-            // pictureBox_Dialogue
-            // 
-            this.pictureBox_Dialogue.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox_Dialogue.Location = new System.Drawing.Point(15, 660);
-            this.pictureBox_Dialogue.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.pictureBox_Dialogue.Name = "pictureBox_Dialogue";
-            this.pictureBox_Dialogue.Size = new System.Drawing.Size(1500, 200);
-            this.pictureBox_Dialogue.TabIndex = 2;
-            this.pictureBox_Dialogue.TabStop = false;
-            this.pictureBox_Dialogue.Click += new System.EventHandler(this.pictureBox_Dialogue_Click);
             // 
             // button_Start
             // 
@@ -271,7 +254,7 @@
             this.checkBox_Dual.AutoSize = true;
             this.checkBox_Dual.Font = new System.Drawing.Font("游明朝 Demibold", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.checkBox_Dual.Location = new System.Drawing.Point(1114, 27);
-            this.checkBox_Dual.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.checkBox_Dual.Margin = new System.Windows.Forms.Padding(2);
             this.checkBox_Dual.Name = "checkBox_Dual";
             this.checkBox_Dual.Size = new System.Drawing.Size(98, 33);
             this.checkBox_Dual.TabIndex = 33;
@@ -286,7 +269,7 @@
             this.comboBox_InputTo.Font = new System.Drawing.Font("游明朝 Demibold", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.comboBox_InputTo.FormattingEnabled = true;
             this.comboBox_InputTo.Location = new System.Drawing.Point(914, 329);
-            this.comboBox_InputTo.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.comboBox_InputTo.Margin = new System.Windows.Forms.Padding(2);
             this.comboBox_InputTo.Name = "comboBox_InputTo";
             this.comboBox_InputTo.Size = new System.Drawing.Size(129, 35);
             this.comboBox_InputTo.TabIndex = 35;
@@ -302,26 +285,6 @@
             this.labelStageName.Size = new System.Drawing.Size(396, 82);
             this.labelStageName.TabIndex = 36;
             this.labelStageName.Text = "StageName";
-            // 
-            // pictureBox_CharaName
-            // 
-            this.pictureBox_CharaName.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox_CharaName.Location = new System.Drawing.Point(15, 600);
-            this.pictureBox_CharaName.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.pictureBox_CharaName.Name = "pictureBox_CharaName";
-            this.pictureBox_CharaName.Size = new System.Drawing.Size(300, 60);
-            this.pictureBox_CharaName.TabIndex = 37;
-            this.pictureBox_CharaName.TabStop = false;
-            // 
-            // pictureBox_CharaImage
-            // 
-            this.pictureBox_CharaImage.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox_CharaImage.Location = new System.Drawing.Point(15, 300);
-            this.pictureBox_CharaImage.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.pictureBox_CharaImage.Name = "pictureBox_CharaImage";
-            this.pictureBox_CharaImage.Size = new System.Drawing.Size(300, 300);
-            this.pictureBox_CharaImage.TabIndex = 38;
-            this.pictureBox_CharaImage.TabStop = false;
             // 
             // label_InputTo
             // 
@@ -516,9 +479,6 @@
             this.Controls.Add(this.button_Start);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.pictureBox_Dialogue);
-            this.Controls.Add(this.pictureBox_CharaImage);
-            this.Controls.Add(this.pictureBox_CharaName);
             this.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
             this.Name = "Stage";
             this.Text = "ゲーム画面";
@@ -526,9 +486,6 @@
             this.Load += new System.EventHandler(this.Stage_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Dialogue)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_CharaName)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_CharaImage)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -538,7 +495,6 @@
 
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.PictureBox pictureBox2;
-        private System.Windows.Forms.PictureBox pictureBox_Dialogue;
         private System.Windows.Forms.Button button_Start;
         private System.Windows.Forms.Button button_ResetInput;
         private System.Windows.Forms.Button button_SecondReset;
@@ -563,8 +519,6 @@
         private System.Windows.Forms.CheckBox checkBox_Dual;
         private System.Windows.Forms.ComboBox comboBox_InputTo;
         private System.Windows.Forms.Label labelStageName;
-        private System.Windows.Forms.PictureBox pictureBox_CharaName;
-        private System.Windows.Forms.PictureBox pictureBox_CharaImage;
         private System.Windows.Forms.Label label_InputTo;
         private System.Windows.Forms.Button button_Explain;
         private System.Windows.Forms.Label label_Input;

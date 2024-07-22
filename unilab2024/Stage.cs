@@ -27,6 +27,8 @@ namespace unilab2024
             //this.AllowDrop = true;
             //this.DragDrop += new DragEventHandler(ListBox_DragDrop);          //Form全体にDrop可能にする
             //this.DragEnter += new DragEventHandler(ListBox_DragEnter);
+            (PictureBoxes, Bitmaps) = Func.CreateConvPictureBox(this);
+            PictureBoxes["Dialogue"].Click += new EventHandler(pictureBox_Dialogue_Click);
 
             this.KeyDown += new KeyEventHandler(Stage_KeyDown);
             this.KeyPreview = true;
@@ -48,13 +50,9 @@ namespace unilab2024
 
             bmp1 = new Bitmap(pictureBox1.Width, pictureBox1.Height);
             bmp2 = new Bitmap(pictureBox2.Width, pictureBox2.Height);
-            bmp_CharaImage = new Bitmap(pictureBox_CharaImage.Width, pictureBox_CharaImage.Height);
-            bmp_CharaName = new Bitmap(pictureBox_CharaName.Width, pictureBox_CharaName.Height);
-            bmp_Dialogue = new Bitmap(pictureBox_Dialogue.Width, pictureBox_Dialogue.Height);
             //bmp4 = new Bitmap(pictureBox4.Width, pictureBox4.Height);
             pictureBox1.Image = bmp1;
             pictureBox2.Image = bmp2;
-            pictureBox_Dialogue.Image = bmp_Dialogue;
             //pictureBox4.Image = bmp4;
             //this.Load += Stage_Load;
         }
@@ -86,7 +84,7 @@ namespace unilab2024
 
         #region グローバル変数定義
         //ここに必要なBitmapやImageを作っていく
-        Bitmap bmp1, bmp2, bmp_CharaImage, bmp_CharaName, bmp_Dialogue, bmp4;
+        Bitmap bmp1, bmp2, bmp4;
 
         Brush goalBackgroundColor = new SolidBrush(Color.Yellow);
         Brush startBackgroundColor = new SolidBrush(Color.Blue);
@@ -130,9 +128,10 @@ namespace unilab2024
         public static int gradenum;
 
         //public static List<Conversation> Conversations = new List<Conversation>();  //会話文を入れるリスト
+        Dictionary<string, PictureBox> PictureBoxes;
+        Dictionary<string, Bitmap> Bitmaps;
         List<Conversation> StartConv; 
         List<Conversation> EndConv;
-        //bool isBefore;
         bool isStartConv;
         int convIndex;
         public Graphics g1;
@@ -332,42 +331,10 @@ namespace unilab2024
             string convFileName = "Story_Chapter" + _worldNumber + "-" + _level + ".csv";
             (StartConv, EndConv) = Func.LoadStories(convFileName, "play"); //会話読み込み
             isStartConv = true;
-            StartConversations();
+            Func.StartConversations(this, PictureBoxes, Bitmaps, StartConv);
         }
 
         #region 各コントロール機能設定
-        private void ChangeControlEnable(bool isStart)//会話用
-        {
-            foreach (Control control in this.Controls)
-            {
-                control.Enabled = !isStart;
-            }
-
-            pictureBox_CharaImage.Visible = isStart;
-            pictureBox_CharaImage.Enabled = isStart;
-            
-            pictureBox_CharaName.Visible = isStart;
-            pictureBox_CharaName.Enabled = isStart;
-            
-            pictureBox_Dialogue.Visible = isStart;
-            pictureBox_Dialogue.Enabled = isStart;
-            
-            if (isStart)
-            {
-                pictureBox_CharaImage.BringToFront();
-                pictureBox_CharaName.BringToFront();
-                pictureBox_Dialogue.BringToFront();
-                pictureBox_Dialogue.Cursor = Cursors.Hand;
-            }
-            else
-            {
-                pictureBox_CharaImage.SendToBack();
-                pictureBox_CharaName.SendToBack();
-                pictureBox_Dialogue.SendToBack();
-                pictureBox_Dialogue.Cursor = Cursors.Default;
-            }
-        }
-
         public void ComboBox_Changed(String Choose, ListBox Change)
         {
             if (Choose.Contains("A")) Change = listBox_A;
@@ -653,6 +620,10 @@ namespace unilab2024
                 ClearCheck.IsCleared[_worldNumber, _level] = true;    //クリア状況管理
                 if (_worldNumber == 4)
                 {
+                    if (!ClearCheck.IsCleared[_worldNumber, 0])
+                    {
+                        ClearCheck.PlayAfterChapter4Story = true;
+                    }
                     for (int j = 0; j < (int)ConstNum.numStages; j++)
                     {
                         ClearCheck.IsCleared[_worldNumber, j] = true;
@@ -694,7 +665,7 @@ namespace unilab2024
                     button_ToMap.ConditionImage = Dictionaries.Img_Button["New"];
                 }
 
-                StartConversations();
+                Func.StartConversations(this, PictureBoxes, Bitmaps, EndConv);
             }
             //else
             //{
@@ -1749,122 +1720,31 @@ namespace unilab2024
         }
         #endregion
 
-        #region 会話の表示（Form依存なのでこの位置）
-        private void StartConversations()
-        {
-            ChangeControlEnable(true);
-            convIndex = 0;
-            drawConversations(isStartConv);
-        }
-        private void drawConversations(bool isStart)
-        {
-            Graphics g_CharaImage = Graphics.FromImage(bmp_CharaImage);
-            Graphics g_CharaName = Graphics.FromImage(bmp_CharaName);
-            Graphics g_Dialogue = Graphics.FromImage(bmp_Dialogue);
-
-            //Pen pen = new Pen(Color.FromArgb(100, 255, 100), 2);
-            Font fnt_name = new Font("游ゴシック", 33, FontStyle.Bold);
-            Font fnt_dia = new Font("游ゴシック", 33);
-            Brush Color_BackConv = new SolidBrush(ColorTranslator.FromHtml("#f8e58c"));
-            Brush Color_BackName = new SolidBrush(ColorTranslator.FromHtml("#856859"));
-            int sp = 5;
-
-            int face = 300;
-            int name_x = 300;
-            int name_y = 60;
-
-            int dia_x = 1500;
-            int dia_y = 200;
-
-            int lineHeight = fnt_dia.Height;
-
-            g_CharaName.FillRectangle(Color_BackName, 0, 0, name_x, name_y);
-            //g1.DrawRectangle(pen, 15, adjust_y + face, name_x, name_y);
-
-            g_Dialogue.FillRectangle(Color_BackConv, 0, 0, dia_x, dia_y);
-            //g1.DrawRectangle(pen, 15, adjust_y + face + name_y, dia_x, dia_y);
-
-            List<Conversation> Conversations = new List<Conversation>();
-            if (isStart)
-            {
-                Conversations = StartConv;
-            }
-            else
-            {
-                Conversations = EndConv;
-            }
-
-            if (convIndex >= Conversations.Count)
-            {
-                ChangeControlEnable(false);
-                return;
-            }
-
-            string charaName = Conversations[convIndex].Character;
-            if (charaName == "主人公")
-            {
-                if (MainCharacter.isBoy)
-                {
-                    charaName = "タロウ";
-                }
-                else
-                {
-                    charaName = "ハナコ";
-                }
-            }
-
-            g_CharaName.DrawString(charaName, fnt_name, Brushes.White, sp, sp);
-
-            //改行の処理はこう書かないとうまくいかない
-            char[] lineBreak = new char[] { '\\' };
-            string[] DialogueLines = Conversations[convIndex].Dialogue.Replace("\\n", "\\").Split(lineBreak);
-            for (int i = 0; i < DialogueLines.Length; i++)
-            {
-                g_Dialogue.DrawString(DialogueLines[i], fnt_dia, Brushes.Black, sp, sp + i * lineHeight);
-            }
-
-            Image charaImage = null;
-            if (Conversations[convIndex].Img == "Main")
-            {
-                if (MainCharacter.isBoy)
-                {
-                    charaImage = Dictionaries.Img_Character["Boy"];
-                }
-                else
-                {
-                    charaImage = Dictionaries.Img_Character["Girl"];
-                }
-            }
-            else
-            {
-                charaImage = Dictionaries.Img_Character[Conversations[convIndex].Img];
-            }
-
-            g_CharaImage.Clear(Color.Transparent);
-            g_CharaImage.DrawImage(charaImage, 0, 0, face, face);
-
-            pictureBox_CharaImage.Image = bmp_CharaImage;
-            g_CharaImage.Dispose();
-            pictureBox_CharaName.Image = bmp_CharaName;
-            g_CharaName.Dispose();
-            pictureBox_Dialogue.Image = bmp_Dialogue;
-            g_Dialogue.Dispose();
-
-            if (convIndex < Conversations.Count)
-            {
-                convIndex++;
-            }
-           
-        }
-
+        #region 会話の表示
         private void pictureBox_Dialogue_Click(object sender, EventArgs e)
         {
-            drawConversations(isStartConv);
+            //drawConversations(isStartConv);
+            if (isStartConv)
+            {
+                Func.DrawConversations(this, PictureBoxes, Bitmaps, StartConv);
+            }
+            else
+            {
+                Func.DrawConversations(this, PictureBoxes, Bitmaps, EndConv);
+            }
         }
 
         private void button_Explain_Click(object sender, EventArgs e)
         {
-            StartConversations();
+            //StartConversations();
+            if (isStartConv)
+            {
+                Func.StartConversations(this, PictureBoxes, Bitmaps, StartConv);
+            }
+            else
+            {
+                Func.StartConversations(this, PictureBoxes, Bitmaps, EndConv);
+            }
         }
         #endregion
     }

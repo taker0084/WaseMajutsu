@@ -13,10 +13,19 @@ namespace unilab2024
     public partial class WorldMap : Form
     {
         #region キー入力の設定等
+        //会話用
+        Dictionary<string, PictureBox> PictureBoxes;
+        Dictionary<string, Bitmap> Bitmaps;
+        List<Conversation> Conversations;
+
         private bool IsButtonToAnotherWorldEnabled;
         public WorldMap()
         {
             InitializeComponent();
+
+            (PictureBoxes, Bitmaps) = Func.CreateConvPictureBox(this);
+            PictureBoxes["Dialogue"].Click += new EventHandler(pictureBox_Dialogue_Click);
+
             this.KeyDown += new KeyEventHandler(WorldMap_KeyDown);
             this.KeyPreview = true;
         }
@@ -85,6 +94,28 @@ namespace unilab2024
                     }
                 }
             }
+
+            Func.ChangeControlEnable(this, PictureBoxes, false);
+
+            if (ClearCheck.IsNew[2, 1])
+            {
+                string convFileName = "Story_AfterChapter1-WorldMap.csv";
+                Conversations = Func.LoadConversations(convFileName);
+                Func.StartConversations(this, PictureBoxes, Bitmaps, Conversations);
+            }
+            else if (ClearCheck.PlayAfterChapter4Story)
+            {
+                string convFileName = "Story_AfterChapter4-WorldMap.csv";
+                Conversations = Func.LoadConversations(convFileName);
+                Func.StartConversations(this, PictureBoxes, Bitmaps, Conversations);
+            }
+        }
+        #endregion
+
+        #region 会話用
+        private void pictureBox_Dialogue_Click(object sender, EventArgs e)
+        {
+            Func.DrawConversations(this, PictureBoxes, Bitmaps, Conversations);
         }
         #endregion
 
@@ -125,6 +156,8 @@ namespace unilab2024
                         ClearCheck.IsButtonEnabled[i, j] = true;
                     }
                 }
+
+                ClearCheck.PlayAfterChapter4Story = true;
 
                 for (int i = 5; i < (int)ConstNum.numWorlds; i++)
                 {

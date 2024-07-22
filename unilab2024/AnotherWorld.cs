@@ -12,12 +12,22 @@ namespace unilab2024
 {
     public partial class AnotherWorld : Form
     {
+        #region キー入力の設定等
+        //会話用
+        Dictionary<string, PictureBox> PictureBoxes;
+        Dictionary<string, Bitmap> Bitmaps;
+        List<Conversation> Conversations;
         public AnotherWorld()
         {
             InitializeComponent();
+
+            (PictureBoxes, Bitmaps) = Func.CreateConvPictureBox(this);
+            PictureBoxes["Dialogue"].Click += new EventHandler(pictureBox_Dialogue_Click);
+
             this.KeyDown += new KeyEventHandler(WorldMap_KeyDown);
             this.KeyPreview = true;
-        }   
+        }
+        #endregion
 
         #region 読み込み時
         private void AnotherWorld_Load(object sender, EventArgs e)
@@ -78,6 +88,14 @@ namespace unilab2024
                     }
                 }
             }
+
+            if (ClearCheck.PlayAfterChapter4Story)
+            {
+                ClearCheck.PlayAfterChapter4Story = false;
+                string convFileName = "Story_AfterChapter4-AnotherWorld.csv";
+                Conversations = Func.LoadConversations(convFileName);
+                Func.StartConversations(this, PictureBoxes, Bitmaps, Conversations);
+            }
         }
         #endregion
 
@@ -100,7 +118,14 @@ namespace unilab2024
             Func.CreateWorldMap(this);
         }
         #endregion
-        
+
+        #region 会話用
+        private void pictureBox_Dialogue_Click(object sender, EventArgs e)
+        {
+            Func.DrawConversations(this, PictureBoxes, Bitmaps, Conversations);
+        }
+        #endregion
+
         #region クリアチェックスキップ用
         private void WorldMap_KeyDown(object sender, KeyEventArgs e)
         {
