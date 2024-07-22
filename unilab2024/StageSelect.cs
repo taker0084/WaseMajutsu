@@ -12,16 +12,22 @@ namespace unilab2024
 {
     public partial class StageSelect : Form
     {
-        #region キー入力の設定等
+        #region 各種メンバ変数の定義など
+        //会話用
+        Dictionary<string, PictureBox> PictureBoxes;
+        Dictionary<string, Bitmap> Bitmaps;
+        List<Conversation> Conversations;
+
         public StageSelect()
         {
             InitializeComponent();
+
+            (PictureBoxes, Bitmaps) = Func.CreateConvPictureBox(this);
+            PictureBoxes["Dialogue"].Click += new EventHandler(pictureBox_Dialogue_Click);
+
             this.KeyDown += new KeyEventHandler(WorldMap_KeyDown);
             this.KeyPreview = true;
         }
-        #endregion
-
-        #region 各種メンバ変数の定義
         private string _worldName;  //WorldMapで選択された学年
         private int _worldNumber;
 
@@ -117,6 +123,21 @@ namespace unilab2024
                     }
                 }
             }
+
+            Func.ChangeControlEnable(this, PictureBoxes, false);
+
+            if (ClearCheck.IsNew[2, 1] && _worldNumber == 1)
+            {
+                string convFileName = "Story_AfterChapter1-StageSelect.csv";
+                Conversations = Func.LoadConversations(convFileName);
+                Func.StartConversations(this, PictureBoxes, Bitmaps, Conversations);
+            }
+            else if(ClearCheck.PlayAfterChapter4Story)
+            {
+                string convFileName = "Story_AfterChapter4-StageSelect.csv";
+                Conversations = Func.LoadConversations(convFileName);
+                Func.StartConversations(this, PictureBoxes, Bitmaps, Conversations);
+            }
         }
         #endregion
 
@@ -136,6 +157,12 @@ namespace unilab2024
                 }
             }
         }
+
+        private void pictureBox_Dialogue_Click(object sender, EventArgs e)
+        {
+            Func.DrawConversations(this,PictureBoxes, Bitmaps, Conversations);
+        }
+
         private void buttonToMap_Click(object sender, EventArgs e)
         {
             if (_worldNumber <= 4) Func.CreateWorldMap(this);
@@ -165,6 +192,9 @@ namespace unilab2024
                 }
                 else if( _worldNumber == 4)
                 {
+                    
+                    ClearCheck.PlayAfterChapter4Story = true;
+                    
                     ClearCheck.IsCleared[4,0] = true;
                     for (int i = 5; i < (int)ConstNum.numWorlds; i++)
                     {

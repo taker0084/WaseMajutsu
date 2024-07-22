@@ -29,11 +29,11 @@
         private void InitializeComponent()
         {
             this.labelWorld = new System.Windows.Forms.Label();
-            this.buttonToMap = new unilab2024.CustomButton();
-            this.button_Stage1 = new unilab2024.CustomButton();
-            this.button_Stage2 = new unilab2024.CustomButton();
-            this.button_Stage3 = new unilab2024.CustomButton();
             this.pictureBox_Background = new System.Windows.Forms.PictureBox();
+            this.button_Stage3 = new unilab2024.CustomButton();
+            this.button_Stage2 = new unilab2024.CustomButton();
+            this.button_Stage1 = new unilab2024.CustomButton();
+            this.buttonToMap = new unilab2024.CustomButton();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Background)).BeginInit();
             this.SuspendLayout();
             // 
@@ -46,6 +46,57 @@
             this.labelWorld.Size = new System.Drawing.Size(395, 82);
             this.labelWorld.TabIndex = 0;
             this.labelWorld.Text = "WorldName";
+            // 
+            // pictureBox_Background
+            // 
+            this.pictureBox_Background.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pictureBox_Background.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox_Background.Name = "pictureBox_Background";
+            this.pictureBox_Background.Size = new System.Drawing.Size(1536, 900);
+            this.pictureBox_Background.TabIndex = 6;
+            this.pictureBox_Background.TabStop = false;
+            // 
+            // button_Stage3
+            // 
+            this.button_Stage3.ConditionImage = null;
+            this.button_Stage3.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.button_Stage3.Font = new System.Drawing.Font("游ゴシック", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.button_Stage3.ForeImage = null;
+            this.button_Stage3.Location = new System.Drawing.Point(1018, 600);
+            this.button_Stage3.Name = "button_Stage3";
+            this.button_Stage3.Size = new System.Drawing.Size(300, 80);
+            this.button_Stage3.TabIndex = 5;
+            this.button_Stage3.Text = "ステージ3";
+            this.button_Stage3.UseVisualStyleBackColor = true;
+            this.button_Stage3.Click += new System.EventHandler(this.button_StageI_Click);
+            // 
+            // button_Stage2
+            // 
+            this.button_Stage2.ConditionImage = null;
+            this.button_Stage2.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.button_Stage2.Font = new System.Drawing.Font("游ゴシック", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.button_Stage2.ForeImage = null;
+            this.button_Stage2.Location = new System.Drawing.Point(618, 600);
+            this.button_Stage2.Name = "button_Stage2";
+            this.button_Stage2.Size = new System.Drawing.Size(300, 80);
+            this.button_Stage2.TabIndex = 4;
+            this.button_Stage2.Text = "ステージ2";
+            this.button_Stage2.UseVisualStyleBackColor = true;
+            this.button_Stage2.Click += new System.EventHandler(this.button_StageI_Click);
+            // 
+            // button_Stage1
+            // 
+            this.button_Stage1.ConditionImage = null;
+            this.button_Stage1.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.button_Stage1.Font = new System.Drawing.Font("游ゴシック", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.button_Stage1.ForeImage = null;
+            this.button_Stage1.Location = new System.Drawing.Point(218, 600);
+            this.button_Stage1.Name = "button_Stage1";
+            this.button_Stage1.Size = new System.Drawing.Size(300, 80);
+            this.button_Stage1.TabIndex = 3;
+            this.button_Stage1.Text = "ステージ1";
+            this.button_Stage1.UseVisualStyleBackColor = true;
+            this.button_Stage1.Click += new System.EventHandler(this.button_StageI_Click);
             // 
             // buttonToMap
             // 
@@ -62,57 +113,6 @@
             this.buttonToMap.Text = "マップにもどる";
             this.buttonToMap.UseVisualStyleBackColor = false;
             this.buttonToMap.Click += new System.EventHandler(this.buttonToMap_Click);
-            // 
-            // button_Stage1
-            // 
-            this.button_Stage1.ConditionImage = null;
-            this.button_Stage1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.button_Stage1.Font = new System.Drawing.Font("游ゴシック", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.button_Stage1.ForeImage = null;
-            this.button_Stage1.Location = new System.Drawing.Point(218, 600);
-            this.button_Stage1.Name = "button_Stage1";
-            this.button_Stage1.Size = new System.Drawing.Size(300, 80);
-            this.button_Stage1.TabIndex = 3;
-            this.button_Stage1.Text = "ステージ1";
-            this.button_Stage1.UseVisualStyleBackColor = true;
-            this.button_Stage1.Click += new System.EventHandler(this.button_StageI_Click);
-            // 
-            // button_Stage2
-            // 
-            this.button_Stage2.ConditionImage = null;
-            this.button_Stage2.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.button_Stage2.Font = new System.Drawing.Font("游ゴシック", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.button_Stage2.ForeImage = null;
-            this.button_Stage2.Location = new System.Drawing.Point(618, 600);
-            this.button_Stage2.Name = "button_Stage2";
-            this.button_Stage2.Size = new System.Drawing.Size(300, 80);
-            this.button_Stage2.TabIndex = 4;
-            this.button_Stage2.Text = "ステージ2";
-            this.button_Stage2.UseVisualStyleBackColor = true;
-            this.button_Stage2.Click += new System.EventHandler(this.button_StageI_Click);
-            // 
-            // button_Stage3
-            // 
-            this.button_Stage3.ConditionImage = null;
-            this.button_Stage3.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.button_Stage3.Font = new System.Drawing.Font("游ゴシック", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.button_Stage3.ForeImage = null;
-            this.button_Stage3.Location = new System.Drawing.Point(1018, 600);
-            this.button_Stage3.Name = "button_Stage3";
-            this.button_Stage3.Size = new System.Drawing.Size(300, 80);
-            this.button_Stage3.TabIndex = 5;
-            this.button_Stage3.Text = "ステージ3";
-            this.button_Stage3.UseVisualStyleBackColor = true;
-            this.button_Stage3.Click += new System.EventHandler(this.button_StageI_Click);
-            // 
-            // pictureBox_Background
-            // 
-            this.pictureBox_Background.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox_Background.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox_Background.Name = "pictureBox_Background";
-            this.pictureBox_Background.Size = new System.Drawing.Size(1536, 900);
-            this.pictureBox_Background.TabIndex = 6;
-            this.pictureBox_Background.TabStop = false;
             // 
             // StageSelect
             // 
