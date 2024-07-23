@@ -186,7 +186,7 @@ namespace unilab2024
                     string[] values = line.Split(',');
 
 
-                    if (values[0] == _worldNumber + "-" + _level)
+                    if (values[0] == stageName)
                     {
                         limit_LB_Input = int.Parse(values[3]);
                         limit_LB_A = int.Parse(values[2]);
