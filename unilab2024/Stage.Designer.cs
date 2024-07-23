@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Stage));
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.button_Start = new System.Windows.Forms.Button();
@@ -58,8 +59,10 @@
             this.uiButtonObject_left = new unilab2024.UIButtonObject();
             this.uiButtonObject_up = new unilab2024.UIButtonObject();
             this.button_ToMap = new unilab2024.CustomButton();
+            this.pictureBox_Background = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Background)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -351,7 +354,9 @@
             // 
             // uiButtonObject_for
             // 
-            this.uiButtonObject_for.BackColor = System.Drawing.Color.Blue;
+            this.uiButtonObject_for.BackColor = System.Drawing.Color.Transparent;
+            this.uiButtonObject_for.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("uiButtonObject_for.BackgroundImage")));
+            this.uiButtonObject_for.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.uiButtonObject_for.Cursor = System.Windows.Forms.Cursors.Hand;
             this.uiButtonObject_for.Location = new System.Drawing.Point(1200, 374);
             this.uiButtonObject_for.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -362,7 +367,9 @@
             // 
             // uiButtonObject_endfor
             // 
-            this.uiButtonObject_endfor.BackColor = System.Drawing.Color.Fuchsia;
+            this.uiButtonObject_endfor.BackColor = System.Drawing.Color.Transparent;
+            this.uiButtonObject_endfor.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("uiButtonObject_endfor.BackgroundImage")));
+            this.uiButtonObject_endfor.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.uiButtonObject_endfor.Cursor = System.Windows.Forms.Cursors.Hand;
             this.uiButtonObject_endfor.Location = new System.Drawing.Point(1125, 450);
             this.uiButtonObject_endfor.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -373,7 +380,9 @@
             // 
             // uiButtonObject_B
             // 
-            this.uiButtonObject_B.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.uiButtonObject_B.BackColor = System.Drawing.Color.Transparent;
+            this.uiButtonObject_B.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("uiButtonObject_B.BackgroundImage")));
+            this.uiButtonObject_B.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.uiButtonObject_B.Cursor = System.Windows.Forms.Cursors.Hand;
             this.uiButtonObject_B.Location = new System.Drawing.Point(1200, 526);
             this.uiButtonObject_B.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -384,7 +393,9 @@
             // 
             // uiButtonObject_A
             // 
-            this.uiButtonObject_A.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.uiButtonObject_A.BackColor = System.Drawing.Color.Transparent;
+            this.uiButtonObject_A.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("uiButtonObject_A.BackgroundImage")));
+            this.uiButtonObject_A.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.uiButtonObject_A.Cursor = System.Windows.Forms.Cursors.Hand;
             this.uiButtonObject_A.Location = new System.Drawing.Point(1275, 450);
             this.uiButtonObject_A.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -395,7 +406,9 @@
             // 
             // uiButtonObject_down
             // 
-            this.uiButtonObject_down.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+            this.uiButtonObject_down.BackColor = System.Drawing.Color.Transparent;
+            this.uiButtonObject_down.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("uiButtonObject_down.BackgroundImage")));
+            this.uiButtonObject_down.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.uiButtonObject_down.Cursor = System.Windows.Forms.Cursors.PanSouth;
             this.uiButtonObject_down.Location = new System.Drawing.Point(925, 526);
             this.uiButtonObject_down.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
@@ -406,7 +419,9 @@
             // 
             // uiButtonObject_right
             // 
-            this.uiButtonObject_right.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+            this.uiButtonObject_right.BackColor = System.Drawing.Color.Transparent;
+            this.uiButtonObject_right.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("uiButtonObject_right.BackgroundImage")));
+            this.uiButtonObject_right.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.uiButtonObject_right.Cursor = System.Windows.Forms.Cursors.PanEast;
             this.uiButtonObject_right.Location = new System.Drawing.Point(1000, 450);
             this.uiButtonObject_right.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
@@ -417,7 +432,9 @@
             // 
             // uiButtonObject_left
             // 
-            this.uiButtonObject_left.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+            this.uiButtonObject_left.BackColor = System.Drawing.Color.Transparent;
+            this.uiButtonObject_left.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("uiButtonObject_left.BackgroundImage")));
+            this.uiButtonObject_left.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.uiButtonObject_left.Cursor = System.Windows.Forms.Cursors.PanWest;
             this.uiButtonObject_left.Location = new System.Drawing.Point(850, 450);
             this.uiButtonObject_left.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
@@ -428,7 +445,9 @@
             // 
             // uiButtonObject_up
             // 
-            this.uiButtonObject_up.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+            this.uiButtonObject_up.BackColor = System.Drawing.Color.Transparent;
+            this.uiButtonObject_up.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("uiButtonObject_up.BackgroundImage")));
+            this.uiButtonObject_up.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.uiButtonObject_up.Cursor = System.Windows.Forms.Cursors.PanNorth;
             this.uiButtonObject_up.Location = new System.Drawing.Point(925, 374);
             this.uiButtonObject_up.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
@@ -453,6 +472,15 @@
             this.button_ToMap.Text = "教室に戻る";
             this.button_ToMap.UseVisualStyleBackColor = false;
             this.button_ToMap.Click += new System.EventHandler(this.button_ToMap_Click);
+            // 
+            // pictureBox_Background
+            // 
+            this.pictureBox_Background.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pictureBox_Background.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox_Background.Name = "pictureBox_Background";
+            this.pictureBox_Background.Size = new System.Drawing.Size(1536, 900);
+            this.pictureBox_Background.TabIndex = 45;
+            this.pictureBox_Background.TabStop = false;
             // 
             // Stage
             // 
@@ -490,6 +518,7 @@
             this.Controls.Add(this.button_Start);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.pictureBox_Background);
             this.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
             this.Name = "Stage";
             this.Text = "ゲーム画面";
@@ -497,6 +526,7 @@
             this.Load += new System.EventHandler(this.Stage_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Background)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -534,5 +564,6 @@
         private System.Windows.Forms.Label label_A;
         private System.Windows.Forms.Label label_B;
         private System.Windows.Forms.Button button_Breset;
+        private System.Windows.Forms.PictureBox pictureBox_Background;
     }
 }

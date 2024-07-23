@@ -97,13 +97,18 @@ namespace unilab2024
 
             Func.ChangeControlEnable(this, PictureBoxes, false);
 
-            if (ClearCheck.IsNew[2, 1])
+            for (int i = 1; i < 4; i++)
             {
-                string convFileName = "Story_AfterChapter1-WorldMap.csv";
-                Conversations = Func.LoadConversations(convFileName);
-                Func.StartConversations(this, PictureBoxes, Bitmaps, Conversations);
+                if (ClearCheck.IsNew[i + 1, 1])
+                {
+                    string convFileName = "Story_AfterChapter" + i + "-WorldMap.csv";
+                    Conversations = Func.LoadConversations(convFileName);
+                    Func.StartConversations(this, PictureBoxes, Bitmaps, Conversations);
+                    return;
+                }
             }
-            else if (ClearCheck.PlayAfterChapter4Story)
+
+            if (ClearCheck.PlayAfterChapter4Story)
             {
                 string convFileName = "Story_AfterChapter4-WorldMap.csv";
                 Conversations = Func.LoadConversations(convFileName);
