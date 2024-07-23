@@ -143,6 +143,7 @@ namespace unilab2024
             //button5.Visible = false;
             //_stageName = "stage2-3";
             //isBefore = true;
+            pictureBox_Background.BackgroundImage = Dictionaries.Img_Background["Stage" + _worldNumber];
             stageName = "stage"+_worldNumber + "-" + _level;
             map = CreateStage(stageName); //ステージ作成
 

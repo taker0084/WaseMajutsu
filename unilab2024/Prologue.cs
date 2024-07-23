@@ -15,8 +15,10 @@ namespace unilab2024
     {
 
         #region メンバ変数の定義など
-        Dictionary<string, PictureBox> PictureBoxes;
-        Dictionary<string, Bitmap> Bitmaps;
+        //Dictionary<string, PictureBox> PictureBoxes;
+        //Dictionary<string, Bitmap> Bitmaps;
+        PictureBox pictureBox_Conv;
+        Bitmap bitmap_Capt;
         List<Conversation> StartConv;
         List<Conversation> EndConv;
         bool isStartConv;
@@ -24,9 +26,13 @@ namespace unilab2024
         public Prologue()
         {
             InitializeComponent();
-            (PictureBoxes, Bitmaps) = Func.CreateConvPictureBox(this);
-            PictureBoxes["Dialogue"].Click += new EventHandler(pictureBox_Dialogue_Click);
+            //(PictureBoxes, Bitmaps) = Func.CreateConvPictureBox(this);
+            //PictureBoxes["Dialogue"].Click += new EventHandler(pictureBox_Dialogue_Click);
 
+            pictureBox_Conv = Func.CreatePictureBox_Conv(this);
+            pictureBox_Conv.Click += new EventHandler(pictureBox_Conv_Click);
+
+            this.Shown += new EventHandler(Prologue_Shown);
             this.KeyDown += new KeyEventHandler(Prologue_KeyDown);
             this.KeyPreview = true;
         }
@@ -42,40 +48,89 @@ namespace unilab2024
             //StartConversations();
             button_Boy.Visible = false;
             button_Girl.Visible = false;
-            Func.StartConversations(this,PictureBoxes, Bitmaps,StartConv);
+            //Func.StartConversations(this,PictureBoxes, Bitmaps,StartConv);
+            //pictureBox_Conv.Visible = false;
+            //bitmap_Capt = Func.CaptureClientArea(this);
+            ////pictureBox_Conv.Visible = true;
+            //Func.PlayConv(this, pictureBox_Conv, bitmap_Capt, StartConv);
+        }
+
+        private void Prologue_Shown(object sender, EventArgs e)
+        {
+            bitmap_Capt = Func.CaptureClientArea(this);
+            Func.PlayConv(this, pictureBox_Conv, bitmap_Capt, StartConv);
         }
         #endregion
 
         #region 会話用
-        private void ChangeControlEnable()
+        //private void ChangeControlEnable()
+        //{
+        //    foreach (Control control in this.Controls)
+        //    {
+        //        control.Enabled = true;
+        //    }
+        //    button_Boy.Visible = true;
+        //    button_Girl.Visible = true;
+        //    button_Boy.BringToFront();
+        //    button_Girl.BringToFront();
+
+        //    PictureBoxes["CharaImage"].Enabled = false;
+        //    PictureBoxes["CharaName"].Enabled = false;
+        //    PictureBoxes["Dialogue"].Enabled = false;
+        //    PictureBoxes["Dialogue"].Cursor = Cursors.Default;
+
+        //}
+        private void ChangeControl()
         {
-            foreach (Control control in this.Controls)
-            {
-                control.Enabled = true;
-            }
             button_Boy.Visible = true;
             button_Girl.Visible = true;
             button_Boy.BringToFront();
             button_Girl.BringToFront();
 
-            PictureBoxes["CharaImage"].Enabled = false;
-            PictureBoxes["CharaName"].Enabled = false;
-            PictureBoxes["Dialogue"].Enabled = false;
-            PictureBoxes["Dialogue"].Cursor = Cursors.Default;
-            
+            pictureBox_Conv.Enabled = false;
+            pictureBox_Conv.Cursor = Cursors.Default;
+
         }
         #endregion
 
         #region 諸々クリックの処理
-        private void pictureBox_Dialogue_Click(object sender, EventArgs e)
+        //private void pictureBox_Dialogue_Click(object sender, EventArgs e)
+        //{
+        //    //drawConversations(isStartConv);
+        //    if (isStartConv)
+        //    {
+        //        Func.DrawConversations(this, PictureBoxes, Bitmaps, StartConv);
+        //        if (Func.convIndex == StartConv.Count)
+        //        {
+        //            ChangeControlEnable();
+        //            isStartConv = false;
+        //            button_Boy.ForeImage = Dictionaries.Img_Character["Boy"];
+        //            button_Girl.ForeImage = Dictionaries.Img_Character["Girl"];
+        //            button_Boy.Cursor = Cursors.Hand;
+        //            button_Girl.Cursor = Cursors.Hand;
+        //            return;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        if (Func.convIndex == EndConv.Count)
+        //        {
+        //            Func.CreateStage(this, "1年生", 1, 1);
+        //            return;
+        //        }
+        //        Func.DrawConversations(this, PictureBoxes, Bitmaps, EndConv);
+        //    }
+        //}
+
+        private void pictureBox_Conv_Click(object sender, EventArgs e)
         {
             //drawConversations(isStartConv);
             if (isStartConv)
             {
-                Func.DrawConversations(this, PictureBoxes, Bitmaps, StartConv);
+                Func.DrawConv(this, pictureBox_Conv, bitmap_Capt, StartConv);
                 if (Func.convIndex == StartConv.Count)
                 {
-                    ChangeControlEnable();
+                    ChangeControl();
                     isStartConv = false;
                     button_Boy.ForeImage = Dictionaries.Img_Character["Boy"];
                     button_Girl.ForeImage = Dictionaries.Img_Character["Girl"];
@@ -91,7 +146,7 @@ namespace unilab2024
                     Func.CreateStage(this, "1年生", 1, 1);
                     return;
                 }
-                Func.DrawConversations(this, PictureBoxes, Bitmaps, EndConv);
+                Func.DrawConv(this,pictureBox_Conv, bitmap_Capt, EndConv);
             }
         }
 
@@ -114,7 +169,8 @@ namespace unilab2024
             Func.LoadImg_DotPic();
             button_Boy.Visible = false;
             button_Girl.Visible = false;
-            Func.StartConversations(this, PictureBoxes, Bitmaps, EndConv);
+            //Func.StartConversations(this, PictureBoxes, Bitmaps, EndConv);
+            Func.PlayConv(this,pictureBox_Conv,bitmap_Capt, EndConv);
         }
         #endregion
 

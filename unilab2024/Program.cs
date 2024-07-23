@@ -26,6 +26,7 @@ namespace unilab2024
             Func.LoadImg_Object();
             Func.LoadImg_Button();
             Func.LoadImg_Background();
+            Func.LoadImg_Conversation();
             Func.InitializeClearCheck();
 
             Application.Run(new Title());
@@ -190,19 +191,19 @@ namespace unilab2024
             Dictionary<string, Bitmap> Bitmaps = new Dictionary<string, Bitmap>();
 
             PictureBox pictureBox_CharaImage = new PictureBox();
-            pictureBox_CharaImage.Location = new Point(15, 300);
+            pictureBox_CharaImage.Location = new Point(15, 270);
             pictureBox_CharaImage.Size = new Size(300, 300);
             currentForm.Controls.Add(pictureBox_CharaImage);
             PictureBoxes["CharaImage"] = pictureBox_CharaImage;
 
             PictureBox pictureBox_CharaName = new PictureBox();
-            pictureBox_CharaName.Location = new Point(15, 600);
+            pictureBox_CharaName.Location = new Point(15, 570);
             pictureBox_CharaName.Size = new Size(300, 60);
             currentForm.Controls.Add(pictureBox_CharaName);
             PictureBoxes["CharaName"] = pictureBox_CharaName;
 
             PictureBox pictureBox_Dialogue = new PictureBox();
-            pictureBox_Dialogue.Location = new Point(15, 660);
+            pictureBox_Dialogue.Location = new Point(15, 630);
             pictureBox_Dialogue.Size = new Size(1500, 200);
             currentForm.Controls.Add(pictureBox_Dialogue);
             PictureBoxes["Dialogue"] = pictureBox_Dialogue;
@@ -217,6 +218,16 @@ namespace unilab2024
             Bitmaps["Dialogue"] = bmp_Dialogue;
 
             return (PictureBoxes, Bitmaps);
+        }
+
+        public static PictureBox CreatePictureBox_Conv(Form currentForm)
+        {
+            PictureBox pictureBox_Conv = new PictureBox();
+            pictureBox_Conv.Location = new Point(0, 0);
+            pictureBox_Conv.Size = new Size(1536, 900);
+            currentForm.Controls.Add(pictureBox_Conv);
+
+            return pictureBox_Conv;
         }
     } 
     
@@ -236,6 +247,22 @@ namespace unilab2024
 
     public partial class Func
     {
+        public static Bitmap CaptureClientArea(Form currentForm)
+        {
+            Rectangle clientRect = currentForm.ClientRectangle;
+
+            Bitmap bitmap = new Bitmap(clientRect.Width, clientRect.Height);
+
+            using (Graphics g = Graphics.FromImage(bitmap))
+            {
+                Point clientScreenPos = currentForm.PointToScreen(clientRect.Location);
+                g.CopyFromScreen(clientScreenPos, Point.Empty, clientRect.Size);
+            }
+
+
+            return bitmap;
+        }
+
         public static int convIndex;
         public static void DrawConversations(Form currentForm, Dictionary<string,PictureBox> PictureBoxes, Dictionary<string, Bitmap> Bitmaps, List<Conversation> Conversations)
         {
@@ -258,6 +285,9 @@ namespace unilab2024
             int dia_y = 200;
 
             int lineHeight = fnt_dia.Height;
+
+            //PictureBoxes["Dialogue"].BackgroundImage = Dictionaries.Img_Conversation["Dialogue"];
+            //PictureBoxes["Dialogue"].BackgroundImageLayout = ImageLayout.Stretch;
 
             g_CharaName.FillRectangle(Color_BackName, 0, 0, name_x, name_y);
             //g1.DrawRectangle(pen, 15, adjust_y + face, name_x, name_y);
@@ -327,6 +357,92 @@ namespace unilab2024
             }
         }
 
+        public static void DrawConv(Form currentForm, PictureBox pictureBox_Conv, Bitmap bitmap_Capt, List<Conversation> Conversations)
+        {
+            Graphics g = Graphics.FromImage(bitmap_Capt);
+
+            Font fnt_name = new Font("游ゴシック", 33, FontStyle.Bold);
+            Font fnt_dia = new Font("游ゴシック", 33);
+            Brush Color_BackConv = new SolidBrush(ColorTranslator.FromHtml("#f8e58c"));
+            Brush Color_BackName = new SolidBrush(ColorTranslator.FromHtml("#856859"));
+
+            int margin_x = 15;
+            int margin_y = 200;
+
+            int sp = 5;
+
+            int sp_x = 150;
+            int sp_y = 30;
+
+            int face = 300;
+            int name_x = 300;
+            int name_y = 60;
+
+            int dia_x = 1500;
+            int dia_y = 270;
+
+            int lineHeight = fnt_dia.Height;
+
+            g.FillRectangle(Color_BackName, margin_x, margin_y + face, name_x, name_y);
+            g.DrawImage(Dictionaries.Img_Conversation["Dialogue"], margin_x, margin_y + face + name_y, dia_x, dia_y);
+
+            if (convIndex >= Conversations.Count)
+            {
+                ChangeControl(pictureBox_Conv, false);
+                return;
+            }
+
+            string charaName = Conversations[convIndex].Character;
+            if (charaName == "主人公")
+            {
+                if (MainCharacter.isBoy)
+                {
+                    charaName = "タロウ";
+                }
+                else
+                {
+                    charaName = "ハナコ";
+                }
+            }
+
+            g.DrawString(charaName, fnt_name, Brushes.White, margin_x + sp, margin_y + face + sp);
+
+            //改行の処理はこう書かないとうまくいかない
+            char[] lineBreak = new char[] { '\\' };
+            string[] DialogueLines = Conversations[convIndex].Dialogue.Replace("\\n", "\\").Split(lineBreak);
+            for (int i = 0; i < DialogueLines.Length; i++)
+            {
+                g.DrawString(DialogueLines[i], fnt_dia, Brushes.Black, margin_x + sp_x, margin_y + face + name_y + sp_y + i * lineHeight);
+            }
+
+            Image charaImage = null;
+            if (Conversations[convIndex].Img == "Main")
+            {
+                if (MainCharacter.isBoy)
+                {
+                    charaImage = Dictionaries.Img_Character["Boy"];
+                }
+                else
+                {
+                    charaImage = Dictionaries.Img_Character["Girl"];
+                }
+            }
+            else
+            {
+                charaImage = Dictionaries.Img_Character[Conversations[convIndex].Img];
+            }
+
+            g.DrawImage(charaImage, margin_x, margin_y, face, face);
+
+            pictureBox_Conv.Image = bitmap_Capt;
+            g.Dispose();
+
+            if (convIndex < Conversations.Count)
+            {
+                convIndex++;
+            }
+        }
+
         public static void ChangeControlEnable(Form currentForm, Dictionary<string, PictureBox> PictureBoxes, bool isStart)
         {
             foreach (Control control in currentForm.Controls)
@@ -359,6 +475,29 @@ namespace unilab2024
             }
         }
 
+        public static void ChangeControl(PictureBox pictureBox_Conv, bool isStart)
+        {
+            pictureBox_Conv.Enabled = isStart;
+            pictureBox_Conv.Visible = isStart;
+            if (isStart)
+            {
+                pictureBox_Conv.BringToFront();
+                pictureBox_Conv.Cursor = Cursors.Hand;
+            }
+            else
+            {
+                pictureBox_Conv.SendToBack();
+                pictureBox_Conv.Cursor= Cursors.Default;
+            }
+        }
+
+        public static void PlayConv(Form currentForm, PictureBox pictureBox_Conv, Bitmap bitmap_Capt, List<Conversation> Conversations)
+        {
+            ChangeControl(pictureBox_Conv, true);
+            convIndex = 0;
+            DrawConv(currentForm, pictureBox_Conv, bitmap_Capt, Conversations);
+        }
+
         public static void StartConversations(Form currentForm, Dictionary<string, PictureBox> PictureBoxes, Dictionary<string, Bitmap> Bitmaps, List<Conversation> Conversations)
         {
             ChangeControlEnable(currentForm, PictureBoxes, true);
@@ -380,6 +519,7 @@ namespace unilab2024
         public static List<Image> Img_Object = new List<Image>();
         public static Dictionary <string, Image> Img_Button = new Dictionary<string, Image>();
         public static Dictionary <string, Image> Img_Background = new Dictionary<string, Image>();
+        public static Dictionary<string, Image> Img_Conversation = new Dictionary<string, Image>();
     }
 
     public partial class Func
@@ -445,6 +585,17 @@ namespace unilab2024
             {
                 string key = Path.GetFileNameWithoutExtension(file).Replace("Img_Background_", "");
                 Dictionaries.Img_Background[key] = Image.FromFile(file);
+            }
+        }
+
+        public static void LoadImg_Conversation()
+        {
+            Dictionaries.Img_Conversation.Clear();
+            string[] files = Directory.GetFiles(@"Image\\Conversation");
+            foreach (string file in files)
+            {
+                string key = Path.GetFileNameWithoutExtension(file).Replace("Img_Conversation_", "");
+                Dictionaries.Img_Conversation[key] = Image.FromFile(file);
             }
         }
     }
