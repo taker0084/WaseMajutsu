@@ -14,8 +14,8 @@ namespace unilab2024
     {
         #region キー入力の設定等
         //会話用
-        Dictionary<string, PictureBox> PictureBoxes;
-        Dictionary<string, Bitmap> Bitmaps;
+        PictureBox pictureBox_Conv;
+        Bitmap bmp_Capt;
         List<Conversation> Conversations;
 
         private bool IsButtonToAnotherWorldEnabled;
@@ -23,8 +23,8 @@ namespace unilab2024
         {
             InitializeComponent();
 
-            (PictureBoxes, Bitmaps) = Func.CreateConvPictureBox(this);
-            PictureBoxes["Dialogue"].Click += new EventHandler(pictureBox_Dialogue_Click);
+            pictureBox_Conv = Func.CreatePictureBox_Conv(this);
+            pictureBox_Conv.Click += new EventHandler(pictureBox_Conv_Click);
 
             this.KeyDown += new KeyEventHandler(WorldMap_KeyDown);
             this.KeyPreview = true;
@@ -32,7 +32,7 @@ namespace unilab2024
         #endregion
 
         #region 読み込み時
-        private void WorldMap_Load(object sender, EventArgs e)
+        private async void WorldMap_Load(object sender, EventArgs e)
         {
             // buttonに対する処理
             foreach (Control control in this.Controls)
@@ -95,7 +95,7 @@ namespace unilab2024
                 }
             }
 
-            Func.ChangeControlEnable(this, PictureBoxes, false);
+            Func.ChangeControl(pictureBox_Conv, false);
 
             for (int i = 1; i < 4; i++)
             {
@@ -103,7 +103,8 @@ namespace unilab2024
                 {
                     string convFileName = "Story_AfterChapter" + i + "-WorldMap.csv";
                     Conversations = Func.LoadConversations(convFileName);
-                    Func.StartConversations(this, PictureBoxes, Bitmaps, Conversations);
+                    await Task.Delay((int)ConstNum.waitTime_Load);
+                    bmp_Capt = Func.PlayConv(this, pictureBox_Conv, bmp_Capt, Conversations);
                     return;
                 }
             }
@@ -112,15 +113,16 @@ namespace unilab2024
             {
                 string convFileName = "Story_AfterChapter4-WorldMap.csv";
                 Conversations = Func.LoadConversations(convFileName);
-                Func.StartConversations(this, PictureBoxes, Bitmaps, Conversations);
+                await Task.Delay((int)ConstNum.waitTime_Load);
+                bmp_Capt = Func.PlayConv(this, pictureBox_Conv, bmp_Capt, Conversations);
             }
         }
         #endregion
 
         #region 会話用
-        private void pictureBox_Dialogue_Click(object sender, EventArgs e)
+        private void pictureBox_Conv_Click(object sender, EventArgs e)
         {
-            Func.DrawConversations(this, PictureBoxes, Bitmaps, Conversations);
+            Func.DrawConv(this,pictureBox_Conv, bmp_Capt, Conversations);
         }
         #endregion
 

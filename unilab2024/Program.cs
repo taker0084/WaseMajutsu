@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing;
+using System.Threading;
 
 namespace unilab2024
 {
@@ -185,41 +186,6 @@ namespace unilab2024
             return (StartConv, EndConv);
         }
 
-        public static (Dictionary<string, PictureBox>, Dictionary<string, Bitmap>) CreateConvPictureBox(Form currentForm)
-        {
-            Dictionary<string, PictureBox> PictureBoxes = new Dictionary<string, PictureBox>();
-            Dictionary<string, Bitmap> Bitmaps = new Dictionary<string, Bitmap>();
-
-            PictureBox pictureBox_CharaImage = new PictureBox();
-            pictureBox_CharaImage.Location = new Point(15, 270);
-            pictureBox_CharaImage.Size = new Size(300, 300);
-            currentForm.Controls.Add(pictureBox_CharaImage);
-            PictureBoxes["CharaImage"] = pictureBox_CharaImage;
-
-            PictureBox pictureBox_CharaName = new PictureBox();
-            pictureBox_CharaName.Location = new Point(15, 570);
-            pictureBox_CharaName.Size = new Size(300, 60);
-            currentForm.Controls.Add(pictureBox_CharaName);
-            PictureBoxes["CharaName"] = pictureBox_CharaName;
-
-            PictureBox pictureBox_Dialogue = new PictureBox();
-            pictureBox_Dialogue.Location = new Point(15, 630);
-            pictureBox_Dialogue.Size = new Size(1500, 200);
-            currentForm.Controls.Add(pictureBox_Dialogue);
-            PictureBoxes["Dialogue"] = pictureBox_Dialogue;
-
-            Bitmap bmp_CharaImage, bmp_CharaName, bmp_Dialogue;
-            bmp_CharaImage = new Bitmap(pictureBox_CharaImage.Width, pictureBox_CharaImage.Height);
-            bmp_CharaName = new Bitmap(pictureBox_CharaName.Width, pictureBox_CharaName.Height);
-            bmp_Dialogue = new Bitmap(pictureBox_Dialogue.Width, pictureBox_Dialogue.Height);
-
-            Bitmaps["CharaImage"] = bmp_CharaImage;
-            Bitmaps["CharaName"] = bmp_CharaName;
-            Bitmaps["Dialogue"] = bmp_Dialogue;
-
-            return (PictureBoxes, Bitmaps);
-        }
-
         public static PictureBox CreatePictureBox_Conv(Form currentForm)
         {
             PictureBox pictureBox_Conv = new PictureBox();
@@ -251,115 +217,22 @@ namespace unilab2024
         {
             Rectangle clientRect = currentForm.ClientRectangle;
 
-            Bitmap bitmap = new Bitmap(clientRect.Width, clientRect.Height);
+            Bitmap bmp_Capt = new Bitmap(clientRect.Width, clientRect.Height);
 
-            using (Graphics g = Graphics.FromImage(bitmap))
+            using (Graphics g = Graphics.FromImage(bmp_Capt))
             {
                 Point clientScreenPos = currentForm.PointToScreen(clientRect.Location);
                 g.CopyFromScreen(clientScreenPos, Point.Empty, clientRect.Size);
             }
 
-
-            return bitmap;
+            return bmp_Capt;
         }
 
         public static int convIndex;
-        public static void DrawConversations(Form currentForm, Dictionary<string,PictureBox> PictureBoxes, Dictionary<string, Bitmap> Bitmaps, List<Conversation> Conversations)
+
+        public static void DrawConv(Form currentForm, PictureBox pictureBox_Conv, Bitmap bmp_Capt, List<Conversation> Conversations)
         {
-            Graphics g_CharaImage = Graphics.FromImage(Bitmaps["CharaImage"]);
-            Graphics g_CharaName = Graphics.FromImage(Bitmaps["CharaName"]);
-            Graphics g_Dialogue = Graphics.FromImage(Bitmaps["Dialogue"]);
-
-            //Pen pen = new Pen(Color.FromArgb(100, 255, 100), 2);
-            Font fnt_name = new Font("游ゴシック", 33, FontStyle.Bold);
-            Font fnt_dia = new Font("游ゴシック", 33);
-            Brush Color_BackConv = new SolidBrush(ColorTranslator.FromHtml("#f8e58c"));
-            Brush Color_BackName = new SolidBrush(ColorTranslator.FromHtml("#856859"));
-            int sp = 5;
-
-            int face = 300;
-            int name_x = 300;
-            int name_y = 60;
-
-            int dia_x = 1500;
-            int dia_y = 200;
-
-            int lineHeight = fnt_dia.Height;
-
-            //PictureBoxes["Dialogue"].BackgroundImage = Dictionaries.Img_Conversation["Dialogue"];
-            //PictureBoxes["Dialogue"].BackgroundImageLayout = ImageLayout.Stretch;
-
-            g_CharaName.FillRectangle(Color_BackName, 0, 0, name_x, name_y);
-            //g1.DrawRectangle(pen, 15, adjust_y + face, name_x, name_y);
-
-            g_Dialogue.FillRectangle(Color_BackConv, 0, 0, dia_x, dia_y);
-            //g1.DrawRectangle(pen, 15, adjust_y + face + name_y, dia_x, dia_y);
-
-            if (convIndex >= Conversations.Count)
-            {
-                ChangeControlEnable(currentForm, PictureBoxes, false);
-                return;
-            }
-
-            string charaName = Conversations[convIndex].Character;
-            if (charaName == "主人公")
-            {
-                if (MainCharacter.isBoy)
-                {
-                    charaName = "タロウ";
-                }
-                else
-                {
-                    charaName = "ハナコ";
-                }
-            }
-
-            g_CharaName.DrawString(charaName, fnt_name, Brushes.White, sp, sp);
-
-            //改行の処理はこう書かないとうまくいかない
-            char[] lineBreak = new char[] { '\\' };
-            string[] DialogueLines = Conversations[convIndex].Dialogue.Replace("\\n", "\\").Split(lineBreak);
-            for (int i = 0; i < DialogueLines.Length; i++)
-            {
-                g_Dialogue.DrawString(DialogueLines[i], fnt_dia, Brushes.Black, sp, sp + i * lineHeight);
-            }
-
-            Image charaImage = null;
-            if (Conversations[convIndex].Img == "Main")
-            {
-                if (MainCharacter.isBoy)
-                {
-                    charaImage = Dictionaries.Img_Character["Boy"];
-                }
-                else
-                {
-                    charaImage = Dictionaries.Img_Character["Girl"];
-                }
-            }
-            else
-            {
-                charaImage = Dictionaries.Img_Character[Conversations[convIndex].Img];
-            }
-
-            g_CharaImage.Clear(Color.Transparent);
-            g_CharaImage.DrawImage(charaImage, 0, 0, face, face);
-
-            PictureBoxes["CharaImage"].Image = Bitmaps["CharaImage"];
-            g_CharaImage.Dispose();
-            PictureBoxes["CharaName"].Image = Bitmaps["CharaName"];
-            g_CharaName.Dispose();
-            PictureBoxes["Dialogue"].Image = Bitmaps["Dialogue"];
-            g_Dialogue.Dispose();
-
-            if (convIndex < Conversations.Count)
-            {
-                convIndex++;
-            }
-        }
-
-        public static void DrawConv(Form currentForm, PictureBox pictureBox_Conv, Bitmap bitmap_Capt, List<Conversation> Conversations)
-        {
-            Graphics g = Graphics.FromImage(bitmap_Capt);
+            Graphics g = Graphics.FromImage(bmp_Capt);
 
             Font fnt_name = new Font("游ゴシック", 33, FontStyle.Bold);
             Font fnt_dia = new Font("游ゴシック", 33);
@@ -434,44 +307,12 @@ namespace unilab2024
 
             g.DrawImage(charaImage, margin_x, margin_y, face, face);
 
-            pictureBox_Conv.Image = bitmap_Capt;
+            pictureBox_Conv.Image = bmp_Capt;
             g.Dispose();
 
             if (convIndex < Conversations.Count)
             {
                 convIndex++;
-            }
-        }
-
-        public static void ChangeControlEnable(Form currentForm, Dictionary<string, PictureBox> PictureBoxes, bool isStart)
-        {
-            foreach (Control control in currentForm.Controls)
-            {
-                control.Enabled = !isStart;
-            }
-
-            PictureBoxes["CharaImage"].Visible = isStart;
-            PictureBoxes["CharaImage"].Enabled = isStart;
-
-            PictureBoxes["CharaName"].Visible = isStart;
-            PictureBoxes["CharaName"].Enabled = isStart;
-
-            PictureBoxes["Dialogue"].Visible = isStart;
-            PictureBoxes["Dialogue"].Enabled = isStart;
-
-            if (isStart)
-            {
-                PictureBoxes["CharaImage"].BringToFront();
-                PictureBoxes["CharaName"].BringToFront();
-                PictureBoxes["Dialogue"].BringToFront();
-                PictureBoxes["Dialogue"].Cursor = Cursors.Hand;
-            }
-            else
-            {
-                PictureBoxes["CharaImage"].SendToBack();
-                PictureBoxes["CharaName"].SendToBack();
-                PictureBoxes["Dialogue"].SendToBack();
-                PictureBoxes["Dialogue"].Cursor = Cursors.Default;
             }
         }
 
@@ -491,18 +332,14 @@ namespace unilab2024
             }
         }
 
-        public static void PlayConv(Form currentForm, PictureBox pictureBox_Conv, Bitmap bitmap_Capt, List<Conversation> Conversations)
+        public static Bitmap PlayConv(Form currentForm, PictureBox pictureBox_Conv, Bitmap bmp_Capt, List<Conversation> Conversations)
         {
+            bmp_Capt = CaptureClientArea(currentForm);
             ChangeControl(pictureBox_Conv, true);
             convIndex = 0;
-            DrawConv(currentForm, pictureBox_Conv, bitmap_Capt, Conversations);
-        }
+            DrawConv(currentForm, pictureBox_Conv, bmp_Capt, Conversations);
 
-        public static void StartConversations(Form currentForm, Dictionary<string, PictureBox> PictureBoxes, Dictionary<string, Bitmap> Bitmaps, List<Conversation> Conversations)
-        {
-            ChangeControlEnable(currentForm, PictureBoxes, true);
-            convIndex = 0;
-            DrawConversations(currentForm, PictureBoxes, Bitmaps, Conversations);
+            return bmp_Capt;
         }
     }
     #endregion
@@ -612,7 +449,9 @@ namespace unilab2024
     public enum ConstNum
     {
         numWorlds = 7+1,
-        numStages = 3+1
+        numStages = 3+1,
+        waitTime_End = 100,
+        waitTime_Load = 300
     }
 
     public partial class CurrentFormState

@@ -27,8 +27,8 @@ namespace unilab2024
             //this.AllowDrop = true;
             //this.DragDrop += new DragEventHandler(ListBox_DragDrop);          //Form全体にDrop可能にする
             //this.DragEnter += new DragEventHandler(ListBox_DragEnter);
-            (PictureBoxes, Bitmaps) = Func.CreateConvPictureBox(this);
-            PictureBoxes["Dialogue"].Click += new EventHandler(pictureBox_Dialogue_Click);
+            pictureBox_Conv = Func.CreatePictureBox_Conv(this);
+            pictureBox_Conv.Click += new EventHandler(pictureBox_Conv_Click);
 
             this.KeyDown += new KeyEventHandler(Stage_KeyDown);
             this.KeyPreview = true;
@@ -127,8 +127,8 @@ namespace unilab2024
         public static int gradenum;
 
         //public static List<Conversation> Conversations = new List<Conversation>();  //会話文を入れるリスト
-        Dictionary<string, PictureBox> PictureBoxes;
-        Dictionary<string, Bitmap> Bitmaps;
+        PictureBox pictureBox_Conv;
+        Bitmap bmp_Capt;
         List<Conversation> StartConv; 
         List<Conversation> EndConv;
         bool isStartConv;
@@ -138,7 +138,7 @@ namespace unilab2024
         #endregion
 
 
-        public void Stage_Load(object sender, EventArgs e)        //StageのFormの起動時処理
+        private async void Stage_Load(object sender, EventArgs e)        //StageのFormの起動時処理
         {
             //button5.Visible = false;
             //_stageName = "stage2-3";
@@ -320,7 +320,9 @@ namespace unilab2024
             string convFileName = "Story_Chapter" + _worldNumber + "-" + _level + ".csv";
             (StartConv, EndConv) = Func.LoadStories(convFileName, "play"); //会話読み込み
             isStartConv = true;
-            Func.StartConversations(this, PictureBoxes, Bitmaps, StartConv);
+
+            await Task.Delay((int)ConstNum.waitTime_Load);
+            bmp_Capt = Func.PlayConv(this,pictureBox_Conv,bmp_Capt,StartConv);
         }
 
         #region 各コントロール機能設定
@@ -607,7 +609,7 @@ namespace unilab2024
         #endregion
 
         #region ボタン押下時処理(UI開発中)
-        private void button_Start_Click(object sender, EventArgs e)  //出発ボタン押下時処理
+        private async void button_Start_Click(object sender, EventArgs e)  //出発ボタン押下時処理
         {
             button_Start.Visible = false;
             button_Start.Enabled = false;
@@ -679,7 +681,8 @@ namespace unilab2024
                     button_ToMap.ConditionImage = Dictionaries.Img_Button["New"];
                 }
 
-                Func.StartConversations(this, PictureBoxes, Bitmaps, EndConv);
+                await Task.Delay((int)ConstNum.waitTime_End);
+                bmp_Capt = Func.PlayConv(this, pictureBox_Conv, bmp_Capt, EndConv);
             }
             //else
             //{
@@ -1740,29 +1743,27 @@ namespace unilab2024
         #endregion
 
         #region 会話の表示
-        private void pictureBox_Dialogue_Click(object sender, EventArgs e)
+        private void pictureBox_Conv_Click(object sender, EventArgs e)
         {
-            //drawConversations(isStartConv);
             if (isStartConv)
             {
-                Func.DrawConversations(this, PictureBoxes, Bitmaps, StartConv);
+                Func.DrawConv(this,pictureBox_Conv,bmp_Capt, StartConv);
             }
             else
             {
-                Func.DrawConversations(this, PictureBoxes, Bitmaps, EndConv);
+                Func.DrawConv(this, pictureBox_Conv, bmp_Capt, EndConv);
             }
         }
 
         private void button_Explain_Click(object sender, EventArgs e)
         {
-            //StartConversations();
             if (isStartConv)
             {
-                Func.StartConversations(this, PictureBoxes, Bitmaps, StartConv);
+                bmp_Capt = Func.PlayConv(this, pictureBox_Conv, bmp_Capt, StartConv);
             }
             else
             {
-                Func.StartConversations(this, PictureBoxes, Bitmaps, EndConv);
+                bmp_Capt = Func.PlayConv(this, pictureBox_Conv, bmp_Capt, EndConv);
             }
         }
         #endregion
