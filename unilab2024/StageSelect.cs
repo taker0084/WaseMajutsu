@@ -14,16 +14,16 @@ namespace unilab2024
     {
         #region 各種メンバ変数の定義など
         //会話用
-        Dictionary<string, PictureBox> PictureBoxes;
-        Dictionary<string, Bitmap> Bitmaps;
+        PictureBox pictureBox_Conv;
+        Bitmap bmp_Capt;
         List<Conversation> Conversations;
 
         public StageSelect()
         {
             InitializeComponent();
 
-            (PictureBoxes, Bitmaps) = Func.CreateConvPictureBox(this);
-            PictureBoxes["Dialogue"].Click += new EventHandler(pictureBox_Dialogue_Click);
+            pictureBox_Conv = Func.CreatePictureBox_Conv(this);
+            pictureBox_Conv.Click += new EventHandler(pictureBox_Conv_Click);
 
             this.KeyDown += new KeyEventHandler(WorldMap_KeyDown);
             this.KeyPreview = true;
@@ -47,7 +47,7 @@ namespace unilab2024
         #endregion
 
         #region 読み込み時
-        private void StageSelect_Load(object sender, EventArgs e)
+        private async void StageSelect_Load(object sender, EventArgs e)
         {
             pictureBox_Background.BackgroundImage = Dictionaries.Img_Background["StageSelect" + _worldNumber];
             labelWorld.Text = _worldName;   //学年表示の書き換え
@@ -124,19 +124,21 @@ namespace unilab2024
                 }
             }
 
-            Func.ChangeControlEnable(this, PictureBoxes, false);
+            Func.ChangeControl(pictureBox_Conv, false);
 
             if (ClearCheck.IsNew[2, 1] && _worldNumber == 1)
             {
                 string convFileName = "Story_AfterChapter1-StageSelect.csv";
                 Conversations = Func.LoadConversations(convFileName);
-                Func.StartConversations(this, PictureBoxes, Bitmaps, Conversations);
+                await Task.Delay((int)ConstNum.waitTime_Load);
+                bmp_Capt = Func.PlayConv(this, pictureBox_Conv, bmp_Capt, Conversations);
             }
             else if(ClearCheck.PlayAfterChapter4Story)
             {
                 string convFileName = "Story_AfterChapter4-StageSelect.csv";
                 Conversations = Func.LoadConversations(convFileName);
-                Func.StartConversations(this, PictureBoxes, Bitmaps, Conversations);
+                await Task.Delay((int)ConstNum.waitTime_Load);
+                bmp_Capt = Func.PlayConv(this, pictureBox_Conv, bmp_Capt, Conversations);
             }
         }
         #endregion
@@ -157,10 +159,9 @@ namespace unilab2024
                 }
             }
         }
-
-        private void pictureBox_Dialogue_Click(object sender, EventArgs e)
+        private void pictureBox_Conv_Click(object sender, EventArgs e)
         {
-            Func.DrawConversations(this,PictureBoxes, Bitmaps, Conversations);
+            Func.DrawConv(this, pictureBox_Conv, bmp_Capt, Conversations);
         }
 
         private void buttonToMap_Click(object sender, EventArgs e)
