@@ -92,11 +92,10 @@ namespace unilab2024
         Image character_me = Dictionaries.Img_DotPic["魔法使いサンプル"];
 
         public static List<ListBox> ListBoxes = new List<ListBox>();
-        public static ListBox ChooseListbox;  //2画面表示の時のリストボックス
-        //public static ListBox ChooseListbox2; //2画面表示の時のリストボックス
         public static bool isDual = false;
         public static ListBox InputListBox;   //入力先のリストボックス
         public static int[,] map = new int[12, 12]; //map情報
+        public static string stageName;
         public static int x_start; //スタート位置ｘ
         public static int y_start; //スタート位置ｙ
         public static int x_goal; //ゴール位置ｘ
@@ -144,7 +143,7 @@ namespace unilab2024
             //button5.Visible = false;
             //_stageName = "stage2-3";
             //isBefore = true;
-            string stageName = "stage"+_worldNumber + "-" + _level;
+            stageName = "stage"+_worldNumber + "-" + _level;
             map = CreateStage(stageName); //ステージ作成
 
             grade = Regex.Replace(stageName, @"[^0-9]", "");
@@ -179,27 +178,27 @@ namespace unilab2024
             int height_LB_A = 10;
             int height_LB_B = 10;
 
-            //using (StreamReader sr = new StreamReader($"stage_frame.csv"))
-            //{
-            //    while (!sr.EndOfStream)
-            //    {
-            //        string line = sr.ReadLine();
-            //        string[] values = line.Split(',');
+            using (StreamReader sr = new StreamReader($"stage_frame.csv"))
+            {
+                while (!sr.EndOfStream)
+                {
+                    string line = sr.ReadLine();
+                    string[] values = line.Split(',');
 
 
-            //        if (values[0] == _stageName)
-            //        {
-            //            Global.limit_LB_Input = int.Parse(values[1]);
-            //            Global.limit_LB_A = int.Parse(values[2]);
-            //            Global.limit_LB_B = int.Parse(values[3]);
-            //            break;
-            //        }
-            //    }
-            //}
+                    if (values[0] == _worldNumber + "-" + _level)
+                    {
+                        limit_LB_Input = int.Parse(values[3]);
+                        limit_LB_A = int.Parse(values[2]);
+                        limit_LB_B = int.Parse(values[1]);
+                        break;
+                    }
+                }
+            }
 
-            limit_LB_Input = 8;
-            limit_LB_A = 8;
-            limit_LB_B = 8;
+            //limit_LB_Input = 8;
+            //limit_LB_A = 8;
+            //limit_LB_B = 8;
             cell_length = pictureBox1.Width / 12;
 
             if (height_LB_Input == 1)
@@ -249,23 +248,20 @@ namespace unilab2024
             //    }
             //}
 
-            if (hint == null)
-            {
-                button_Hint.Visible = false;
-            }
-            else
-            {
-                button_Hint.Visible = true;
-            }
+            //if (hint == null)
+            //{
+            //    button_Hint.Visible = false;
+            //}
+            //else
+            //{
+            //    button_Hint.Visible = true;
+            //}
 
             listBox_Input.Height = element_height * height_LB_Input;
             listBox_A.Height = element_height * height_LB_A;
             listBox_B.Height = element_height * height_LB_B;
 
-            ChooseListbox = listBox_A;  //2画面時にデフォルトで表示するリストボックス
-            //ChooseListbox2 = listBox_A;
             InputListBox = listBox_Input;
-            ShowListBox(ChooseListbox);
             ListBoxes.Add(listBox_Input);
             ListBoxes.Add(listBox_A);
             ListBoxes.Add(listBox_B);
@@ -304,27 +300,19 @@ namespace unilab2024
 
             //ChooseInput.Items.Clear();
             //ComboBoxes.Add(comboBox_Select);
-            comboBox_InputTo.Items.Add("起動魔法");
-            comboBox_InputTo.Items.Add("Aの魔法");
-            comboBox_InputTo.Items.Add("Bの魔法");
-            comboBox_InputTo.SelectedIndex = 0;
-            if (_worldNumber > 2)
-            {
-                isDual = true;
-                label_InputTo.Visible = true;
-                comboBox_InputTo.Visible = true;
-                comboBox_InputTo.SelectedIndex = 1;
-                label_Dual.Visible = true;
-            }
+            
+            if (_worldNumber > 2) isDual = true;
+        
 
             //ストーリー強制視聴
             //listBox_Options.Visible = false;
             //listBox_SelectAB.Visible = false;
-            button_Hint.Visible = false;
+            //button_Hint.Visible = false;
             button_Retry.Visible = false;
             button_ToMap.Visible = true;
             label_Error.Visible = false;
             label_Result.Visible = false;
+            ShowListBox();
             //drawConversation();
             #endregion
 
@@ -341,7 +329,22 @@ namespace unilab2024
             else if (Choose.Contains("B")) Change = listBox_B;
             else Change = listBox_Input;
         }
+        private void listBox_Input_Click(object sender, EventArgs e)
+        {
+            InputListBox = listBox_Input;
+            ShowListBox();
+        }
 
+        private void listBox_A_Click(object sender, EventArgs e)
+        {
+            InputListBox = listBox_A;
+            ShowListBox();
+        }
+        private void listBox_B_Click(object sender, EventArgs e)
+        {
+            InputListBox = listBox_B;
+            ShowListBox();
+        }
         //public void SecondSelect_Changed(object sender, EventArgs e)
         //{
         //    string Choose = comboBox_Select.SelectedItem.ToString();
@@ -353,63 +356,69 @@ namespace unilab2024
 
         public void Dual_Checked(object sender, EventArgs e)
         {
-            ShowListBox(ChooseListbox);
+            ShowListBox();
         }
 
-        public void Input_Changed(object sender, EventArgs e)
-        {
-            string Choose = comboBox_InputTo.SelectedItem.ToString();
-            if (Choose.Contains("A"))
-            {
-                InputListBox = listBox_A;
-                if (ChooseListbox != listBox_A)
-                {
-                    ChooseListbox = listBox_A;
-                    label_Dual.Text = Choose;
-                    label_Dual.Visible = true;
-                }
-            }
-            else if (Choose.Contains("B"))
-            {
-                InputListBox = listBox_B;
-                if (ChooseListbox != listBox_B)
-                {
-                    ChooseListbox = listBox_B;
-                    label_Dual.Text = Choose;
-                    label_Dual.Visible = true;
-                }
-            }
-            else InputListBox = listBox_Input;
-            //ComboBox_Changed(Choose,InputListBox);
-            ShowListBox (ChooseListbox);
-        }
+        //public void Input_Changed(object sender, EventArgs e)
+        //{
+        //    string Choose = comboBox_InputTo.SelectedItem.ToString();
+        //    if (Choose.Contains("A"))
+        //    {
+        //        InputListBox = listBox_A;
+        //        if (ChooseListbox != listBox_A)
+        //        {
+        //            ChooseListbox = listBox_A;
+        //            label_Dual.Text = Choose;
+        //            label_Dual.Visible = true;
+        //        }
+        //    }
+        //    else if (Choose.Contains("B"))
+        //    {
+        //        InputListBox = listBox_B;
+        //        if (ChooseListbox != listBox_B)
+        //        {
+        //            ChooseListbox = listBox_B;
+        //            label_Dual.Text = Choose;
+        //            label_Dual.Visible = true;
+        //        }
+        //    }
+        //    else InputListBox = listBox_Input;
+        //    //ComboBox_Changed(Choose,InputListBox);
+        //    ShowListBox(ChooseListbox);
+        //}
 
-        public void ShowListBox(ListBox listBox)
+        public void ShowListBox()
         {
             foreach (ListBox listbox in ListBoxes)
             {
                 listbox.Visible = false;
-                listbox.Location = new Point(800, 150);
-                listbox.BackColor = SystemColors.Info;
-                listbox.ForeColor = Color.Black;
+                listbox.Location = new Point(750, 150);
+                listbox.BackColor = Color.Black;
+                listbox.ForeColor = Color.Yellow;
             }
-            InputListBox.BackColor = Color.Black;
-            InputListBox.ForeColor = Color.Yellow;
+            InputListBox.BackColor = SystemColors.Info;
+            InputListBox.ForeColor = Color.Black;
             if (isDual)
             {
                 listBox_Input.Width = 200;
                 listBox_Input.Visible = true;
 
+                label_A.Visible = true;
+                label_B.Visible = true;
                 //comboBox_Select.Visible = true;
-                button_SecondReset.Visible = true;
-                listBox.Location = new Point(listBox_Input.Location.X + 250, listBox_Input.Location.Y);
-                listBox.Width = 200;
-                listBox.Visible = true;
+                button_A_Reset.Visible = true;
+                listBox_A.Location = new Point(listBox_Input.Location.X + 250, listBox_Input.Location.Y);
+                listBox_A.Width = 200;
+                listBox_A.Visible = true;
+                button_Breset.Visible = true;
+                listBox_B.Location = new Point(listBox_A.Location.X + 250, listBox_A.Location.Y);
+                listBox_B.Width = 200;
+                listBox_B.Visible = true;
 
             }
             else
             {
-                button_SecondReset.Visible = false;
+                button_A_Reset.Visible = false;
                 listBox_Input.Visible = true;
                 listBox_Input.Width = 400;
             }
@@ -441,13 +450,17 @@ namespace unilab2024
                 listbox.Items.Clear();
             }
         }
-        private void button_ResetInput_Click(object sender, EventArgs e)        //起動部分リセット
+        private void button_Input_Reset_Click(object sender, EventArgs e)        //起動部分リセット
         {
             ResetListBox(listBox_Input);                    //Program.CSに処理記載
         }      
-        private void button_ResetSecond_Click(object sender, EventArgs e)           //Bの魔法リセット
+        private void button_A_Reset_Click(object sender, EventArgs e)           //Aの魔法リセット
         {
-            ResetListBox(ChooseListbox);
+            ResetListBox(listBox_A);
+        }
+        private void button_B_Reset_Click(object sender, EventArgs e)           //Aの魔法リセット
+        {
+            ResetListBox(listBox_B);
         }
         public void resetStage(string type) // ステージリセットまとめ
         {
@@ -682,7 +695,10 @@ namespace unilab2024
         {
             resetStage("quit");
         }
-
+        private void button_Hint_Click(object sender, EventArgs e)
+        {
+            CreateStage(stageName + "_hint");
+        }
         void uiButtonObject_up_Click(object sender, EventArgs e)
         {
             InputListBox.Items.Add("↑");
@@ -1718,6 +1734,8 @@ namespace unilab2024
                 count_walk++;
             }
         }
+
+
         #endregion
 
         #region 会話の表示

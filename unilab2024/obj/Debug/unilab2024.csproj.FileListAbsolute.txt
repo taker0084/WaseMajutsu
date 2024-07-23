@@ -42,3 +42,4 @@ C:\Users\0084t\Source\Repos\inouelab-waseda\unilab2024\unilab2024\bin\Debug\unil
 C:\Users\0084t\Source\Repos\inouelab-waseda\unilab2024\unilab2024\bin\Debug\unilab2024.pdb
 C:\Users\ShingoNogami\source\repos\unilab2024\unilab2024\obj\Debug\unilab2024.AnotherWorld.resources
 C:\Users\0084t\Source\Repos\inouelab-waseda\unilab2024\unilab2024\obj\Debug\unilab2024.AnotherWorld.resources
+C:\Users\takeru\Source\Repos\inouelab-waseda\unilab2024\unilab2024\obj\Debug\unilab2024.AnotherWorld.resources
