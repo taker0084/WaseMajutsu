@@ -169,14 +169,14 @@
             // listBox_Input
             // 
             this.listBox_Input.BackColor = System.Drawing.Color.Black;
-            this.listBox_Input.Font = new System.Drawing.Font("メイリオ", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.listBox_Input.Font = new System.Drawing.Font("メイリオ", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.listBox_Input.ForeColor = System.Drawing.SystemColors.Info;
             this.listBox_Input.FormattingEnabled = true;
-            this.listBox_Input.ItemHeight = 41;
+            this.listBox_Input.ItemHeight = 36;
             this.listBox_Input.Location = new System.Drawing.Point(750, 150);
             this.listBox_Input.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.listBox_Input.Name = "listBox_Input";
-            this.listBox_Input.Size = new System.Drawing.Size(422, 168);
+            this.listBox_Input.Size = new System.Drawing.Size(422, 148);
             this.listBox_Input.TabIndex = 11;
             this.listBox_Input.Visible = false;
             this.listBox_Input.Click += new System.EventHandler(this.listBox_Input_Click);
@@ -184,13 +184,13 @@
             // listBox_A
             // 
             this.listBox_A.BackColor = System.Drawing.SystemColors.Info;
-            this.listBox_A.Font = new System.Drawing.Font("メイリオ", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.listBox_A.Font = new System.Drawing.Font("メイリオ", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.listBox_A.FormattingEnabled = true;
-            this.listBox_A.ItemHeight = 41;
+            this.listBox_A.ItemHeight = 36;
             this.listBox_A.Location = new System.Drawing.Point(7500, 150);
             this.listBox_A.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.listBox_A.Name = "listBox_A";
-            this.listBox_A.Size = new System.Drawing.Size(422, 168);
+            this.listBox_A.Size = new System.Drawing.Size(422, 148);
             this.listBox_A.TabIndex = 13;
             this.listBox_A.Visible = false;
             this.listBox_A.Click += new System.EventHandler(this.listBox_A_Click);
@@ -205,7 +205,7 @@
             this.listBox_B.Location = new System.Drawing.Point(750, 150);
             this.listBox_B.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.listBox_B.Name = "listBox_B";
-            this.listBox_B.Size = new System.Drawing.Size(422, 184);
+            this.listBox_B.Size = new System.Drawing.Size(422, 148);
             this.listBox_B.TabIndex = 14;
             this.listBox_B.Visible = false;
             this.listBox_B.Click += new System.EventHandler(this.listBox_B_Click);
