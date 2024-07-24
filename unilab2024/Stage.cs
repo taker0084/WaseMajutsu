@@ -92,7 +92,6 @@ namespace unilab2024
         Image character_me = Dictionaries.Img_DotPic["魔法使いサンプル"];
 
         public static List<ListBox> ListBoxes = new List<ListBox>();
-        public static bool isDual = false;
         public static ListBox InputListBox;   //入力先のリストボックス
         public static int[,] map = new int[12, 12]; //map情報
         public static string stageName;
@@ -165,14 +164,14 @@ namespace unilab2024
             }
 
             #region リストボックス・ボタンの設定
+            //ゲーム画面の一ブロックの大きさ
+            cell_length = pictureBox1.Width / 12;
             // 1行文の高さ
-            int ItemHeight = 20;
+            int ItemHeight = 22;
             listBox_Input.ItemHeight = ItemHeight;
-            //listBox_Options.ItemHeight = ItemHeight;
             listBox_A.ItemHeight = ItemHeight;
             listBox_B.ItemHeight = ItemHeight;
 
-            int element_height = listBox_Input.ItemHeight;
 
             // それぞれの枠の高さ
             int height_LB_Input = 10;
@@ -190,40 +189,11 @@ namespace unilab2024
                     if (values[0] == stageName)
                     {
                         limit_LB_Input = int.Parse(values[3]);
-                        limit_LB_A = int.Parse(values[2]);
-                        limit_LB_B = int.Parse(values[1]);
+                        limit_LB_A = int.Parse(values[1]);
+                        limit_LB_B = int.Parse(values[2]);
                         break;
                     }
                 }
-            }
-
-            //limit_LB_Input = 8;
-            //limit_LB_A = 8;
-            //limit_LB_B = 8;
-            cell_length = pictureBox1.Width / 12;
-
-            if (height_LB_Input == 1)
-            {
-                //listBox_Input.Visible = false;
-                
-                //listBox_SelectAB.Items.Remove("A");
-                button_ResetInput.Visible = false;
-                button_ResetInput.Enabled = false;
-
-            }
-
-            if (height_LB_A == 1)
-            {
-                //listBox_A.Visible = false;
-                //label_B.Visible = false;
-                //listBox_B.Items.Remove("B");
-                button_ResetInput.Visible = false;
-                button_ResetInput.Enabled = false;
-            }
-
-            if (height_LB_Input == 1 && height_LB_A == 1)
-            {
-                //listBox_SelectAB.Visible = false;
             }
 
             //hint = null;
@@ -258,52 +228,38 @@ namespace unilab2024
             //    button_Hint.Visible = true;
             //}
 
-            listBox_Input.Height = element_height * height_LB_Input;
-            listBox_A.Height = element_height * height_LB_A;
-            listBox_B.Height = element_height * height_LB_B;
+            listBox_Input.Height = ItemHeight * height_LB_Input;
+            listBox_A.Height = ItemHeight * height_LB_A;
+            listBox_B.Height = ItemHeight * height_LB_B;
 
             InputListBox = listBox_Input;
             ListBoxes.Add(listBox_Input);
             ListBoxes.Add(listBox_A);
             ListBoxes.Add(listBox_B);
-            //ListBox1のイベントハンドラを追加
-            //listBox_Input.SelectionMode = SelectionMode.One;
-            //listBox_Input.DragEnter += new DragEventHandler(ListBox_DragEnter);
-            //listBox_Input.DragDrop += new DragEventHandler(ListBox_DragDrop);
-            //listBox_Options.MouseDown += new MouseEventHandler(ListBox_MouseDown);
-            //listBox_A.SelectionMode = SelectionMode.One;
-            //listBox_A.DragEnter += new DragEventHandler(ListBox_DragEnter);
-            //listBox_A.DragDrop += new DragEventHandler(ListBox_DragDrop);
-            //listBox_B.SelectionMode = SelectionMode.One;
-            //listBox_B.DragEnter += new DragEventHandler(ListBox_DragEnter);
-            //listBox_B.DragDrop += new DragEventHandler(ListBox_DragDrop);
-            //listBox_SelectAB.MouseDown += new MouseEventHandler(ListBox_MouseDown);
-
-            //    //ヒントを教えるキャラのアイコンを表示
-            //    Graphics g3 = Graphics.FromImage(bmp3);
-            //    Bitmap bmp = new Bitmap(1, 1);
-            //    bmp.SetPixel(0, 0, Color.White);
-            //    g3.DrawImage(bmp, 0, 0, bmp3.Height - 1, bmp3.Height - 1);
-            //    g3.DrawRectangle(Pens.Black, 0, 0, bmp3.Height - 1, bmp3.Height - 1);
-            //    g3.Dispose();
+            
 
             //チュートリアルステージでは、マップに戻るボタンを消す。ゴールしたら見える
             if (stageName == "stage1-1")
             {
                 button_ToMap.Visible = false;
             }
-            ////for文をステージ1-1,1-2で消す
-            //if (stageName == "stage1-1" || stageName == "stage1-2")
-            //{
-            //    listBox_options.Items.Remove("連チャンの術 (1)");
-            //    listBox_options.Items.Remove("連チャンの術おわり");
-            //}
+            //for文、ABボタンをステージ1で消す
+            if (_worldNumber == 1)
+            {
+                uiButtonObject_for.Visible = false;
+                uiButtonObject_endfor.Visible = false;
+                uiButtonObject_A.Visible = false;
+                uiButtonObject_B.Visible = false;
+            }
+            else if(_worldNumber == 2)
+            {
+                uiButtonObject_A.Visible = false;
+                uiButtonObject_B.Visible = false;
+            }
 
+            if(stageName == "stage6-3" || stageName == "stage7-2" || stageName == "stage7-3") button_Hint.Visible = true;
             //ChooseInput.Items.Clear();
             //ComboBoxes.Add(comboBox_Select);
-            
-            if (_worldNumber > 2) isDual = true;
-        
 
             //ストーリー強制視聴
             //listBox_Options.Visible = false;
@@ -348,47 +304,12 @@ namespace unilab2024
             InputListBox = listBox_B;
             ShowListBox();
         }
-        //public void SecondSelect_Changed(object sender, EventArgs e)
-        //{
-        //    string Choose = comboBox_Select.SelectedItem.ToString();
-        //    if (Choose.Contains("A")) ChooseListbox2 = listBox_A;
-        //    else if (Choose.Contains("B")) ChooseListbox2 = listBox_B;
-        //    else ChooseListbox2 = listBox_Input;
-        //    ShowListBox(ChooseListbox,ChooseListbox2);
-        //}
-
+        
         public void Dual_Checked(object sender, EventArgs e)
         {
             ShowListBox();
         }
 
-        //public void Input_Changed(object sender, EventArgs e)
-        //{
-        //    string Choose = comboBox_InputTo.SelectedItem.ToString();
-        //    if (Choose.Contains("A"))
-        //    {
-        //        InputListBox = listBox_A;
-        //        if (ChooseListbox != listBox_A)
-        //        {
-        //            ChooseListbox = listBox_A;
-        //            label_Dual.Text = Choose;
-        //            label_Dual.Visible = true;
-        //        }
-        //    }
-        //    else if (Choose.Contains("B"))
-        //    {
-        //        InputListBox = listBox_B;
-        //        if (ChooseListbox != listBox_B)
-        //        {
-        //            ChooseListbox = listBox_B;
-        //            label_Dual.Text = Choose;
-        //            label_Dual.Visible = true;
-        //        }
-        //    }
-        //    else InputListBox = listBox_Input;
-        //    //ComboBox_Changed(Choose,InputListBox);
-        //    ShowListBox(ChooseListbox);
-        //}
 
         public void ShowListBox()
         {
@@ -401,22 +322,26 @@ namespace unilab2024
             }
             InputListBox.BackColor = SystemColors.Info;
             InputListBox.ForeColor = Color.Black;
-            if (isDual)
+            if (limit_LB_A != 0)
             {
                 listBox_Input.Width = 200;
                 listBox_Input.Visible = true;
 
                 label_A.Visible = true;
-                label_B.Visible = true;
                 //comboBox_Select.Visible = true;
                 button_A_Reset.Visible = true;
                 listBox_A.Location = new Point(listBox_Input.Location.X + 250, listBox_Input.Location.Y);
                 listBox_A.Width = 200;
                 listBox_A.Visible = true;
-                button_Breset.Visible = true;
-                listBox_B.Location = new Point(listBox_A.Location.X + 250, listBox_A.Location.Y);
-                listBox_B.Width = 200;
-                listBox_B.Visible = true;
+
+                if (limit_LB_B != 0)
+                {
+                    label_B.Visible = true;
+                    button_Breset.Visible = true;
+                    listBox_B.Location = new Point(listBox_A.Location.X + 250, listBox_A.Location.Y);
+                    listBox_B.Width = 200;
+                    listBox_B.Visible = true;
+                }
 
             }
             else
@@ -442,7 +367,7 @@ namespace unilab2024
         #endregion
 
         #region リセット関連
-        public static void ResetListBox(ListBox listbox)   //ListBoxの中身消去
+        public void ResetListBox(ListBox listbox)   //ListBoxの中身消去
         {
             if (listbox.SelectedIndex > -1)
             {
@@ -452,6 +377,7 @@ namespace unilab2024
             {
                 listbox.Items.Clear();
             }
+            label_Info.Visible = false;
         }
         private void button_Input_Reset_Click(object sender, EventArgs e)        //起動部分リセット
         {
@@ -473,7 +399,7 @@ namespace unilab2024
                     Func.CreateStageSelect(this, _worldName, _worldNumber);
                     break; ;
                 case "miss_out":
-                    label_Error.Text = "そこは止まれないよ！やり直そう！";
+                    label_Error.Text = "そこは入れないよ！やり直そう！";
                     label_Error.Visible = true;
                     Thread.Sleep(300);
                     button_Retry.Visible = true;
@@ -703,34 +629,65 @@ namespace unilab2024
         {
             CreateStage(stageName + "_hint");
         }
+        bool Input_check()
+        {
+            bool result = false;
+            label_Info.Visible = false;
+            switch (InputListBox.Name)
+            {
+                case "listBox_Input":
+                    if (InputListBox.Items.Count < limit_LB_Input) break;
+                    else goto default;
+                case "listBox_A":
+                    if (InputListBox.Items.Count < limit_LB_A) break;
+                    else goto default;
+                case "listBox_B":
+                    if (InputListBox.Items.Count < limit_LB_B) break;
+                    else goto default;
+                default:
+                    label_Info.Text = "これ以上入力できないよ";
+                    label_Info.Visible = true;
+                    result = true;
+                    break;
+
+            }
+            return result;
+        }
         void uiButtonObject_up_Click(object sender, EventArgs e)
         {
+            if(Input_check()) return;
             InputListBox.Items.Add("↑");
         }
         void uiButtonObject_left_Click(object sender, EventArgs e)
         {
+            if (Input_check()) return;
             InputListBox.Items.Add("←");
         }
         void uiButtonObject_right_Click(object sender, EventArgs e)
         {
+            if (Input_check()) return;
             InputListBox.Items.Add("→");
         }
         void uiButtonObject_down_Click(object sender, EventArgs e)
         {
+            if (Input_check()) return;
             InputListBox.Items.Add("↓");
         }
         void uiButtonObject_A_Click(object sender, EventArgs e)
         {
+            if (Input_check()) return;
             InputListBox.Items.Add("A");
         }
         void uiButtonObject_B_Click(object sender, EventArgs e)
         {
+            if (Input_check()) return;
             InputListBox.Items.Add("B");
         }
         void uiButtonObject_for_Click(object sender, EventArgs e)
         {
+            if (Input_check()) return;
             //　ボタンの押下を制限　
-            foreach(Control items in Controls)
+            foreach (Control items in Controls)
             {
                 if (items == textBox_ForCount) continue;
                 items.Enabled = false;
@@ -748,7 +705,7 @@ namespace unilab2024
             {
                 For_count = int.Parse(e.KeyChar.ToString());
                 // リストボックスに "Input(数字)" 形式で追加
-                InputListBox.Items.Add($"反復魔法({For_count})");
+                InputListBox.Items.Add($"リフレイン({For_count})");
                 e.Handled = true;
                 textBox_ForCount.Visible = false;
                 label_Info.Visible = false;
@@ -765,7 +722,8 @@ namespace unilab2024
         }
         void uiButtonObject_endfor_Click(object sender, EventArgs e)
         {
-            InputListBox.Items.Add("反復魔法終わり");
+            if (Input_check()) return;
+            InputListBox.Items.Add("リフレイン終わり");
         }
 
         void Stage_KeyDown(object sender, KeyEventArgs e)
@@ -966,7 +924,7 @@ namespace unilab2024
             int Now;                                                                                                  //入力したListのうち何番目の処理か
             //List<int[]> Return_List = new List<int[]>();                                                              //出力の配列(動きを[x,y]として保存)
             int Return_Num = i;                                                                                       //何番目までfor文処理が続いているか
-            if (Move_Input[i].StartsWith("反復魔法("))
+            if (Move_Input[i].StartsWith("リフレイン("))
             {
                 trial = int.Parse(Regex.Replace(Move_Input[i], @"[^0-9]", ""));                                       //処理回数をtrialに設定
                 for (int j = 0; j < trial; j++)
@@ -976,12 +934,12 @@ namespace unilab2024
                     {
                         if (Now >= Move_Input.Count)                                                                 //for文の終わりが存在しない場合、エラー表示
                         {
-                            MessageBox.Show("「反復魔法」と「反復魔法おわり」はセットで使ってください");
+                            MessageBox.Show("「リフレイン」と「リフレインおわり」はセットで使ってください");
                             isEndfor = false;
                             return (move, i);
                         }
                         (move, Now) = ForLoop(move, Move_Input, Move_A, Move_B, Now);                                  //二重ループの探索
-                        if (Move_Input[Now] == "反復魔法終わり") break;                                                       //for文終わりが存在したら処理終了
+                        if (Move_Input[Now] == "リフレイン終わり") break;                                                       //for文終わりが存在したら処理終了
                         else
                         {
                             if (Move_Input[Now] == "A") move.AddRange(Move_A);                            //Aの魔法が入力されている場合、Aの処理内容をListに追加
@@ -1006,62 +964,15 @@ namespace unilab2024
             var Move_B = new List<int[]>();                                                           //Bでの動きを保存
             string[] Get_Input_A = this.listBox_A.Items.Cast<string>().ToArray();                     //AのListへの入力を保存
             string[] Get_Input_B = this.listBox_B.Items.Cast<string>().ToArray();                     //BのListへの入力を保存
-            //Get_Input_A = exchange_move(Get_Input_A);                             //AのListへの入力を動きに変換
-            //Get_Input_B = exchange_move(Get_Input_B);                             //BのListへの入力を動きに変換
+            
             var Move_A_List = new List<string> (Get_Input_A);
             var Move_B_List = new List<string>(Get_Input_B);
-
-            //get_move_a_list.AddRange(get_move_a);
-            //get_move_b_list.AddRange(get_move_b);
 
             int loop_count = 0;
             while (Move_A_List.Count <= 30 || Move_B_List.Count <= 30)
             {
                 Move_A_List = MakeMoveList(Get_Input_A, Get_Input_B, Move_A_List);
                 Move_B_List = MakeMoveList(Get_Input_A, Get_Input_B, Move_B_List);
-                /*var get_move_a_list_copy = new List<string>(Move_A_List);
-                var get_move_b_list_copy = new List<string>(Move_B_List);
-                Move_A_List.Clear();
-                Move_B_List.Clear();
-
-
-                for (int i = 0; i < get_move_a_list_copy.Count; i++)
-                {
-
-                    if (get_move_a_list_copy[i] == "B")
-                    {
-                        Move_A_List.AddRange(Get_Input_B);
-
-                    }
-                    else if (get_move_a_list_copy[i] == "A")
-                    {
-                        get_move_a_list.AddRange(get_move_a_list_copy);
-
-                    }
-                    else
-                    {
-                        get_move_a_list.Add(get_move_a_list_copy[i]);
-                    }
-                }
-
-                for (int i = 0; i < get_move_b_list_copy.Count; i++)
-                {
-
-                    if (get_move_b_list_copy[i] == "B")
-                    {
-                        get_move_b_list.AddRange(get_move_b);
-
-                    }
-                    else if (get_move_b_list_copy[i] == "A")
-                    {
-                        get_move_b_list.AddRange(get_move_a_list_copy);
-
-                    }
-                    else
-                    {
-                        get_move_b_list.Add(get_move_b_list_copy[i]);
-                    }
-                }*/           //削除候補
                 loop_count++;
 
                 if (loop_count > 5)
@@ -1072,8 +983,6 @@ namespace unilab2024
 
             if (Get_Input_A.Length != 0)
             {
-                //string[] get_move_a = this.listBox_Input.Items.Cast<string>().ToArray();
-
                 for (int i = 0; i < Move_A_List.Count; i++)
                 {
                     (Move_A, i) = ForLoop(Move_A,Move_A_List,Move_A,Move_B, i);
@@ -1180,9 +1089,7 @@ namespace unilab2024
 
             if (Get_Input_B.Length != 0)
             {
-                //string[] get_move_b = this.listBox3.Items.Cast<string>().ToArray();
-
-                for (int i = 0; i < Move_B_List.Count; i++)
+               for (int i = 0; i < Move_B_List.Count; i++)
                 {
                     (Move_B, i) = ForLoop(Move_B,Move_B_List, Move_A, Move_B, i);
                     #region 削除候補
@@ -1576,7 +1483,6 @@ namespace unilab2024
 
             void DrawCharacter(int a, int b, ref Image character_me)
             {
-                //character_me = Dictionaries.Img_DotPic["魔法使いサンプル"];
                 g2.DrawImage(character_me, a * cell_length - extra_length, b * cell_length - 2 * extra_length, cell_length + 2 * extra_length, cell_length + 2 * extra_length);
             }
 
@@ -1604,13 +1510,13 @@ namespace unilab2024
                         DrawCharacter(x, y, ref character_me);
                         break;
                     }
-                    if (jump != 0 && Map[x + move_copy[0][1] * 2, y + move_copy[0][0] * 2] == 8) //jumpの時着地先が木の場合、ゲームオーバー
+                    if (jump != 0 && Map[x + move_copy[0][1] * jump, y + move_copy[0][0] * jump] == 2) //jumpの時着地先が木の場合、ゲームオーバー
                     {
                         (x_now, y_now) = draw_move(x, y, ref move_copy);
                         Thread.Sleep(waittime);
                         (x_now, y_now) = draw_move(x, y, ref move_copy);
 
-                        resetStage("miss_tree");
+                        resetStage("miss_out");
                         DrawCharacter(x, y, ref character_me);
                         break;
                     }
@@ -1636,7 +1542,14 @@ namespace unilab2024
                     Thread.Sleep(waittime);
                     continue;
                 }
-
+                if(Map[x + move_copy[0][0], y + move_copy[0][1]] == 11)
+                {
+                    DrawCharacter(x, y, ref character_me);
+                    move_copy.RemoveAt(0);
+                    //500ミリ秒=0.5秒待機する
+                    Thread.Sleep(waittime);
+                    continue;
+                }
                 (x_now, y_now) = draw_move(x, y, ref move_copy);
                 //x += move_copy[0][0];
                 //y += move_copy[0][1];
