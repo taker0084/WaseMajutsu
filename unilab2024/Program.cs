@@ -232,6 +232,14 @@ namespace unilab2024
 
         public static void DrawConv(Form currentForm, PictureBox pictureBox_Conv, Bitmap bmp_Capt, List<Conversation> Conversations)
         {
+            if (convIndex >= Conversations.Count)
+            {
+                ChangeControl(pictureBox_Conv, false);
+                return;
+            }
+
+            bool isStage = currentForm is Stage;
+
             Graphics g = Graphics.FromImage(bmp_Capt);
 
             Font fnt_name = new Font("游ゴシック", 33, FontStyle.Bold);
@@ -256,36 +264,41 @@ namespace unilab2024
 
             int lineHeight = fnt_dia.Height;
 
-            g.FillRectangle(Color_BackName, margin_x, margin_y + face, name_x, name_y);
-            g.DrawImage(Dictionaries.Img_Conversation["Dialogue"], margin_x, margin_y + face + name_y, dia_x, dia_y);
-
-            if (convIndex >= Conversations.Count)
+            if (isStage)
             {
-                ChangeControl(pictureBox_Conv, false);
-                return;
+                sp = 180;
+                sp_x = 400;
+                face = 200;
             }
+            
+            g.DrawImage(Dictionaries.Img_Conversation["Dialogue"], margin_x, margin_y + 300 + name_y, dia_x, dia_y);
 
-            string charaName = Conversations[convIndex].Character;
-            if (charaName == "主人公")
+            if (!isStage)
             {
-                if (MainCharacter.isBoy)
+                string charaName = Conversations[convIndex].Character;
+                if (charaName == "主人公")
                 {
-                    charaName = "タロウ";
+                    if (MainCharacter.isBoy)
+                    {
+                        charaName = "タロウ";
+                    }
+                    else
+                    {
+                        charaName = "ハナコ";
+                    }
                 }
-                else
-                {
-                    charaName = "ハナコ";
-                }
-            }
 
-            g.DrawString(charaName, fnt_name, Brushes.White, margin_x + sp, margin_y + face + sp);
+                g.FillRectangle(Color_BackName, margin_x, margin_y + face, name_x, name_y);
+                g.DrawString(charaName, fnt_name, Brushes.White, margin_x + sp, margin_y + face + sp);
+            }
+           
 
             //改行の処理はこう書かないとうまくいかない
             char[] lineBreak = new char[] { '\\' };
             string[] DialogueLines = Conversations[convIndex].Dialogue.Replace("\\n", "\\").Split(lineBreak);
             for (int i = 0; i < DialogueLines.Length; i++)
             {
-                g.DrawString(DialogueLines[i], fnt_dia, Brushes.Black, margin_x + sp_x, margin_y + face + name_y + sp_y + i * lineHeight);
+                g.DrawString(DialogueLines[i], fnt_dia, Brushes.Black, margin_x + sp_x, margin_y + 300 + name_y + sp_y + i * lineHeight);
             }
 
             Image charaImage = null;
@@ -305,7 +318,14 @@ namespace unilab2024
                 charaImage = Dictionaries.Img_Character[Conversations[convIndex].Img];
             }
 
-            g.DrawImage(charaImage, margin_x, margin_y, face, face);
+            if (isStage)
+            {
+                g.DrawImage(charaImage, margin_x + sp, margin_y + 300 + name_y + 30, face, face);
+            }
+            else
+            {
+                g.DrawImage(charaImage, margin_x, margin_y, face, face);
+            }
 
             pictureBox_Conv.Image = bmp_Capt;
             g.Dispose();

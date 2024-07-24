@@ -790,6 +790,9 @@ namespace unilab2024
                 case Keys.B:
                     InputListBox.Items.Add("B");
                     break;
+                case Keys.M:
+                    Func.ChangeControl(pictureBox_Conv, false);
+                    break;
             }
         }
         #endregion
