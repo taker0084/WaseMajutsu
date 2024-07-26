@@ -127,7 +127,7 @@ namespace unilab2024
 
         //public static List<Conversation> Conversations = new List<Conversation>();  //会話文を入れるリスト
         PictureBox pictureBox_Conv;
-        Bitmap bmp_Capt;
+        byte[] Capt;
         List<Conversation> StartConv; 
         List<Conversation> EndConv;
         bool isStartConv;
@@ -278,7 +278,7 @@ namespace unilab2024
             isStartConv = true;
 
             await Task.Delay((int)ConstNum.waitTime_Load);
-            bmp_Capt = Func.PlayConv(this,pictureBox_Conv,bmp_Capt,StartConv);
+            Capt = Func.PlayConv(this,pictureBox_Conv,StartConv);
         }
 
         #region 各コントロール機能設定
@@ -608,7 +608,7 @@ namespace unilab2024
                 }
 
                 await Task.Delay((int)ConstNum.waitTime_End);
-                bmp_Capt = Func.PlayConv(this, pictureBox_Conv, bmp_Capt, EndConv);
+                Capt = Func.PlayConv(this, pictureBox_Conv, EndConv);
             }
             //else
             //{
@@ -1707,11 +1707,11 @@ namespace unilab2024
         {
             if (isStartConv)
             {
-                Func.DrawConv(this,pictureBox_Conv,bmp_Capt, StartConv);
+                Func.DrawConv(this,pictureBox_Conv,Capt, StartConv);
             }
             else
             {
-                Func.DrawConv(this, pictureBox_Conv, bmp_Capt, EndConv);
+                Func.DrawConv(this, pictureBox_Conv, Capt, EndConv);
             }
         }
 
@@ -1719,11 +1719,11 @@ namespace unilab2024
         {
             if (isStartConv)
             {
-                bmp_Capt = Func.PlayConv(this, pictureBox_Conv, bmp_Capt, StartConv);
+                Capt = Func.PlayConv(this, pictureBox_Conv, StartConv);
             }
             else
             {
-                bmp_Capt = Func.PlayConv(this, pictureBox_Conv, bmp_Capt, EndConv);
+                Capt = Func.PlayConv(this, pictureBox_Conv, EndConv);
             }
         }
         #endregion
