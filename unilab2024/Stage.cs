@@ -93,6 +93,8 @@ namespace unilab2024
 
         public static List<ListBox> ListBoxes = new List<ListBox>();
         public static ListBox InputListBox;   //入力先のリストボックス
+        public static bool isChange = false;
+        public static int Change_Item_Number;
         public static int[,] map = new int[12, 12]; //map情報
         public static string stageName;
         public static int x_start; //スタート位置ｘ
@@ -282,12 +284,12 @@ namespace unilab2024
         }
 
         #region 各コントロール機能設定
-        public void ComboBox_Changed(String Choose, ListBox Change)
-        {
-            if (Choose.Contains("A")) Change = listBox_A;
-            else if (Choose.Contains("B")) Change = listBox_B;
-            else Change = listBox_Input;
-        }
+        //public void ComboBox_Changed(String Choose, ListBox Change)
+        //{
+        //    if (Choose.Contains("A")) Change = listBox_A;
+        //    else if (Choose.Contains("B")) Change = listBox_B;
+        //    else Change = listBox_Input;
+        //}
         private void listBox_Input_Click(object sender, EventArgs e)
         {
             InputListBox = listBox_Input;
@@ -304,12 +306,6 @@ namespace unilab2024
             InputListBox = listBox_B;
             ShowListBox();
         }
-        
-        public void Dual_Checked(object sender, EventArgs e)
-        {
-            ShowListBox();
-        }
-
 
         public void ShowListBox()
         {
@@ -352,18 +348,20 @@ namespace unilab2024
             }
         }
 
-        /* 要素の書き換え　開発中
-         * 
+        // 要素の書き換え　開発中
         public void Change_item_click(object sender, EventArgs e)
         {
-            ListBox listBox = sender as ListBox;
-            string item = listBox.SelectedItem as string;
+            Change_Item_Number = InputListBox.SelectedIndex;
             label_Info.Text ="修正したいボタンを押してエンターを押してね";
             label_Info.Visible = true;
-            if (item.StartsWith("反復魔法(")) uiButtonObject_for_Click(sender, e);
-            listBox.SelectedItem = listBox.Items[listBox.Items.Count - 1];
-            listBox.Items.RemoveAt(listBox.Items.Count - 1);
-        }*/
+            isChange = true;
+        }
+        public void Item_Change()
+        {
+            isChange = false;
+            InputListBox.Items[Change_Item_Number] = InputListBox.Items[InputListBox.Items.Count - 1].ToString();
+            InputListBox.Items.RemoveAt(InputListBox.Items.Count - 1);
+        }
         #endregion
 
         #region リセット関連
@@ -381,14 +379,17 @@ namespace unilab2024
         }
         private void button_Input_Reset_Click(object sender, EventArgs e)        //起動部分リセット
         {
+            label_Info.Visible = false;
             ResetListBox(listBox_Input);                    //Program.CSに処理記載
         }      
         private void button_A_Reset_Click(object sender, EventArgs e)           //Aの魔法リセット
         {
+            label_Info.Visible = false;
             ResetListBox(listBox_A);
         }
         private void button_B_Reset_Click(object sender, EventArgs e)           //Aの魔法リセット
         {
+            label_Info.Visible = false;
             ResetListBox(listBox_B);
         }
         public void resetStage(string type) // ステージリセットまとめ
@@ -618,18 +619,15 @@ namespace unilab2024
 
         private void button_Retry_Click(object sender, EventArgs e)  //リトライボタン押下時処理
         {
-            label_Info.Visible = false;
             resetStage("retry");
         }
 
         private void button_ToMap_Click(object sender, EventArgs e)  //マップに戻るボタン押下時処理
         {
-            label_Info.Visible = false;
             resetStage("quit");
         }
         private void button_Hint_Click(object sender, EventArgs e)
         {
-            label_Info.Visible = false;
             CreateStage(stageName + "_hint");
         }
         bool Input_check()
@@ -658,37 +656,43 @@ namespace unilab2024
         }
         void uiButtonObject_up_Click(object sender, EventArgs e)
         {
-            if(Input_check()) return;
+            if(Input_check() && !isChange) return;
             InputListBox.Items.Add("↑");
+            if (isChange) Item_Change();
         }
         void uiButtonObject_left_Click(object sender, EventArgs e)
         {
-            if (Input_check()) return;
+            if (Input_check() && !isChange) return;
             InputListBox.Items.Add("←");
+            if (isChange) Item_Change();
         }
         void uiButtonObject_right_Click(object sender, EventArgs e)
         {
-            if (Input_check()) return;
+            if (Input_check() && !isChange) return;
             InputListBox.Items.Add("→");
+            if (isChange) Item_Change();
         }
         void uiButtonObject_down_Click(object sender, EventArgs e)
         {
-            if (Input_check()) return;
+            if (Input_check() && !isChange) return;
             InputListBox.Items.Add("↓");
+            if (isChange) Item_Change();
         }
         void uiButtonObject_A_Click(object sender, EventArgs e)
         {
-            if (Input_check()) return;
+            if (Input_check() && !isChange) return;
             InputListBox.Items.Add("A");
+            if (isChange) Item_Change();
         }
         void uiButtonObject_B_Click(object sender, EventArgs e)
         {
-            if (Input_check()) return;
+            if (Input_check() && !isChange) return;
             InputListBox.Items.Add("B");
+            if (isChange) Item_Change();
         }
         void uiButtonObject_for_Click(object sender, EventArgs e)
         {
-            if (Input_check()) return;
+            if (Input_check() && !isChange) return;
             //　ボタンの押下を制限　
             foreach (Control items in Controls)
             {
@@ -699,7 +703,7 @@ namespace unilab2024
             label_Info.Text = "ループ回数を入力してね!";
             textBox_ForCount.Visible = true;
             textBox_ForCount.Focus();
-            //listBox_Input.Items.Add($"反復魔法({For_count})");
+            if (isChange) Item_Change();
         }
         private void textBox_ForCount_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -722,10 +726,11 @@ namespace unilab2024
                 label_Info.Text = "数字を入力してね!";
                 e.Handled = true;
             }
+            if (isChange) Item_Change();
         }
         void uiButtonObject_endfor_Click(object sender, EventArgs e)
         {
-            if (Input_check()) return;
+            if (Input_check() && !isChange) return;
             InputListBox.Items.Add("リフレイン終わり");
         }
 
@@ -1659,6 +1664,7 @@ namespace unilab2024
                 {
                     //500ミリ秒=0.5秒待機する
                     Thread.Sleep(waittime);
+                    continue;
                 }
                
                 //ワープの処理
