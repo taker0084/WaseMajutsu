@@ -373,7 +373,7 @@ namespace unilab2024
         //ここでのConversations[convIndex].Imgは"Teacher".
         public static Dictionary<string, Image> Img_Character = new Dictionary<string, Image>();
         public static Dictionary<string, Image> Img_DotPic = new Dictionary<string, Image>();
-        public static List<Image> Img_Object = new List<Image>();
+        public static Dictionary<string,Image> Img_Object = new Dictionary<string,Image>();
         public static Dictionary <string, Image> Img_Button = new Dictionary<string, Image>();
         public static Dictionary <string, Image> Img_Background = new Dictionary<string, Image>();
         public static Dictionary<string, Image> Img_Conversation = new Dictionary<string, Image>();
@@ -418,8 +418,8 @@ namespace unilab2024
             string[] files = Directory.GetFiles(@"Object");
             foreach (string file in files)
             {
-                //string File_Name = file.Replace("Object\\", "");
-                Dictionaries.Img_Object.Add(Image.FromFile(file));
+                string key = Path.GetFileNameWithoutExtension(file).Replace("Img_Object_", "");
+                Dictionaries.Img_Object[key] = Image.FromFile(file);
             }
         }
 
