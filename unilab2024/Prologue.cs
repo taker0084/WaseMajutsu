@@ -16,7 +16,7 @@ namespace unilab2024
 
         #region メンバ変数の定義など
         PictureBox pictureBox_Conv;
-        Bitmap bmp_Capt;
+        byte[] Capt;
         List<Conversation> StartConv;
         List<Conversation> EndConv;
         bool isStartConv;
@@ -44,7 +44,7 @@ namespace unilab2024
             button_Girl.Visible = false;
 
             await Task.Delay((int)ConstNum.waitTime_Load);
-            bmp_Capt = Func.PlayConv(this, pictureBox_Conv, bmp_Capt, StartConv);
+            Capt = Func.PlayConv(this, pictureBox_Conv, StartConv);
         }
         #endregion
 
@@ -67,7 +67,7 @@ namespace unilab2024
         {
             if (isStartConv)
             {
-                Func.DrawConv(this, pictureBox_Conv, bmp_Capt, StartConv);
+                Func.DrawConv(this, pictureBox_Conv, Capt, StartConv);
                 if (Func.convIndex == StartConv.Count)
                 {
                     ChangeControl();
@@ -86,7 +86,7 @@ namespace unilab2024
                     Func.CreateStage(this, "1年生", 1, 1);
                     return;
                 }
-                Func.DrawConv(this,pictureBox_Conv,bmp_Capt, EndConv);
+                Func.DrawConv(this,pictureBox_Conv,Capt, EndConv);
             }
         }
 
@@ -109,8 +109,10 @@ namespace unilab2024
             Func.LoadImg_DotPic();
             button_Boy.Visible = false;
             button_Girl.Visible = false;
+            Func.ChangeControl(pictureBox_Conv, true);
+            Func.convIndex = 0;
             await Task.Delay((int)ConstNum.waitTime_End);
-            bmp_Capt = Func.PlayConv(this,pictureBox_Conv, bmp_Capt, EndConv);
+            Func.DrawConv(this,pictureBox_Conv, Capt, EndConv);
         }
         #endregion
 

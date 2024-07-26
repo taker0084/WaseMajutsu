@@ -15,7 +15,7 @@ namespace unilab2024
         #region 各種メンバ変数の定義など
         //会話用
         PictureBox pictureBox_Conv;
-        Bitmap bmp_Capt;
+        byte[] Capt;
         List<Conversation> Conversations;
 
         public StageSelect()
@@ -131,14 +131,14 @@ namespace unilab2024
                 string convFileName = "Story_AfterChapter1-StageSelect.csv";
                 Conversations = Func.LoadConversations(convFileName);
                 await Task.Delay((int)ConstNum.waitTime_Load);
-                bmp_Capt = Func.PlayConv(this, pictureBox_Conv, bmp_Capt, Conversations);
+                Capt = Func.PlayConv(this, pictureBox_Conv, Conversations);
             }
             else if(ClearCheck.PlayAfterChapter4Story)
             {
                 string convFileName = "Story_AfterChapter4-StageSelect.csv";
                 Conversations = Func.LoadConversations(convFileName);
                 await Task.Delay((int)ConstNum.waitTime_Load);
-                bmp_Capt = Func.PlayConv(this, pictureBox_Conv, bmp_Capt, Conversations);
+                Capt = Func.PlayConv(this, pictureBox_Conv, Conversations);
             }
         }
         #endregion
@@ -161,7 +161,7 @@ namespace unilab2024
         }
         private void pictureBox_Conv_Click(object sender, EventArgs e)
         {
-            Func.DrawConv(this, pictureBox_Conv, bmp_Capt, Conversations);
+            Func.DrawConv(this, pictureBox_Conv, Capt, Conversations);
         }
 
         private void buttonToMap_Click(object sender, EventArgs e)

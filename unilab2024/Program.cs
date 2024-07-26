@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Threading;
 
 namespace unilab2024
@@ -213,7 +214,7 @@ namespace unilab2024
 
     public partial class Func
     {
-        public static Bitmap CaptureClientArea(Form currentForm)
+        public static byte[] CaptureClientArea(Form currentForm)
         {
             Rectangle clientRect = currentForm.ClientRectangle;
 
@@ -225,12 +226,24 @@ namespace unilab2024
                 g.CopyFromScreen(clientScreenPos, Point.Empty, clientRect.Size);
             }
 
-            return bmp_Capt;
+            using (MemoryStream ms = new MemoryStream())
+            {
+                bmp_Capt.Save(ms, ImageFormat.Png);
+                return ms.ToArray();
+            }
+        }
+
+        public static Bitmap ByteArrayToBitmap(byte[] byteArray)
+        {
+            using (MemoryStream ms = new MemoryStream(byteArray))
+            {
+                return new Bitmap(ms);
+            }
         }
 
         public static int convIndex;
 
-        public static void DrawConv(Form currentForm, PictureBox pictureBox_Conv, Bitmap bmp_Capt, List<Conversation> Conversations)
+        public static void DrawConv(Form currentForm, PictureBox pictureBox_Conv, byte[] Capt, List<Conversation> Conversations)
         {
             if (convIndex >= Conversations.Count)
             {
@@ -240,6 +253,7 @@ namespace unilab2024
 
             bool isStage = currentForm is Stage;
 
+            Bitmap bmp_Capt = ByteArrayToBitmap(Capt);
             Graphics g = Graphics.FromImage(bmp_Capt);
 
             Font fnt_name = new Font("游ゴシック", 33, FontStyle.Bold);
@@ -266,15 +280,18 @@ namespace unilab2024
 
             if (isStage)
             {
-                sp = 180;
-                sp_x = 400;
+                sp = 30;
+                sp_x = 250;
                 face = 200;
             }
-            
-            g.DrawImage(Dictionaries.Img_Conversation["Dialogue"], margin_x, margin_y + 300 + name_y, dia_x, dia_y);
 
-            if (!isStage)
+            if (isStage)
             {
+                g.DrawImage(Dictionaries.Img_Conversation["Dialogue_Stage"], margin_x, margin_y + 300 + name_y, dia_x, dia_y);
+            }
+            else
+            {
+                g.DrawImage(Dictionaries.Img_Conversation["Dialogue"], margin_x, margin_y + 300 + name_y, dia_x, dia_y);
                 string charaName = Conversations[convIndex].Character;
                 if (charaName == "主人公")
                 {
@@ -288,10 +305,10 @@ namespace unilab2024
                     }
                 }
 
-                g.FillRectangle(Color_BackName, margin_x, margin_y + face, name_x, name_y);
+                g.DrawImage(Dictionaries.Img_Conversation["Name"], margin_x, margin_y + face, name_x, name_y);
                 g.DrawString(charaName, fnt_name, Brushes.White, margin_x + sp, margin_y + face + sp);
             }
-           
+
 
             //改行の処理はこう書かないとうまくいかない
             char[] lineBreak = new char[] { '\\' };
@@ -320,7 +337,7 @@ namespace unilab2024
 
             if (isStage)
             {
-                g.DrawImage(charaImage, margin_x + sp, margin_y + 300 + name_y + 30, face, face);
+                g.DrawImage(charaImage, margin_x + sp, margin_y + 300 + name_y + sp, face, face);
             }
             else
             {
@@ -352,14 +369,14 @@ namespace unilab2024
             }
         }
 
-        public static Bitmap PlayConv(Form currentForm, PictureBox pictureBox_Conv, Bitmap bmp_Capt, List<Conversation> Conversations)
+        public static byte[] PlayConv(Form currentForm, PictureBox pictureBox_Conv, List<Conversation> Conversations)
         {
-            bmp_Capt = CaptureClientArea(currentForm);
+            byte[] Capt = CaptureClientArea(currentForm);
             ChangeControl(pictureBox_Conv, true);
             convIndex = 0;
-            DrawConv(currentForm, pictureBox_Conv, bmp_Capt, Conversations);
+            DrawConv(currentForm, pictureBox_Conv, Capt, Conversations);
 
-            return bmp_Capt;
+            return Capt;
         }
     }
     #endregion

@@ -15,7 +15,7 @@ namespace unilab2024
         #region キー入力の設定等
         //会話用
         PictureBox pictureBox_Conv;
-        Bitmap bmp_Capt;
+        byte[] Capt;
         List<Conversation> Conversations;
 
         private bool IsButtonToAnotherWorldEnabled;
@@ -104,7 +104,7 @@ namespace unilab2024
                     string convFileName = "Story_AfterChapter" + i + "-WorldMap.csv";
                     Conversations = Func.LoadConversations(convFileName);
                     await Task.Delay((int)ConstNum.waitTime_Load);
-                    bmp_Capt = Func.PlayConv(this, pictureBox_Conv, bmp_Capt, Conversations);
+                    Capt = Func.PlayConv(this, pictureBox_Conv,Conversations);
                     return;
                 }
             }
@@ -114,7 +114,7 @@ namespace unilab2024
                 string convFileName = "Story_AfterChapter4-WorldMap.csv";
                 Conversations = Func.LoadConversations(convFileName);
                 await Task.Delay((int)ConstNum.waitTime_Load);
-                bmp_Capt = Func.PlayConv(this, pictureBox_Conv, bmp_Capt, Conversations);
+                Capt = Func.PlayConv(this, pictureBox_Conv, Conversations);
             }
         }
         #endregion
@@ -122,7 +122,7 @@ namespace unilab2024
         #region 会話用
         private void pictureBox_Conv_Click(object sender, EventArgs e)
         {
-            Func.DrawConv(this,pictureBox_Conv, bmp_Capt, Conversations);
+            Func.DrawConv(this,pictureBox_Conv, Capt, Conversations);
         }
         #endregion
 
