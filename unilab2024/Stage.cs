@@ -618,15 +618,18 @@ namespace unilab2024
 
         private void button_Retry_Click(object sender, EventArgs e)  //リトライボタン押下時処理
         {
+            label_Info.Visible = false;
             resetStage("retry");
         }
 
         private void button_ToMap_Click(object sender, EventArgs e)  //マップに戻るボタン押下時処理
         {
+            label_Info.Visible = false;
             resetStage("quit");
         }
         private void button_Hint_Click(object sender, EventArgs e)
         {
+            label_Info.Visible = false;
             CreateStage(stageName + "_hint");
         }
         bool Input_check()
@@ -1551,7 +1554,7 @@ namespace unilab2024
                     }
                     break;
                 }
-                if (move_copy.Count > 0)
+                else
                 {
                     if (Colision_detection(x, y, Map, move_copy) && jump==0)
                     {
@@ -1561,7 +1564,7 @@ namespace unilab2024
                         DrawCharacter(x, y, ref character_me);
                         break;
                     }
-                    if (jump != 0 && Map[x + move_copy[0][1] * jump, y + move_copy[0][0] * jump] == 2) //jumpの時着地先が木の場合、ゲームオーバー
+                    if (jump != 0 && Map[x + move_copy[0][0], y + move_copy[0][1] ] == 2) //jumpの時着地先が木の場合、ゲームオーバー
                     {
                         (x_now, y_now) = draw_move(x, y, ref move_copy);
                         Thread.Sleep(waittime);
@@ -1578,11 +1581,11 @@ namespace unilab2024
                         break;
                     }
                 }
-                else
-                {
-                    DrawCharacter(x, y, ref character_me);
-                    break;
-                }
+                //else
+                //{
+                //    DrawCharacter(x, y, ref character_me);
+                //    break;
+                //}
 
                 //jumpでない時移動先が木の場合、木の方向には進めない
                 if (jump == 0 && Map[x + move_copy[0][0], y + move_copy[0][1]] == 2)
@@ -1601,7 +1604,7 @@ namespace unilab2024
                     Thread.Sleep(waittime);
                     continue;
                 }
-
+                
                 (x_now, y_now) = draw_move(x, y, ref move_copy);
                 //x += move_copy[0][0];
                 //y += move_copy[0][1];
@@ -1640,36 +1643,26 @@ namespace unilab2024
                 if ((Map[x, y] == 5) || (Map[x, y] == 6))
                 {
                     jump = Map[x, y] - 3;
+                    if (Map[x, y] == 6) DoubleJump = true;
                 }
                 //移動先がジャンプ台なら同じ方向に二回進む（１個先の障害物は無視）
                 if (jump != 0)                           //ジャンプ台の番号も決める(いまは一旦9)
                 {
-
                     jump--;
-                    //if (jump) //次の移動で着地
-                    //{
-                    //    jump = false;
-                    //}
-                    //else //ジャンプ台の上（次の移動でジャンプ）
-                    //{
-                    //    jump = true;
-                    //}
-
-                    //500ミリ秒=0.5秒待機する
-                    //draw_move(x, y, ref move_copy);
+                    if(jump == 0) DoubleJump = false;
                     Thread.Sleep(waittime);
                     continue;
                 }
+
                 //移動先が氷の上なら同じ方向にもう一回進む
                 if (jump == 0 && Map[x, y] == 8)                         //氷ステージ出来たら数字きめる(いまは一旦8)
                 {
                     //500ミリ秒=0.5秒待機する
                     Thread.Sleep(waittime);
-                    continue;
                 }
-
+               
                 //ワープの処理
-                if( Map[x, y] == 7)
+                if ( Map[x, y] == 7)
                 {
                     for(int i = 0; i < 12; i++)
                     {
