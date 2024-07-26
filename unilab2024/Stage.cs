@@ -93,6 +93,8 @@ namespace unilab2024
 
         public static List<ListBox> ListBoxes = new List<ListBox>();
         public static ListBox InputListBox;   //入力先のリストボックス
+        public static bool isChange = false;
+        public static int Change_Item_Number;
         public static int[,] map = new int[12, 12]; //map情報
         public static string stageName;
         public static int x_start; //スタート位置ｘ
@@ -282,12 +284,6 @@ namespace unilab2024
         }
 
         #region 各コントロール機能設定
-        public void ComboBox_Changed(String Choose, ListBox Change)
-        {
-            if (Choose.Contains("A")) Change = listBox_A;
-            else if (Choose.Contains("B")) Change = listBox_B;
-            else Change = listBox_Input;
-        }
         private void listBox_Input_Click(object sender, EventArgs e)
         {
             InputListBox = listBox_Input;
@@ -304,12 +300,6 @@ namespace unilab2024
             InputListBox = listBox_B;
             ShowListBox();
         }
-        
-        public void Dual_Checked(object sender, EventArgs e)
-        {
-            ShowListBox();
-        }
-
 
         public void ShowListBox()
         {
@@ -352,18 +342,22 @@ namespace unilab2024
             }
         }
 
-        /* 要素の書き換え　開発中
-         * 
+        // 要素の書き換え　開発中
         public void Change_item_click(object sender, EventArgs e)
         {
-            ListBox listBox = sender as ListBox;
-            string item = listBox.SelectedItem as string;
-            label_Info.Text ="修正したいボタンを押してエンターを押してね";
+            label_Info.Visible = false;
+            Change_Item_Number = InputListBox.SelectedIndex;
+            label_Info.Text ="修正したいボタンを押してね";
             label_Info.Visible = true;
-            if (item.StartsWith("反復魔法(")) uiButtonObject_for_Click(sender, e);
-            listBox.SelectedItem = listBox.Items[listBox.Items.Count - 1];
-            listBox.Items.RemoveAt(listBox.Items.Count - 1);
-        }*/
+            isChange = true;
+        }
+        public void Item_Change()
+        {
+            isChange = false;
+            InputListBox.Items[Change_Item_Number] = InputListBox.Items[InputListBox.Items.Count - 1].ToString();
+            InputListBox.Items.RemoveAt(InputListBox.Items.Count - 1);
+            label_Info.Visible=false;
+        }
         #endregion
 
         #region リセット関連
@@ -381,14 +375,17 @@ namespace unilab2024
         }
         private void button_Input_Reset_Click(object sender, EventArgs e)        //起動部分リセット
         {
+            label_Info.Visible = false;
             ResetListBox(listBox_Input);                    //Program.CSに処理記載
         }      
         private void button_A_Reset_Click(object sender, EventArgs e)           //Aの魔法リセット
         {
+            label_Info.Visible = false;
             ResetListBox(listBox_A);
         }
         private void button_B_Reset_Click(object sender, EventArgs e)           //Aの魔法リセット
         {
+            label_Info.Visible = false;
             ResetListBox(listBox_B);
         }
         public void resetStage(string type) // ステージリセットまとめ
@@ -618,23 +615,22 @@ namespace unilab2024
 
         private void button_Retry_Click(object sender, EventArgs e)  //リトライボタン押下時処理
         {
-            label_Info.Visible = false;
             resetStage("retry");
         }
 
         private void button_ToMap_Click(object sender, EventArgs e)  //マップに戻るボタン押下時処理
         {
-            label_Info.Visible = false;
             resetStage("quit");
         }
         private void button_Hint_Click(object sender, EventArgs e)
         {
-            label_Info.Visible = false;
             CreateStage(stageName + "_hint");
         }
         bool Input_check()
         {
             bool result = false;
+            if(isChange) return result;
+
             label_Info.Visible = false;
             switch (InputListBox.Name)
             {
@@ -660,31 +656,37 @@ namespace unilab2024
         {
             if(Input_check()) return;
             InputListBox.Items.Add("↑");
+            if (isChange) Item_Change();
         }
         void uiButtonObject_left_Click(object sender, EventArgs e)
         {
             if (Input_check()) return;
             InputListBox.Items.Add("←");
+            if (isChange) Item_Change();
         }
         void uiButtonObject_right_Click(object sender, EventArgs e)
         {
             if (Input_check()) return;
             InputListBox.Items.Add("→");
+            if (isChange) Item_Change();
         }
         void uiButtonObject_down_Click(object sender, EventArgs e)
         {
             if (Input_check()) return;
             InputListBox.Items.Add("↓");
+            if (isChange) Item_Change();
         }
         void uiButtonObject_A_Click(object sender, EventArgs e)
         {
             if (Input_check()) return;
             InputListBox.Items.Add("A");
+            if (isChange) Item_Change();
         }
         void uiButtonObject_B_Click(object sender, EventArgs e)
         {
             if (Input_check()) return;
             InputListBox.Items.Add("B");
+            if (isChange) Item_Change();
         }
         void uiButtonObject_for_Click(object sender, EventArgs e)
         {
@@ -699,7 +701,6 @@ namespace unilab2024
             label_Info.Text = "ループ回数を入力してね!";
             textBox_ForCount.Visible = true;
             textBox_ForCount.Focus();
-            //listBox_Input.Items.Add($"反復魔法({For_count})");
         }
         private void textBox_ForCount_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -722,11 +723,13 @@ namespace unilab2024
                 label_Info.Text = "数字を入力してね!";
                 e.Handled = true;
             }
+            if (isChange) Item_Change();
         }
         void uiButtonObject_endfor_Click(object sender, EventArgs e)
         {
             if (Input_check()) return;
             InputListBox.Items.Add("リフレイン終わり");
+            if (isChange) Item_Change();
         }
 
         void Stage_KeyDown(object sender, KeyEventArgs e)
@@ -989,104 +992,7 @@ namespace unilab2024
                 for (int i = 0; i < Move_A_List.Count; i++)
                 {
                     (Move_A, i) = ForLoop(Move_A,Move_A_List,Move_A,Move_B, i);
-                    #region 削除候補
-                    //if (get_move_a_list[i].StartsWith("for"))
-                    //{
-                    //    int start = i + 1;
-                    //    int trial = int.Parse(Regex.Replace(get_move_a_list[i], @"[^0-9]", ""));
-
-                    //    int goal = 0; //後で設定
-
-                    //    for (int j = 0; j < trial; j++)
-                    //    {
-                    //        int k = start;
-                    //        do
-                    //        {
-                    //            if (k >= get_move_a_list.Count)
-                    //            {
-                    //                MessageBox.Show("「反復魔法」と「反復魔法おわり」はセットで使ってください");
-                    //                return new List<int[]>();
-                    //            }
-                    //            if (get_move_a_list[k].StartsWith("for")) //二重ループ
-                    //            {
-                    //                int trial2 = int.Parse(Regex.Replace(get_move_a_list[k], @"[^0-9]", ""));
-                    //                for (int l = 0; l < trial2; l++)
-                    //                {
-                    //                    k = start + 1;
-                    //                    do
-                    //                    {
-                    //                        if (get_move_a_list[k] == "endfor")
-                    //                        {
-                    //                            break;
-                    //                        }
-
-                    //                        else if (get_move_a_list[k] == "up")
-                    //                        {
-                    //                            move_a.Add(new int[2] { 0, -1 });
-                    //                        }
-                    //                        else if (get_move_a_list[k] == "down")
-                    //                        {
-                    //                            move_a.Add(new int[2] { 0, 1 });
-                    //                        }
-                    //                        else if (get_move_a_list[k] == "right")
-                    //                        {
-                    //                            move_a.Add(new int[2] { 1, 0 });
-                    //                        }
-                    //                        else if (get_move_a_list[k] == "left")
-                    //                        {
-                    //                            move_a.Add(new int[2] { -1, 0 });
-                    //                        }
-                    //                        k++;
-                    //                    } while (true);
-                    //                }
-                    //            }
-                    //            else if (get_move_a_list[k] == "endfor")
-                    //            {
-                    //                goal = k;
-                    //                break;
-                    //            }
-                    //            else if (get_move_a_list[k] == "up")
-                    //            {
-                    //                move_a.Add(new int[2] { 0, -1 });
-                    //            }
-                    //            else if (get_move_a_list[k] == "down")
-                    //            {
-                    //                move_a.Add(new int[2] { 0, 1 });
-                    //            }
-                    //            else if (get_move_a_list[k] == "right")
-                    //            {
-                    //                move_a.Add(new int[2] { 1, 0 });
-                    //            }
-                    //            else if (get_move_a_list[k] == "left")
-                    //            {
-                    //                move_a.Add(new int[2] { -1, 0 });
-                    //            }
-                    //            k++;
-                    //        } while (true);
-                    //    }
-                    //    i = goal;
-                    //}
-                    //else
-                    //{
-                    //    if (get_move_a_list[i] == "up")
-                    //    {
-                    //        move_a.Add(new int[2] { 0, -1 });
-                    //    }
-                    //    else if (get_move_a_list[i] == "down")
-                    //    {
-                    //        move_a.Add(new int[2] { 0, 1 });
-                    //    }
-                    //    else if (get_move_a_list[i] == "right")
-                    //    {
-                    //        move_a.Add(new int[2] { 1, 0 });
-                    //    }
-                    //    else if (get_move_a_list[i] == "left")
-                    //    {
-                    //        move_a.Add(new int[2] { -1, 0 });
-                    //    }
-                    //}
-                    #endregion
-                    MoveTo(Move_A, Get_Input_A[i]);
+                    MoveTo(Move_A, Move_A_List[i]);
                 }
             }
 
@@ -1095,115 +1001,7 @@ namespace unilab2024
                for (int i = 0; i < Move_B_List.Count; i++)
                 {
                     (Move_B, i) = ForLoop(Move_B,Move_B_List, Move_A, Move_B, i);
-                    #region 削除候補
-                    //if (get_move_b_list[i].StartsWith("for"))
-                    //{
-                    //    int start = i + 1;
-                    //    int trial = int.Parse(Regex.Replace(get_move_b_list[i], @"[^0-9]", ""));
-
-                    //    int goal = 0; //後で設定
-
-                    //    for (int j = 0; j < trial; j++)
-                    //    {
-                    //        int k = start;
-                    //        do
-                    //        {
-                    //            if (k >= get_move_b_list.Count)
-                    //            {
-                    //                MessageBox.Show("「反復魔法」と「反復魔法おわり」はセットで使ってください");
-                    //                return new List<int[]>();
-                    //            }
-                    //            if (get_move_b_list[k].StartsWith("for")) //二重ループ
-                    //            {
-                    //                int trial2 = int.Parse(Regex.Replace(get_move_b_list[k], @"[^0-9]", ""));
-                    //                for (int l = 0; l < trial2; l++)
-                    //                {
-                    //                    k = start + 1;
-                    //                    if (get_move_b_list[k] == "endfor") break;
-                    //                    else
-                    //                    {
-                    //                        Func.Move(move_b, get_move_b_list[k]);
-                    //                        k++;
-                    //                    }
-                    //                    //do
-                    //                    //{
-                    //                    //    if (get_move_b_list[k] == "endfor")
-                    //                    //    {
-                    //                    //        break;
-                    //                    //    }
-
-                    //                    //    else if (get_move_b_list[k] == "up")
-                    //                    //    {
-                    //                    //        move_b.Add(new int[2] { 0, -1 });
-                    //                    //    }
-                    //                    //    else if (get_move_b_list[k] == "down")
-                    //                    //    {
-                    //                    //        move_b.Add(new int[2] { 0, 1 });
-                    //                    //    }
-                    //                    //    else if (get_move_b_list[k] == "right")
-                    //                    //    {
-                    //                    //        move_b.Add(new int[2] { 1, 0 });
-                    //                    //    }
-                    //                    //    else if (get_move_b_list[k] == "left")
-                    //                    //    {
-                    //                    //        move_b.Add(new int[2] { -1, 0 });
-                    //                    //    }
-                    //                    //    k++;
-                    //                    //} while (true);
-                    //                }
-                    //            }
-                    //            else if (get_move_b_list[k] == "endfor")
-                    //            {
-                    //                goal = k;
-                    //                break;
-                    //            }
-                    //            else
-                    //            {
-                    //                Func.Move(move_b, get_move_b_list[k]);
-                    //                k++;
-                    //            }
-                    //            //else if (get_move_b_list[k] == "up")
-                    //            //{
-                    //            //    move_b.Add(new int[2] { 0, -1 });
-                    //            //}
-                    //            //else if (get_move_b_list[k] == "down")
-                    //            //{
-                    //            //    move_b.Add(new int[2] { 0, 1 });
-                    //            //}
-                    //            //else if (get_move_b_list[k] == "right")
-                    //            //{
-                    //            //    move_b.Add(new int[2] { 1, 0 });
-                    //            //}
-                    //            //else if (get_move_b_list[k] == "left")
-                    //            //{
-                    //            //    move_b.Add(new int[2] { -1, 0 });
-                    //            //}
-                    //            //k++;
-                    //        } while (true);
-                    //    }
-                    //    i = goal;
-                    //}
-                    //else
-                    //{
-                    //    if (get_move_b_list[i] == "up")
-                    //    {
-                    //        move_b.Add(new int[2] { 0, -1 });
-                    //    }
-                    //    else if (get_move_b_list[i] == "down")
-                    //    {
-                    //        move_b.Add(new int[2] { 0, 1 });
-                    //    }
-                    //    else if (get_move_b_list[i] == "right")
-                    //    {
-                    //        move_b.Add(new int[2] { 1, 0 });
-                    //    }
-                    //    else if (get_move_b_list[i] == "left")
-                    //    {
-                    //        move_b.Add(new int[2] { -1, 0 });
-                    //    }
-                    //}
-                    #endregion
-                    MoveTo(Move_B, Get_Input_B[i]);
+                    MoveTo(Move_B, Move_B_List[i]);
                 }
             }
 
@@ -1217,139 +1015,6 @@ namespace unilab2024
                 for (int i = 0; i < Move_Main_List.Count; i++)
                 {
                     (move, i) = ForLoop(move,Move_Main_List,Move_A,Move_B, i);
-                    #region 削除候補
-                    //if (get_move_main[i].StartsWith("for"))
-                    //{
-                    //    int start = i + 1;
-                    //    int trial = int.Parse(Regex.Replace(get_move_main[i], @"[^0-9]", ""));
-
-                    //    int goal = 0; //後で設定
-
-                    //    for (int j = 0; j < trial; j++)
-                    //    {
-                    //        int k = start;
-                    //        do
-                    //        {
-                    //            if (k >= get_move_main.Length)
-                    //            {
-                    //                MessageBox.Show("「反復魔法」と「反復魔法おわり」はセットで使ってください");
-                    //                return new List<int[]>();
-                    //            }
-                    //            if (get_move_main[k].StartsWith("for")) //二重ループ
-                    //            {
-                    //                int trial2 = int.Parse(Regex.Replace(get_move_main[k], @"[^0-9]", ""));
-                    //                for (int l = 0; l < trial2; l++)
-                    //                {
-                    //                    k = start + 1;
-                    //                    if (get_move_main[k] == "endfor") break;
-                    //                    else
-                    //                    {
-                    //                        Func.Move(move, get_move_main[k]);
-                    //                        k++;
-                    //                    }
-                    //                    //do
-                    //                    //{
-                    //                    //    if (get_move_main[k] == "endfor")
-                    //                    //    {
-                    //                    //        break;
-                    //                    //    }
-
-                    //                    //    else if (get_move_main[k] == "up")
-                    //                    //    {
-                    //                    //        move.Add(new int[2] { 0, -1 });
-                    //                    //    }
-                    //                    //    else if (get_move_main[k] == "down")
-                    //                    //    {
-                    //                    //        move.Add(new int[2] { 0, 1 });
-                    //                    //    }
-                    //                    //    else if (get_move_main[k] == "right")
-                    //                    //    {
-                    //                    //        move.Add(new int[2] { 1, 0 });
-                    //                    //    }
-                    //                    //    else if (get_move_main[k] == "left")
-                    //                    //    {
-                    //                    //        move.Add(new int[2] { -1, 0 });
-                    //                    //    }
-                    //                    //    else if (get_move_main[k] == "A")
-                    //                    //    {
-                    //                    //        move.AddRange(move_a);
-                    //                    //    }
-                    //                    //    else if (get_move_main[k] == "B")
-                    //                    //    {
-                    //                    //        move.AddRange(move_b);
-                    //                    //    }
-                    //                    //    k++;
-                    //                    //} while (true);
-                    //                }
-                    //            }
-                    //            else if (get_move_main[k] == "endfor")
-                    //            {
-                    //                goal = k;
-                    //                break;
-                    //            }
-                    //            else
-                    //            {
-                    //                Func.Move(move, get_move_main[k]);
-                    //                k++;
-                    //            }
-                    //            //else if (get_move_main[k] == "up")
-                    //            //{
-                    //            //    move.Add(new int[2] { 0, -1 });
-                    //            //}
-                    //            //else if (get_move_main[k] == "down")
-                    //            //{
-                    //            //    move.Add(new int[2] { 0, 1 });
-                    //            //}
-                    //            //else if (get_move_main[k] == "right")
-                    //            //{
-                    //            //    move.Add(new int[2] { 1, 0 });
-                    //            //}
-                    //            //else if (get_move_main[k] == "left")
-                    //            //{
-                    //            //    move.Add(new int[2] { -1, 0 });
-                    //            //}
-                    //            //else if (get_move_main[k] == "A")
-                    //            //{
-                    //            //    move.AddRange(move_a);
-                    //            //}
-                    //            //else if (get_move_main[k] == "B")
-                    //            //{
-                    //            //    move.AddRange(move_b);
-                    //            //}
-                    //            //k++;
-                    //        } while (true);
-                    //    }
-                    //    i = goal;
-                    //}
-
-                    //else
-                    //{
-                    //    if (get_move_main[i] == "up")
-                    //    {
-                    //        move.Add(new int[2] { 0, -1 });
-                    //    }
-                    //    else if (get_move_main[i] == "down")
-                    //    {
-                    //        move.Add(new int[2] { 0, 1 });
-                    //    }
-                    //    else if (get_move_main[i] == "right")
-                    //    {
-                    //        move.Add(new int[2] { 1, 0 });
-                    //    }
-                    //    else if (get_move_main[i] == "left")
-                    //    {
-                    //        move.Add(new int[2] { -1, 0 });
-                    //    }
-                    //    else if (get_move_main[i] == "A")
-                    //    {
-                    //        move.AddRange(move_a);
-                    //    }
-                    //    else if (get_move_main[i] == "B")
-                    //    {
-                    //        move.AddRange(move_b);
-                    //    }
-                    //}
-                    #endregion
                     if (Move_Main_List[i] == "A") move.AddRange(Move_A);
                     else if(Move_Main_List[i] == "B") move.AddRange(Move_B);
                     else MoveTo(move, Move_Main_List[i]);
@@ -1453,37 +1118,6 @@ namespace unilab2024
                         break;
                 }
             }
-            //if (a == 1)
-            //{
-            //    if (x == -1) Ninja = Image.FromFile("忍者_左面_右足.png");
-            //    if (x == 1) Ninja = Image.FromFile("忍者_右面_右足.png");
-            //    if (y == -1) Ninja = Image.FromFile("忍者_背面_右足.png");
-            //    if (y == 1) Ninja = Image.FromFile("忍者_正面_右足.png");
-            //}
-            //else if (a == 3)
-            //{
-            //    if (x == -1) Ninja = Image.FromFile("忍者_左面_左足.png");
-            //    if (x == 1) Ninja = Image.FromFile("忍者_右面_左足.png");
-            //    if (y == -1) Ninja = Image.FromFile("忍者_背面_左足.png");
-            //    if (y == 1) Ninja = Image.FromFile("忍者_正面_左足.png");
-
-            //}
-            //else
-            //{
-            //    if (x == -1) Ninja = Image.FromFile("忍者_左面.png");
-            //    if (x == 1) Ninja = Image.FromFile("忍者_右面.png");
-            //    if (y == -1) Ninja = Image.FromFile("忍者_背面.png");
-            //    if (y == 1) Ninja = Image.FromFile("忍者_正面.png");
-            //}
-
-
-            //if (jump)
-            //{
-            //    if (x == -1) Ninja = Image.FromFile("忍者_左面_ジャンプ.png");
-            //    if (x == 1) Ninja = Image.FromFile("忍者_右面_ジャンプ.png");
-            //    if (y == -1) Ninja = Image.FromFile("忍者_背面_ジャンプ.png");
-            //    if (y == 1) Ninja = Image.FromFile("忍者_正面_ジャンプ.png");
-            //}
             return Chara;
         }
         
@@ -1581,11 +1215,7 @@ namespace unilab2024
                         break;
                     }
                 }
-                //else
-                //{
-                //    DrawCharacter(x, y, ref character_me);
-                //    break;
-                //}
+                
 
                 //jumpでない時移動先が木の場合、木の方向には進めない
                 if (jump == 0 && Map[x + move_copy[0][0], y + move_copy[0][1]] == 2)
@@ -1606,33 +1236,8 @@ namespace unilab2024
                 }
                 
                 (x_now, y_now) = draw_move(x, y, ref move_copy);
-                //x += move_copy[0][0];
-                //y += move_copy[0][1];
-                //x_now = x;
-                //y_now = y;
-                //g2.Clear(Color.Transparent);
 
-                //ステージごとにゴールのキャラを変えたい
-                //g2.DrawImage(goal_obj(_stageName), x_goal * cell_length - extra_length, y_goal * cell_length - 2 * extra_length, cell_length + 2 * extra_length, cell_length + 2 * extra_length);
-
-                //忍者の動きに合わせて向きが変わる
-                //character_me = Ninja_Image(move_copy[0][0], move_copy[0][1], count_walk, jump, character_me);
-                //g2.DrawImage(character_me, x * cell_length - extra_length, y * cell_length - 2 * extra_length, cell_length + 2 * extra_length, cell_length + 2 * extra_length);
-
-                //Thread.Sleep(waittime);//マスの間に歩く差分を出そうとしたけど。。。
-                //g2.Clear(Color.Transparent);
-                //character_me = Ninja_Image(move_copy[0][0], move_copy[0][1], stepCount, jump, character_me);
-                //g2.DrawImage(character_me, x * cell_length + move_copy[0][0] * cell_length / 2, y * cell_length + move_copy[0][1] * cell_length / 2, cell_length, cell_length);
-
-
-                //pictureBoxの中身を塗り替える
-                //this.Invoke((MethodInvoker)delegate
-                //{
-                //    // pictureBox2を同期的にRefreshする
-                //    pictureBox2.Refresh();
-                //});
-
-                if (Map[x, y] == 101 && Map[x - move_copy[0][1], y - move_copy[0][0]] != 3)     //何の判定???
+                if (Map[x, y] == 101 && Map[x - move_copy[0][1], y - move_copy[0][0]] != 3)     //何の判定??? -> 正面向かせる処理
                 {
                     DrawCharacter(x, y, ref character_me);
                     //character_me = Image.FromFile("忍者_正面.png");
@@ -1655,10 +1260,11 @@ namespace unilab2024
                 }
 
                 //移動先が氷の上なら同じ方向にもう一回進む
-                if (jump == 0 && Map[x, y] == 8)                         //氷ステージ出来たら数字きめる(いまは一旦8)
+                if (jump == 0 && Map[x, y] == 8)
                 {
                     //500ミリ秒=0.5秒待機する
                     Thread.Sleep(waittime);
+                    continue;
                 }
                
                 //ワープの処理
@@ -1681,19 +1287,7 @@ namespace unilab2024
                 }
                 
                 move_copy.RemoveAt(0);
-                //if (move_copy.Count == 0)//動作がすべて終了した場合
-                //{
-                //    if (x_now != x_goal || y_now != y_goal)
-                //    {
-                //        resetStage("miss_end");
-                //        Thread.Sleep(300);
-                //        DrawCharacter(x, y, ref character_me);
-                //        //character_me = Image.FromFile("忍者_正面.png");
-                //        //g2.DrawImage(character_me, x * cell_length - extra_length, y * cell_length - 2 * extra_length, cell_length + 2 * extra_length, cell_length + 2 * extra_length);
-                //    }
-                //    break;
-                //}
-                //500ミリ秒=0.5秒待機する
+
                 Thread.Sleep(waittime);
                 count_walk++;
             }
