@@ -816,7 +816,7 @@ namespace unilab2024
                 {
                     int placeX = x * cell_length;
                     int placeY = y * cell_length;
-                    g1.DrawImage(Dictionaries.Img_Object[map[x,y]], placeX, placeY, cell_length, cell_length);
+                    g1.DrawImage(Dictionaries.Img_Object[map[x, y].ToString()], placeX, placeY, cell_length, cell_length);
                     switch (map[x, y])
                     {
                         case 0:
@@ -1390,26 +1390,65 @@ namespace unilab2024
         /// <param name="Chara">出力画像へのポインタ</param>
         /// <returns></returns>
 
-        Image Character_Image(int x, int y, int steps, int jump, Image Chara) 
+        Image Character_Image(int x, int y, int steps, int jump, bool DoubleJump, Image Chara) 
         {
             int a = steps % 2;//歩き差分を識別
             int direction = x * 10 + y;
             int type = a + 1;
             //if (a % 2 == 0) return Dictionaries.Img_DotPic["魔法使いサンプル"];   //左右図でき次第差し替え
-            switch (direction)
+            if(jump == 0)
             {
-                case 10:
-                    Chara = Dictionaries.Img_DotPic[$"歩き右{type}"];
-                    break;
-                case -10:
-                    Chara = Dictionaries.Img_DotPic[$"歩き左{type}"];
-                    break;
-                case 1:
-                    Chara = Dictionaries.Img_DotPic[$"歩き{type}"];
-                    break;
-                case -1:
-                    Chara = Dictionaries.Img_DotPic[$"歩き後ろ{type}"];
-                    break;
+                switch (direction)
+                {
+                    case 10:
+                        Chara = Dictionaries.Img_DotPic[$"歩き右{type}"];
+                        break;
+                    case -10:
+                        Chara = Dictionaries.Img_DotPic[$"歩き左{type}"];
+                        break;
+                    case 1:
+                        Chara = Dictionaries.Img_DotPic[$"歩き{type}"];
+                        break;
+                    case -1:
+                        Chara = Dictionaries.Img_DotPic[$"歩き後ろ{type}"];
+                        break;
+                }
+            }
+            else if(jump != 0 && !DoubleJump)
+            {
+                switch (direction)
+                {
+                    case 10:
+                        Chara = Dictionaries.Img_DotPic[$"箒右"];
+                        break;
+                    case -10:
+                        Chara = Dictionaries.Img_DotPic[$"箒左"];
+                        break;
+                    case 1:
+                        Chara = Dictionaries.Img_DotPic[$"箒"];
+                        break;
+                    case -1:
+                        Chara = Dictionaries.Img_DotPic[$"箒後ろ"];
+                        break;
+                }
+            }
+            else
+            {
+                switch (direction)
+                {
+                    case 10:
+                        Chara = Dictionaries.Img_DotPic[$"虹箒右"];
+                        break;
+                    case -10:
+                        Chara = Dictionaries.Img_DotPic[$"虹箒左"];
+                        break;
+                    case 1:
+                        Chara = Dictionaries.Img_DotPic[$"虹箒"];
+                        break;
+                    case -1:
+                        Chara = Dictionaries.Img_DotPic[$"虹箒後ろ"];
+                        break;
+                }
             }
             //if (a == 1)
             //{
@@ -1466,7 +1505,7 @@ namespace unilab2024
             List<int[]> move_copy = new List<int[]>(move);
             
             int jump = 0;
-            //bool move_floor = false;
+            bool DoubleJump = false;
             int waittime = 250; //ミリ秒
             count_walk = 1;//何マス歩いたか、歩き差分用
             bool isWarp = false;
@@ -1489,7 +1528,7 @@ namespace unilab2024
             (int,int) draw_move(int a,int b,ref List<int[]> move_next)
             {
                 (x_now, y_now) = place_update(a, b, move_next);
-                character_me = Character_Image(move_copy[0][0], move_copy[0][1], count_walk, jump, character_me);
+                character_me = Character_Image(move_copy[0][0], move_copy[0][1], count_walk, jump,DoubleJump, character_me);
                 DrawCharacter(x_now, y_now, ref character_me);
                 this.Invoke((MethodInvoker)delegate
                 {
@@ -1500,6 +1539,18 @@ namespace unilab2024
             }
             while (true)
             {
+                if (move_copy.Count == 0)//動作がすべて終了した場合
+                {
+                    if (x_now != x_goal || y_now != y_goal)
+                    {
+                        resetStage("miss_end");
+                        Thread.Sleep(300);
+                        DrawCharacter(x, y, ref character_me);
+                        //character_me = Image.FromFile("忍者_正面.png");
+                        //g2.DrawImage(character_me, x * cell_length - extra_length, y * cell_length - 2 * extra_length, cell_length + 2 * extra_length, cell_length + 2 * extra_length);
+                    }
+                    break;
+                }
                 if (move_copy.Count > 0)
                 {
                     if (Colision_detection(x, y, Map, move_copy) && jump==0)
@@ -1550,6 +1601,7 @@ namespace unilab2024
                     Thread.Sleep(waittime);
                     continue;
                 }
+
                 (x_now, y_now) = draw_move(x, y, ref move_copy);
                 //x += move_copy[0][0];
                 //y += move_copy[0][1];
@@ -1585,20 +1637,12 @@ namespace unilab2024
                     break;
                 }
 
-                //移動先が氷の上なら同じ方向にもう一回進む
-                if (jump == 0 && Map[x, y] == 8)                         //氷ステージ出来たら数字きめる(いまは一旦8)
-                {
-                    //500ミリ秒=0.5秒待機する
-                    Thread.Sleep(waittime);
-                    continue;
-                }
-
                 if ((Map[x, y] == 5) || (Map[x, y] == 6))
                 {
                     jump = Map[x, y] - 3;
                 }
                 //移動先がジャンプ台なら同じ方向に二回進む（１個先の障害物は無視）
-                if ( jump != 0)                           //ジャンプ台の番号も決める(いまは一旦9)
+                if (jump != 0)                           //ジャンプ台の番号も決める(いまは一旦9)
                 {
 
                     jump--;
@@ -1612,9 +1656,18 @@ namespace unilab2024
                     //}
 
                     //500ミリ秒=0.5秒待機する
+                    //draw_move(x, y, ref move_copy);
                     Thread.Sleep(waittime);
                     continue;
                 }
+                //移動先が氷の上なら同じ方向にもう一回進む
+                if (jump == 0 && Map[x, y] == 8)                         //氷ステージ出来たら数字きめる(いまは一旦8)
+                {
+                    //500ミリ秒=0.5秒待機する
+                    Thread.Sleep(waittime);
+                    continue;
+                }
+
                 //ワープの処理
                 if( Map[x, y] == 7)
                 {
@@ -1635,20 +1688,18 @@ namespace unilab2024
                 }
                 
                 move_copy.RemoveAt(0);
-
-                if (move_copy.Count == 0)//動作がすべて終了した場合
-                {
-                    if (x_now != x_goal || y_now != y_goal)
-                    {
-                        resetStage("miss_end");
-                        Thread.Sleep(300);
-                        DrawCharacter(x, y, ref character_me);
-                        //character_me = Image.FromFile("忍者_正面.png");
-                        //g2.DrawImage(character_me, x * cell_length - extra_length, y * cell_length - 2 * extra_length, cell_length + 2 * extra_length, cell_length + 2 * extra_length);
-                    }
-                    break;
-                }
-
+                //if (move_copy.Count == 0)//動作がすべて終了した場合
+                //{
+                //    if (x_now != x_goal || y_now != y_goal)
+                //    {
+                //        resetStage("miss_end");
+                //        Thread.Sleep(300);
+                //        DrawCharacter(x, y, ref character_me);
+                //        //character_me = Image.FromFile("忍者_正面.png");
+                //        //g2.DrawImage(character_me, x * cell_length - extra_length, y * cell_length - 2 * extra_length, cell_length + 2 * extra_length, cell_length + 2 * extra_length);
+                //    }
+                //    break;
+                //}
                 //500ミリ秒=0.5秒待機する
                 Thread.Sleep(waittime);
                 count_walk++;
