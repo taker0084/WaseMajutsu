@@ -132,8 +132,9 @@ namespace unilab2024
         byte[] Capt;
         List<Conversation> StartConv; 
         List<Conversation> EndConv;
+        List<Conversation> Message;
         bool isStartConv;
-        int convIndex;
+        bool isMessageMode;
         public Graphics g1;
         public Graphics g2;
         #endregion
@@ -278,6 +279,7 @@ namespace unilab2024
             string convFileName = "Story_Chapter" + _worldNumber + "-" + _level + ".csv";
             (StartConv, EndConv) = Func.LoadStories(convFileName, "play"); //会話読み込み
             isStartConv = true;
+            isMessageMode = false;
 
             await Task.Delay((int)ConstNum.waitTime_Load);
             Capt = Func.PlayConv(this,pictureBox_Conv,StartConv);
@@ -388,70 +390,74 @@ namespace unilab2024
             label_Info.Visible = false;
             ResetListBox(listBox_B);
         }
-        public void resetStage(string type) // ステージリセットまとめ
+        private void DisplayMessage(string type)
         {
-            switch (type)
+            isMessageMode = true;
+            Message = Dictionaries.Messages[type];
+            Capt = Func.PlayConv(this, pictureBox_Conv,Message);
+        }
+        public void resetStage() // ステージリセット
+        {
+            //初期位置に戻す
+            x_now = x_start;
+            y_now = y_start;
+
+            //初期位置に書き換え
+            Graphics g2 = Graphics.FromImage(bmp2);
+            g2.Clear(Color.Transparent);
+            //int cell_length = pictureBox1.Width / 12;
+            //character_me = Image.FromFile("忍者_正面.png");
+            g2.DrawImage(Dictionaries.Img_DotPic["魔法使いサンプル"], x_now * cell_length - extra_length, y_now * cell_length - 2 * extra_length, cell_length + 2 * extra_length, cell_length + 2 * extra_length);
+
+            //g2.DrawImage(goal_obj(_stageName), Global.x_goal * cell_length - Global.extra_length, Global.y_goal * cell_length - 2 * Global.extra_length, cell_length + 2 * Global.extra_length, cell_length + 2 * Global.extra_length);
+            this.Invoke((MethodInvoker)delegate
             {
-                case "quit":
-                    Func.CreateStageSelect(this, _worldName, _worldNumber);
-                    break; ;
-                case "miss_out":
-                    label_Error.Text = "そこは入れないよ！やり直そう！";
-                    label_Error.Visible = true;
-                    Thread.Sleep(300);
-                    button_Retry.Visible = true;
-                    button_Retry.Enabled = true;
-                    miss_count += 1;
-                    break;
-                case "miss_countover":
-                    label_Error.Text = "これ以上は移動できない！やり直そう！";
-                    label_Error.Visible = true;
-                    button_Retry.Visible = true;
-                    button_Retry.Enabled = true;
-                    Thread.Sleep(300);
-                    miss_count += 1;
-                    break;
-                case "miss_end":
-                    label_Error.Text = "ゴールまで届いてないね！やり直そう！";
-                    label_Error.Visible = true;
-                    button_Retry.Visible = true;
-                    button_Retry.Enabled = true;
-                    Thread.Sleep(300);
-                    miss_count += 1;
-                    break;
-                case "retry":
-                    //初期位置に戻す
-                    x_now = x_start;
-                    y_now = y_start;
+                // pictureBox2を同期的にRefreshする
+                pictureBox2.Refresh();
+            });
 
-                    //初期位置に書き換え
-                    Graphics g2 = Graphics.FromImage(bmp2);
-                    g2.Clear(Color.Transparent);
-                    //int cell_length = pictureBox1.Width / 12;
-                    //character_me = Image.FromFile("忍者_正面.png");
-                    g2.DrawImage(Dictionaries.Img_DotPic["魔法使いサンプル"], x_now * cell_length - extra_length, y_now * cell_length - 2 * extra_length, cell_length + 2 * extra_length, cell_length + 2 * extra_length);
-
-                    //g2.DrawImage(goal_obj(_stageName), Global.x_goal * cell_length - Global.extra_length, Global.y_goal * cell_length - 2 * Global.extra_length, cell_length + 2 * Global.extra_length, cell_length + 2 * Global.extra_length);
-                    this.Invoke((MethodInvoker)delegate
-                    {
-                        // pictureBox2を同期的にRefreshする
-                        pictureBox2.Refresh();
-                    });
-
-                    //初期設定に戻す
-                    button_Start.Visible = true;
-                    button_Start.Enabled = true;
-                    label_Error.Visible = false;
-                    count = 0;
-                    miss_count = 0;
-                    isEndfor = true;
-                    label_Error.Text = "ミス！";
-                    label_Error.Visible = false;
-                    label_Result.Visible = false;
+            //初期設定に戻す
+            button_Start.Visible = true;
+            button_Start.Enabled = true;
+            label_Error.Visible = false;
+            count = 0;
+            miss_count = 0;
+            isEndfor = true;
+            label_Error.Text = "ミス！";
+            label_Error.Visible = false;
+            label_Result.Visible = false;
+            //switch (type)
+            //{
+            //    //case "miss_out":
+            //    //    label_Error.Text = "そこは入れないよ！やり直そう！";
+            //    //    label_Error.Visible = true;
+            //    //    Thread.Sleep(300);
+            //    //    button_Retry.Visible = true;
+            //    //    button_Retry.Enabled = true;
+            //    //    miss_count += 1;
+            //    //    break;
+            //    //case "miss_countover":
+            //    //    label_Error.Text = "これ以上は移動できない！やり直そう！";
+            //    //    label_Error.Visible = true;
+            //    //    button_Retry.Visible = true;
+            //    //    button_Retry.Enabled = true;
+            //    //    Thread.Sleep(300);
+            //    //    miss_count += 1;
+            //    //    break;
+            //    //case "miss_end":
+            //    //    label_Error.Text = "ゴールまで届いてないね！やり直そう！";
+            //    //    label_Error.Visible = true;
+            //    //    button_Retry.Visible = true;
+            //    //    button_Retry.Enabled = true;
+            //    //    Thread.Sleep(300);
+            //    //    miss_count += 1;
+            //    //    break;
+            //    case "retry":
                     
-                    break;
-                default: break;
-            }
+                    
+            //        break;
+            //    default: break;
+            //}
             #region 削除候補
             //if (type == "quit")
             //{
@@ -540,15 +546,15 @@ namespace unilab2024
             move = Movement(); //ユーザーの入力を読み取る
             if (!isEndfor)
             {
-                resetStage("retry");
+                resetStage();
                 return;
             }
             SquareMovement(x_now, y_now, map, move); //キャラ動かす
             count += 1;
             if (x_goal == x_now && y_goal == y_now)
             {
-                label_Result.Text = "クリア！！";
-                label_Result.Visible = true;
+                //label_Result.Text = "クリア！！";
+                //label_Result.Visible = true;
                 button_ToMap.Enabled = true;
                 button_Retry.Enabled = false;
                 button_ToMap.Visible = true;
@@ -615,12 +621,13 @@ namespace unilab2024
 
         private void button_Retry_Click(object sender, EventArgs e)  //リトライボタン押下時処理
         {
-            resetStage("retry");
+            resetStage();
         }
 
         private void button_ToMap_Click(object sender, EventArgs e)  //マップに戻るボタン押下時処理
         {
-            resetStage("quit");
+            Func.CreateStageSelect(this, _worldName, _worldNumber);
+            return;
         }
         private void button_Hint_Click(object sender, EventArgs e)
         {
@@ -644,8 +651,9 @@ namespace unilab2024
                     if (InputListBox.Items.Count < limit_LB_B) break;
                     else goto default;
                 default:
-                    label_Info.Text = "これ以上入力できないよ";
-                    label_Info.Visible = true;
+                    //label_Info.Text = "これ以上入力できないよ";
+                    //label_Info.Visible = true;
+                    DisplayMessage("Overflow");
                     result = true;
                     break;
 
@@ -1135,7 +1143,7 @@ namespace unilab2024
             //cell_length = pictureBox1.Width / 12;
             if (move.Count == 0) //ゴールについていない場合(入力がない)場合のエラー処理
             {
-                resetStage("miss_end");
+                DisplayMessage("miss_end");
                 return;
             }
 
@@ -1180,9 +1188,9 @@ namespace unilab2024
                 {
                     if (x_now != x_goal || y_now != y_goal)
                     {
-                        resetStage("miss_end");
-                        Thread.Sleep(300);
-                        DrawCharacter(x, y, ref character_me);
+                        DisplayMessage("miss_end");
+                        //Thread.Sleep(300);
+                        //DrawCharacter(x, y, ref character_me);
                         //character_me = Image.FromFile("忍者_正面.png");
                         //g2.DrawImage(character_me, x * cell_length - extra_length, y * cell_length - 2 * extra_length, cell_length + 2 * extra_length, cell_length + 2 * extra_length);
                     }
@@ -1194,8 +1202,8 @@ namespace unilab2024
                     {
                         //忍者を動かしてからミスの表示を出す
                         (x_now, y_now) = draw_move(x, y, ref move_copy);
-                        resetStage("miss_out");
-                        DrawCharacter(x, y, ref character_me);
+                        DisplayMessage("miss_out");
+                        //DrawCharacter(x, y, ref character_me);
                         break;
                     }
                     if (jump != 0 && Map[x + move_copy[0][0], y + move_copy[0][1] ] == 2) //jumpの時着地先が木の場合、ゲームオーバー
@@ -1204,14 +1212,14 @@ namespace unilab2024
                         Thread.Sleep(waittime);
                         (x_now, y_now) = draw_move(x, y, ref move_copy);
 
-                        resetStage("miss_out");
-                        DrawCharacter(x, y, ref character_me);
+                        DisplayMessage("miss_out");
+                        //DrawCharacter(x, y, ref character_me);
                         break;
                     }
                     if (count_walk > 50) //無限ループ対策
                     {
-                        resetStage("miss_countover");
-                        DrawCharacter(x, y, ref character_me);
+                        DisplayMessage("miss_countover");
+                        //DrawCharacter(x, y, ref character_me);
                         break;
                     }
                 }
@@ -1299,7 +1307,17 @@ namespace unilab2024
         #region 会話の表示
         private void pictureBox_Conv_Click(object sender, EventArgs e)
         {
-            if (isStartConv)
+            if (isMessageMode)
+            {
+                if (Func.convIndex == Message.Count)
+                {
+                    isMessageMode = false;
+                    Func.ChangeControl(pictureBox_Conv, false);
+                    resetStage();
+                }
+                Func.DrawConv(this, pictureBox_Conv, Capt, Message);
+            }
+            else if (isStartConv)
             {
                 Func.DrawConv(this,pictureBox_Conv,Capt, StartConv);
             }
