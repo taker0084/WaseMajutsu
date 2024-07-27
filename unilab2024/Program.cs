@@ -29,6 +29,7 @@ namespace unilab2024
             Func.LoadImg_Button();
             Func.LoadImg_Background();
             Func.LoadImg_Conversation();
+            Func.LoadMessages();
             Func.InitializeClearCheck();
 
             Application.Run(new Title());
@@ -145,6 +146,32 @@ namespace unilab2024
             }
 
             return Conversations;
+        }
+
+        public static List<Conversation> LoadMessageCSV(string FileName)  //引数はConversationファイルの名前
+        {
+            List<Conversation> Message = new List<Conversation>();
+
+            using (StreamReader sr = new StreamReader($"{FileName}"))
+            {
+                bool isFirstRow = true;
+
+                while (!sr.EndOfStream)
+                {
+                    string line = sr.ReadLine();
+                    string[] values = line.Split(',');
+
+                    if (isFirstRow) //escape 1st row
+                    {
+                        isFirstRow = false;
+                        continue;
+                    }
+
+                    Message.Add(new Conversation(values[0], values[1], values[2]));
+                }
+            }
+
+            return Message;
         }
 
         public static (List<Conversation>,List<Conversation>) LoadStories(string ConvFileName, string cutWord)
@@ -384,16 +411,13 @@ namespace unilab2024
     #region 各データのDictionaryと読み込み関数
     public partial class Dictionaries
     {
-        //g1.DrawImage()の第1引数にDictionaries.Img_Character["画像名"]と入れて使う
-        //使い方の例（in Prologue.cs）
-        //g1.DrawImage(Dictionaries.Img_Character[Conversations[convIndex].Img], 15, adjust_y, face, face);
-        //ここでのConversations[convIndex].Imgは"Teacher".
         public static Dictionary<string, Image> Img_Character = new Dictionary<string, Image>();
         public static Dictionary<string, Image> Img_DotPic = new Dictionary<string, Image>();
         public static Dictionary<string,Image> Img_Object = new Dictionary<string,Image>();
         public static Dictionary <string, Image> Img_Button = new Dictionary<string, Image>();
         public static Dictionary <string, Image> Img_Background = new Dictionary<string, Image>();
         public static Dictionary<string, Image> Img_Conversation = new Dictionary<string, Image>();
+        public static Dictionary<string, List<Conversation>> Messages = new Dictionary<string, List<Conversation>>();
     }
 
     public partial class Func
@@ -470,6 +494,17 @@ namespace unilab2024
             {
                 string key = Path.GetFileNameWithoutExtension(file).Replace("Img_Conversation_", "");
                 Dictionaries.Img_Conversation[key] = Image.FromFile(file);
+            }
+        }
+
+        public static void LoadMessages()
+        {
+            Dictionaries.Messages.Clear();
+            string[] files = Directory.GetFiles(@"Message");
+            foreach(string file in files)
+            {
+                string key = Path.GetFileNameWithoutExtension(file).Replace("Message_", "");
+                Dictionaries.Messages[key] = LoadMessageCSV(file);
             }
         }
     }
