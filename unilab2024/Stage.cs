@@ -349,8 +349,20 @@ namespace unilab2024
         {
             label_Info.Visible = false;
             Change_Item_Number = InputListBox.SelectedIndex;
-            label_Info.Text ="修正したいボタンを押してね";
-            label_Info.Visible = true;
+            //label_Info.Text ="修正したいボタンを押してね";
+            //label_Info.Visible = true;
+            DisplayMessage("ChangeInput");
+            foreach (Control control in this.Controls)
+            {
+                if (control is UIButtonObject)
+                {
+                    control.BringToFront();
+                }
+                else
+                {
+                    control.Enabled = false;
+                }
+            }
             isChange = true;
         }
         public void Item_Change()
@@ -359,6 +371,11 @@ namespace unilab2024
             InputListBox.Items[Change_Item_Number] = InputListBox.Items[InputListBox.Items.Count - 1].ToString();
             InputListBox.Items.RemoveAt(InputListBox.Items.Count - 1);
             label_Info.Visible=false;
+            foreach (Control control in this.Controls)
+            {
+                control.Enabled = true;
+            }
+            Func.ChangeControl(pictureBox_Conv, false);
         }
         #endregion
 
@@ -705,10 +722,14 @@ namespace unilab2024
                 if (items == textBox_ForCount) continue;
                 items.Enabled = false;
             }
-            label_Info.Visible = true;
-            label_Info.Text = "ループ回数を入力してね!";
+            //label_Info.Visible = true;
+            //label_Info.Text = "ループ回数を入力してね!";
+            DisplayMessage("InputCount");
+            textBox_ForCount.Enabled = true;
             textBox_ForCount.Visible = true;
             textBox_ForCount.Focus();
+            textBox_ForCount.BringToFront();
+            pictureBox_Conv.Enabled = false;
         }
         private void textBox_ForCount_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -720,15 +741,18 @@ namespace unilab2024
                 InputListBox.Items.Add($"リフレイン({For_count})");
                 e.Handled = true;
                 textBox_ForCount.Visible = false;
-                label_Info.Visible = false;
+                //label_Info.Visible = false;
                 foreach (Control items in Controls)
                 {
                     items.Enabled = true;
                 }
+                Func.ChangeControl(pictureBox_Conv, false);
             }
             else
             {
-                label_Info.Text = "数字を入力してね!";
+                //label_Info.Text = "数字を入力してね!";
+                Func.convIndex = 0;
+                Func.DrawConv(this, pictureBox_Conv, Capt, Dictionaries.Messages["InputError"]);
                 e.Handled = true;
             }
             if (isChange) Item_Change();
@@ -948,7 +972,8 @@ namespace unilab2024
                     {
                         if (Now >= Move_Input.Count)                                                                 //for文の終わりが存在しない場合、エラー表示
                         {
-                            MessageBox.Show("「リフレイン」と「リフレインおわり」はセットで使ってください");
+                            //MessageBox.Show("「リフレイン」と「リフレインおわり」はセットで使ってください");
+                            DisplayMessage("LackEndfor");
                             isEndfor = false;
                             return (move, i);
                         }
