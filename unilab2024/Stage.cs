@@ -344,10 +344,10 @@ namespace unilab2024
             }
         }
 
-        // 要素の書き換え　開発中
+        // 要素の書き換え　
         public void Change_item_click(object sender, EventArgs e)
         {
-            label_Info.Visible = false;
+            //label_Info.Visible = false;
             Change_Item_Number = InputListBox.SelectedIndex;
             //label_Info.Text ="修正したいボタンを押してね";
             //label_Info.Visible = true;
@@ -370,7 +370,7 @@ namespace unilab2024
             isChange = false;
             InputListBox.Items[Change_Item_Number] = InputListBox.Items[InputListBox.Items.Count - 1].ToString();
             InputListBox.Items.RemoveAt(InputListBox.Items.Count - 1);
-            label_Info.Visible=false;
+            //label_Info.Visible=false;
             foreach (Control control in this.Controls)
             {
                 control.Enabled = true;
@@ -390,21 +390,21 @@ namespace unilab2024
             {
                 listbox.Items.Clear();
             }
-            label_Info.Visible = false;
+            //label_Info.Visible = false;
         }
         private void button_Input_Reset_Click(object sender, EventArgs e)        //起動部分リセット
         {
-            label_Info.Visible = false;
+            //label_Info.Visible = false;
             ResetListBox(listBox_Input);                    //Program.CSに処理記載
         }      
         private void button_A_Reset_Click(object sender, EventArgs e)           //Aの魔法リセット
         {
-            label_Info.Visible = false;
+            //label_Info.Visible = false;
             ResetListBox(listBox_A);
         }
         private void button_B_Reset_Click(object sender, EventArgs e)           //Aの魔法リセット
         {
-            label_Info.Visible = false;
+            //label_Info.Visible = false;
             ResetListBox(listBox_B);
         }
         private void DisplayMessage(string type)
@@ -554,7 +554,7 @@ namespace unilab2024
         }
         #endregion
 
-        #region ボタン押下時処理(UI開発中)
+        #region ボタン押下時処理
         private async void button_Start_Click(object sender, EventArgs e)  //出発ボタン押下時処理
         {
             button_Start.Visible = false;
@@ -655,7 +655,7 @@ namespace unilab2024
             bool result = false;
             if(isChange) return result;
 
-            label_Info.Visible = false;
+            //label_Info.Visible = false;
             switch (InputListBox.Name)
             {
                 case "listBox_Input":
@@ -1231,7 +1231,7 @@ namespace unilab2024
                         //DrawCharacter(x, y, ref character_me);
                         break;
                     }
-                    if (jump != 0 && Map[x + move_copy[0][0], y + move_copy[0][1] ] == 2) //jumpの時着地先が木の場合、ゲームオーバー
+                    if (jump == 0 && Map[x + move_copy[0][0], y + move_copy[0][1] ] == 2) //jumpの時着地先が木の場合、ゲームオーバー
                     {
                         (x_now, y_now) = draw_move(x, y, ref move_copy);
                         Thread.Sleep(waittime);
@@ -1251,14 +1251,14 @@ namespace unilab2024
                 
 
                 //jumpでない時移動先が木の場合、木の方向には進めない
-                if (jump == 0 && Map[x + move_copy[0][0], y + move_copy[0][1]] == 2)
-                {
-                    DrawCharacter(x, y, ref character_me);
-                    move_copy.RemoveAt(0);
-                    //500ミリ秒=0.5秒待機する
-                    Thread.Sleep(waittime);
-                    continue;
-                }
+                //if (jump == 0 && Map[x + move_copy[0][0], y + move_copy[0][1]] == 2)
+                //{
+                //    DrawCharacter(x, y, ref character_me);
+                //    move_copy.RemoveAt(0);
+                //    //500ミリ秒=0.5秒待機する
+                //    Thread.Sleep(waittime);
+                //    continue;
+                //}
                 if(Map[x + move_copy[0][0], y + move_copy[0][1]] == 11)
                 {
                     DrawCharacter(x, y, ref character_me);
@@ -1267,10 +1267,17 @@ namespace unilab2024
                     Thread.Sleep(waittime);
                     continue;
                 }
-                
+                if (Map[x , y] == 5 || Map[x, y] == 6)
+                {
+                    Graphics g1 = Graphics.FromImage(bmp1);
+                    int placeX = x * cell_length;
+                    int placeY = y * cell_length;
+                    g1.DrawImage(Dictionaries.Img_Object["3"], placeX, placeY, cell_length, cell_length);
+                }
+
                 (x_now, y_now) = draw_move(x, y, ref move_copy);
 
-                if (Map[x, y] == 101 && Map[x - move_copy[0][1], y - move_copy[0][0]] != 3)     //何の判定??? -> 正面向かせる処理
+                if (Map[x, y] == 101 && Map[x - move_copy[0][0], y - move_copy[0][1]] != 2)     //何の判定??? -> 正面向かせる処理
                 {
                     DrawCharacter(x, y, ref character_me);
                     //character_me = Image.FromFile("忍者_正面.png");
