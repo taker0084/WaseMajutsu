@@ -259,7 +259,7 @@ namespace unilab2024
                 uiButtonObject_A.Visible = false;
                 uiButtonObject_B.Visible = false;
             }
-
+            if(stageName == "stage3-1") uiButtonObject_B.Visible=false;
             if(stageName == "stage6-3" || stageName == "stage7-2" || stageName == "stage7-3") button_Hint.Visible = true;
             //ChooseInput.Items.Clear();
             //ComboBoxes.Add(comboBox_Select);
@@ -433,6 +433,7 @@ namespace unilab2024
                 // pictureBox2を同期的にRefreshする
                 pictureBox2.Refresh();
             });
+            CreateStage(stageName);
 
             //初期設定に戻す
             button_Start.Visible = true;
@@ -864,11 +865,17 @@ namespace unilab2024
                             y_start = y;
                             x_now = x;
                             y_now = y;
+                            Image character_me = Dictionaries.Img_DotPic["魔法使いサンプル"];
                             g2.DrawImage(character_me, placeX - extra_length, placeY - 2 * extra_length, cell_length + 2 * extra_length, cell_length + 2 * extra_length);
                             break;
                         case 1:
                             x_goal = x;
                             y_goal = y;
+                            if(_worldNumber > 4)
+                            {
+                                int goal = 10 + _worldNumber;
+                                g2.DrawImage(Dictionaries.Img_Object[goal.ToString()], placeX, placeY, cell_length, cell_length);
+                            }
                             break;
                         default:
                             break;
@@ -1194,6 +1201,13 @@ namespace unilab2024
 
             void DrawCharacter(int a, int b, ref Image character_me)
             {
+                if (_worldNumber > 4 && (x_now != x_goal || y_now != y_goal))
+                {
+                    int placeX = x_goal * cell_length;
+                    int placeY = y_goal * cell_length;
+                    int goal = 10 + _worldNumber;
+                    g2.DrawImage(Dictionaries.Img_Object[goal.ToString()], placeX, placeY, cell_length, cell_length);
+                }
                 g2.DrawImage(character_me, a * cell_length - extra_length, b * cell_length - 2 * extra_length, cell_length + 2 * extra_length, cell_length + 2 * extra_length);
             }
 
@@ -1216,10 +1230,6 @@ namespace unilab2024
                     if (x_now != x_goal || y_now != y_goal)
                     {
                         DisplayMessage("miss_end");
-                        //Thread.Sleep(300);
-                        //DrawCharacter(x, y, ref character_me);
-                        //character_me = Image.FromFile("忍者_正面.png");
-                        //g2.DrawImage(character_me, x * cell_length - extra_length, y * cell_length - 2 * extra_length, cell_length + 2 * extra_length, cell_length + 2 * extra_length);
                     }
                     break;
                 }
@@ -1261,7 +1271,7 @@ namespace unilab2024
                 //    Thread.Sleep(waittime);
                 //    continue;
                 //}
-                if(Map[x + move_copy[0][0], y + move_copy[0][1]] == 11)
+                if(Map[x + move_copy[0][0], y + move_copy[0][1]] == 10)
                 {
                     DrawCharacter(x, y, ref character_me);
                     move_copy.RemoveAt(0);
@@ -1279,13 +1289,13 @@ namespace unilab2024
 
                 (x_now, y_now) = draw_move(x, y, ref move_copy);
 
-                if (Map[x, y] == 101 && Map[x - move_copy[0][0], y - move_copy[0][1]] != 2)     //何の判定??? -> 正面向かせる処理
-                {
-                    DrawCharacter(x, y, ref character_me);
-                    //character_me = Image.FromFile("忍者_正面.png");
-                    //g2.DrawImage(character_me, x * cell_length - extra_length, y * cell_length - 2 * extra_length, cell_length + 2 * extra_length, cell_length + 2 * extra_length);
-                    break;
-                }
+                //if (Map[x, y] == 101 && Map[x - move_copy[0][0], y - move_copy[0][1]] != 2)     //何の判定??? -> 正面向かせる処理
+                //{
+                //    DrawCharacter(x, y, ref character_me);
+                //    //character_me = Image.FromFile("忍者_正面.png");
+                //    //g2.DrawImage(character_me, x * cell_length - extra_length, y * cell_length - 2 * extra_length, cell_length + 2 * extra_length, cell_length + 2 * extra_length);
+                //    break;
+                //}
 
                 if ((Map[x, y] == 5) || (Map[x, y] == 6))
                 {
@@ -1325,7 +1335,15 @@ namespace unilab2024
                         }
                         if (isWarp) break;
                     }
+                    //Image character_me = Dictionaries.Img_DotPic["魔法使いサンプル"];
+                    //DrawCharacter(x, y, ref character_me);
+                    //this.Invoke((MethodInvoker)delegate
+                    //{
+                    //    // pictureBox2を同期的にRefreshする
+                    //    pictureBox2.Refresh();
+                    //});
                     Thread.Sleep(waittime);
+
                 }
                 
                 move_copy.RemoveAt(0);
