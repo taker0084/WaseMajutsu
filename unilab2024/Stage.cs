@@ -376,6 +376,7 @@ namespace unilab2024
                 control.Enabled = true;
             }
             Func.ChangeControl(pictureBox_Conv, false);
+            isMessageMode = false;
         }
         #endregion
 
@@ -747,6 +748,7 @@ namespace unilab2024
                     items.Enabled = true;
                 }
                 Func.ChangeControl(pictureBox_Conv, false);
+                isMessageMode = false;
             }
             else
             {

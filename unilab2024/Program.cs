@@ -523,7 +523,7 @@ namespace unilab2024
         numWorlds = 7+1,
         numStages = 3+1,
         waitTime_End = 100,
-        waitTime_Load = 300
+        waitTime_Load = 350
     }
 
     public partial class CurrentFormState
