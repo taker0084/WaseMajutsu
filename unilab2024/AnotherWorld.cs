@@ -53,6 +53,20 @@ namespace unilab2024
                             {
                                 button.BackColor = Color.FromArgb(128, 255, 255);
                                 button.ConditionImage = Dictionaries.Img_Button["Clear"];
+                                switch (i)
+                                {
+                                    case 5:
+                                        button.ForeImage = Dictionaries.Img_Object["15"];
+                                        break;
+                                    case 6:
+                                        button.ForeImage = Dictionaries.Img_Object["16"];
+                                        break;
+                                    case 7:
+                                        button.ForeImage = Dictionaries.Img_Object["17"];
+                                        break;
+                                    default:
+                                        break;
+                                }
                             }
                             else
                             {
