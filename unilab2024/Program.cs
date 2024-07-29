@@ -763,7 +763,8 @@ namespace unilab2024
                
                 pevent.Graphics.DrawImage(this.ForeImage, destRect);
             }
-            else if (this.ConditionImage != null)
+
+            if (this.ConditionImage != null)
             {
                 //画像サイズ
                 int imageWidth = this.ConditionImage.Width;
