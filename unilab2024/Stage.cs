@@ -199,37 +199,9 @@ namespace unilab2024
                 }
             }
 
-            //hint = null;
-            //hint_character = null;
-            //hint_name = null;
-
-            // CSVから読み込んだテキストを設定します。
-            //using (StreamReader sr = new StreamReader($"hint.csv"))
-            //{
-            //    while (!sr.EndOfStream)
-            //    {
-            //        string line = sr.ReadLine();
-            //        string[] values = line.Split(',');
-
-
-            //        if (values[0] == _stageName)
-            //        {
-            //            Global.hint_character = values[1];
-            //            Global.hint = values[2];
-            //            Global.hint_name = values[3];
-            //            break;
-            //        }
-            //    }
-            //}
-
-            //if (hint == null)
-            //{
-            //    button_Hint.Visible = false;
-            //}
-            //else
-            //{
-            //    button_Hint.Visible = true;
-            //}
+            label_LeftInput.Text = $"あと {limit_LB_Input}";
+            label_LeftA.Text = $"あと {limit_LB_A}";
+            label_LeftB.Text = $"あと {limit_LB_B}";
 
             listBox_Input.Height = ItemHeight * height_LB_Input;
             listBox_A.Height = ItemHeight * height_LB_A;
@@ -320,7 +292,7 @@ namespace unilab2024
                 listBox_Input.Visible = true;
 
                 label_A.Visible = true;
-                //comboBox_Select.Visible = true;
+                label_LeftA.Visible = true;
                 button_A_Reset.Visible = true;
                 listBox_A.Location = new Point(listBox_Input.Location.X + 250, listBox_Input.Location.Y);
                 listBox_A.Width = 200;
@@ -329,6 +301,7 @@ namespace unilab2024
                 if (limit_LB_B != 0)
                 {
                     label_B.Visible = true;
+                    label_LeftB.Visible = true;
                     button_Breset.Visible = true;
                     listBox_B.Location = new Point(listBox_A.Location.X + 250, listBox_A.Location.Y);
                     listBox_B.Width = 200;
@@ -679,41 +652,53 @@ namespace unilab2024
             }
             return result;
         }
+        void Left_Availabel_Input()
+        {
+            if (InputListBox == listBox_Input) label_LeftInput.Text = $"あと {limit_LB_Input - listBox_Input.Items.Count}";
+            else if (InputListBox == listBox_A) label_LeftA.Text = $"あと {limit_LB_A - listBox_A.Items.Count}";
+            else label_LeftB.Text = $"あと {limit_LB_B - listBox_B.Items.Count}";
+        }
         void uiButtonObject_up_Click(object sender, EventArgs e)
         {
             if(Input_check()) return;
             InputListBox.Items.Add("↑");
             if (isChange) Item_Change();
+            else Left_Availabel_Input();
         }
         void uiButtonObject_left_Click(object sender, EventArgs e)
         {
             if (Input_check()) return;
             InputListBox.Items.Add("←");
             if (isChange) Item_Change();
+            else Left_Availabel_Input();
         }
         void uiButtonObject_right_Click(object sender, EventArgs e)
         {
             if (Input_check()) return;
             InputListBox.Items.Add("→");
             if (isChange) Item_Change();
+            else Left_Availabel_Input();
         }
         void uiButtonObject_down_Click(object sender, EventArgs e)
         {
             if (Input_check()) return;
             InputListBox.Items.Add("↓");
             if (isChange) Item_Change();
+            else Left_Availabel_Input();
         }
         void uiButtonObject_A_Click(object sender, EventArgs e)
         {
             if (Input_check()) return;
             InputListBox.Items.Add("A");
             if (isChange) Item_Change();
+            else Left_Availabel_Input();
         }
         void uiButtonObject_B_Click(object sender, EventArgs e)
         {
             if (Input_check()) return;
             InputListBox.Items.Add("B");
             if (isChange) Item_Change();
+            else Left_Availabel_Input();
         }
         void uiButtonObject_for_Click(object sender, EventArgs e)
         {
@@ -759,12 +744,14 @@ namespace unilab2024
                 e.Handled = true;
             }
             if (isChange) Item_Change();
+            else Left_Availabel_Input();
         }
         void uiButtonObject_endfor_Click(object sender, EventArgs e)
         {
             if (Input_check()) return;
             InputListBox.Items.Add("リフレイン終わり");
             if (isChange) Item_Change();
+            else Left_Availabel_Input();
         }
 
         void Stage_KeyDown(object sender, KeyEventArgs e)
