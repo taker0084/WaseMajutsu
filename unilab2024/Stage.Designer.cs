@@ -49,6 +49,10 @@
             this.label_B = new System.Windows.Forms.Label();
             this.button_Breset = new System.Windows.Forms.Button();
             this.pictureBox_Background = new System.Windows.Forms.PictureBox();
+            this.label_Input = new System.Windows.Forms.Label();
+            this.label_LeftInput = new System.Windows.Forms.Label();
+            this.label_LeftA = new System.Windows.Forms.Label();
+            this.label_LeftB = new System.Windows.Forms.Label();
             this.uiButtonObject_for = new unilab2024.UIButtonObject();
             this.uiButtonObject_endfor = new unilab2024.UIButtonObject();
             this.uiButtonObject_B = new unilab2024.UIButtonObject();
@@ -58,10 +62,6 @@
             this.uiButtonObject_left = new unilab2024.UIButtonObject();
             this.uiButtonObject_up = new unilab2024.UIButtonObject();
             this.button_ToMap = new unilab2024.CustomButton();
-            this.label_Input = new System.Windows.Forms.Label();
-            this.label_LeftInput = new System.Windows.Forms.Label();
-            this.label_LeftA = new System.Windows.Forms.Label();
-            this.label_LeftB = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Background)).BeginInit();
@@ -263,6 +263,7 @@
             // labelStageName
             // 
             this.labelStageName.AutoSize = true;
+            this.labelStageName.BackColor = System.Drawing.SystemColors.Window;
             this.labelStageName.Font = new System.Drawing.Font("游ゴシック", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.labelStageName.Location = new System.Drawing.Point(15, 13);
             this.labelStageName.Name = "labelStageName";
@@ -338,6 +339,56 @@
             this.pictureBox_Background.Size = new System.Drawing.Size(1536, 900);
             this.pictureBox_Background.TabIndex = 45;
             this.pictureBox_Background.TabStop = false;
+            // 
+            // label_Input
+            // 
+            this.label_Input.AutoSize = true;
+            this.label_Input.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.label_Input.Font = new System.Drawing.Font("メイリオ", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.label_Input.Location = new System.Drawing.Point(750, 50);
+            this.label_Input.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label_Input.Name = "label_Input";
+            this.label_Input.Size = new System.Drawing.Size(148, 48);
+            this.label_Input.TabIndex = 41;
+            this.label_Input.Text = "起動魔法";
+            // 
+            // label_LeftInput
+            // 
+            this.label_LeftInput.AutoSize = true;
+            this.label_LeftInput.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.label_LeftInput.Font = new System.Drawing.Font("メイリオ", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.label_LeftInput.Location = new System.Drawing.Point(850, 107);
+            this.label_LeftInput.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label_LeftInput.Name = "label_LeftInput";
+            this.label_LeftInput.Size = new System.Drawing.Size(21, 31);
+            this.label_LeftInput.TabIndex = 46;
+            this.label_LeftInput.Text = " ";
+            // 
+            // label_LeftA
+            // 
+            this.label_LeftA.AutoSize = true;
+            this.label_LeftA.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.label_LeftA.Font = new System.Drawing.Font("メイリオ", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.label_LeftA.Location = new System.Drawing.Point(1100, 107);
+            this.label_LeftA.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label_LeftA.Name = "label_LeftA";
+            this.label_LeftA.Size = new System.Drawing.Size(21, 31);
+            this.label_LeftA.TabIndex = 47;
+            this.label_LeftA.Text = " ";
+            this.label_LeftA.Visible = false;
+            // 
+            // label_LeftB
+            // 
+            this.label_LeftB.AutoSize = true;
+            this.label_LeftB.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.label_LeftB.Font = new System.Drawing.Font("メイリオ", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.label_LeftB.Location = new System.Drawing.Point(1350, 107);
+            this.label_LeftB.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label_LeftB.Name = "label_LeftB";
+            this.label_LeftB.Size = new System.Drawing.Size(14, 31);
+            this.label_LeftB.TabIndex = 48;
+            this.label_LeftB.Text = "\r\n";
+            this.label_LeftB.Visible = false;
             // 
             // uiButtonObject_for
             // 
@@ -459,56 +510,6 @@
             this.button_ToMap.Text = "教室に戻る";
             this.button_ToMap.UseVisualStyleBackColor = false;
             this.button_ToMap.Click += new System.EventHandler(this.button_ToMap_Click);
-            // 
-            // label_Input
-            // 
-            this.label_Input.AutoSize = true;
-            this.label_Input.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.label_Input.Font = new System.Drawing.Font("メイリオ", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label_Input.Location = new System.Drawing.Point(750, 50);
-            this.label_Input.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label_Input.Name = "label_Input";
-            this.label_Input.Size = new System.Drawing.Size(148, 48);
-            this.label_Input.TabIndex = 41;
-            this.label_Input.Text = "起動魔法";
-            // 
-            // label_LeftInput
-            // 
-            this.label_LeftInput.AutoSize = true;
-            this.label_LeftInput.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.label_LeftInput.Font = new System.Drawing.Font("メイリオ", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label_LeftInput.Location = new System.Drawing.Point(850, 107);
-            this.label_LeftInput.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label_LeftInput.Name = "label_LeftInput";
-            this.label_LeftInput.Size = new System.Drawing.Size(21, 31);
-            this.label_LeftInput.TabIndex = 46;
-            this.label_LeftInput.Text = " ";
-            // 
-            // label_LeftA
-            // 
-            this.label_LeftA.AutoSize = true;
-            this.label_LeftA.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.label_LeftA.Font = new System.Drawing.Font("メイリオ", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label_LeftA.Location = new System.Drawing.Point(1100, 107);
-            this.label_LeftA.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label_LeftA.Name = "label_LeftA";
-            this.label_LeftA.Size = new System.Drawing.Size(21, 31);
-            this.label_LeftA.TabIndex = 47;
-            this.label_LeftA.Text = " ";
-            this.label_LeftA.Visible = false;
-            // 
-            // label_LeftB
-            // 
-            this.label_LeftB.AutoSize = true;
-            this.label_LeftB.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.label_LeftB.Font = new System.Drawing.Font("メイリオ", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label_LeftB.Location = new System.Drawing.Point(1350, 107);
-            this.label_LeftB.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label_LeftB.Name = "label_LeftB";
-            this.label_LeftB.Size = new System.Drawing.Size(14, 31);
-            this.label_LeftB.TabIndex = 48;
-            this.label_LeftB.Text = "\r\n";
-            this.label_LeftB.Visible = false;
             // 
             // Stage
             // 

@@ -553,7 +553,7 @@ namespace unilab2024
                 isStartConv = false;
                 //button_ToMap.Location = new Point(800, 600);
                 //button_ToMap.Size = new Size(200, 50);
-                
+
                 ClearCheck.IsCleared[_worldNumber, _level] = true;    //クリア状況管理
                 if (_worldNumber == 4)
                 {
@@ -1218,6 +1218,19 @@ namespace unilab2024
                     {
                         DisplayMessage("miss_end");
                     }
+                    else
+                    {
+                        g2.Clear(Color.Transparent);
+                        //Graphics g2 = Graphics.FromImage(bmp2);
+                        int placeX = x_goal * cell_length;
+                        int placeY = y_goal * cell_length;
+                        g2.DrawImage(Dictionaries.Img_DotPic["GOAL"], placeX, placeY, cell_length, cell_length);
+                        this.Invoke((MethodInvoker)delegate
+                        {
+                            // pictureBox2を同期的にRefreshする
+                            pictureBox2.Refresh();
+                        });
+                    }
                     break;
                 }
                 else
@@ -1273,7 +1286,7 @@ namespace unilab2024
                     int placeY = y * cell_length;
                     g1.DrawImage(Dictionaries.Img_Object["3"], placeX, placeY, cell_length, cell_length);
                 }
-
+                
                 (x_now, y_now) = draw_move(x, y, ref move_copy);
 
                 //if (Map[x, y] == 101 && Map[x - move_copy[0][0], y - move_copy[0][1]] != 2)     //何の判定??? -> 正面向かせる処理
