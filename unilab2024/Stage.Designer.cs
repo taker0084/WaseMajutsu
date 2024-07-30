@@ -45,7 +45,6 @@
             this.label_Info = new System.Windows.Forms.Label();
             this.labelStageName = new System.Windows.Forms.Label();
             this.button_Explain = new System.Windows.Forms.Button();
-            this.label_Input = new System.Windows.Forms.Label();
             this.label_A = new System.Windows.Forms.Label();
             this.label_B = new System.Windows.Forms.Label();
             this.button_Breset = new System.Windows.Forms.Button();
@@ -59,6 +58,10 @@
             this.uiButtonObject_left = new unilab2024.UIButtonObject();
             this.uiButtonObject_up = new unilab2024.UIButtonObject();
             this.button_ToMap = new unilab2024.CustomButton();
+            this.label_Input = new System.Windows.Forms.Label();
+            this.label_LeftInput = new System.Windows.Forms.Label();
+            this.label_LeftA = new System.Windows.Forms.Label();
+            this.label_LeftB = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Background)).BeginInit();
@@ -282,18 +285,6 @@
             this.button_Explain.UseVisualStyleBackColor = false;
             this.button_Explain.Click += new System.EventHandler(this.button_Explain_Click);
             // 
-            // label_Input
-            // 
-            this.label_Input.AutoSize = true;
-            this.label_Input.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.label_Input.Font = new System.Drawing.Font("メイリオ", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label_Input.Location = new System.Drawing.Point(750, 50);
-            this.label_Input.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label_Input.Name = "label_Input";
-            this.label_Input.Size = new System.Drawing.Size(148, 48);
-            this.label_Input.TabIndex = 41;
-            this.label_Input.Text = "起動魔法";
-            // 
             // label_A
             // 
             this.label_A.AutoSize = true;
@@ -469,12 +460,65 @@
             this.button_ToMap.UseVisualStyleBackColor = false;
             this.button_ToMap.Click += new System.EventHandler(this.button_ToMap_Click);
             // 
+            // label_Input
+            // 
+            this.label_Input.AutoSize = true;
+            this.label_Input.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.label_Input.Font = new System.Drawing.Font("メイリオ", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.label_Input.Location = new System.Drawing.Point(750, 50);
+            this.label_Input.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label_Input.Name = "label_Input";
+            this.label_Input.Size = new System.Drawing.Size(148, 48);
+            this.label_Input.TabIndex = 41;
+            this.label_Input.Text = "起動魔法";
+            // 
+            // label_LeftInput
+            // 
+            this.label_LeftInput.AutoSize = true;
+            this.label_LeftInput.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.label_LeftInput.Font = new System.Drawing.Font("メイリオ", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.label_LeftInput.Location = new System.Drawing.Point(850, 107);
+            this.label_LeftInput.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label_LeftInput.Name = "label_LeftInput";
+            this.label_LeftInput.Size = new System.Drawing.Size(21, 31);
+            this.label_LeftInput.TabIndex = 46;
+            this.label_LeftInput.Text = " ";
+            // 
+            // label_LeftA
+            // 
+            this.label_LeftA.AutoSize = true;
+            this.label_LeftA.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.label_LeftA.Font = new System.Drawing.Font("メイリオ", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.label_LeftA.Location = new System.Drawing.Point(1100, 107);
+            this.label_LeftA.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label_LeftA.Name = "label_LeftA";
+            this.label_LeftA.Size = new System.Drawing.Size(21, 31);
+            this.label_LeftA.TabIndex = 47;
+            this.label_LeftA.Text = " ";
+            this.label_LeftA.Visible = false;
+            // 
+            // label_LeftB
+            // 
+            this.label_LeftB.AutoSize = true;
+            this.label_LeftB.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.label_LeftB.Font = new System.Drawing.Font("メイリオ", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.label_LeftB.Location = new System.Drawing.Point(1350, 107);
+            this.label_LeftB.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label_LeftB.Name = "label_LeftB";
+            this.label_LeftB.Size = new System.Drawing.Size(14, 31);
+            this.label_LeftB.TabIndex = 48;
+            this.label_LeftB.Text = "\r\n";
+            this.label_LeftB.Visible = false;
+            // 
             // Stage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.ClientSize = new System.Drawing.Size(1154, 861);
+            this.ClientSize = new System.Drawing.Size(1642, 861);
+            this.Controls.Add(this.label_LeftB);
+            this.Controls.Add(this.label_LeftA);
+            this.Controls.Add(this.label_LeftInput);
             this.Controls.Add(this.button_Breset);
             this.Controls.Add(this.label_B);
             this.Controls.Add(this.label_A);
@@ -545,10 +589,13 @@
         private System.Windows.Forms.Label label_Info;
         private System.Windows.Forms.Label labelStageName;
         private System.Windows.Forms.Button button_Explain;
-        private System.Windows.Forms.Label label_Input;
         private System.Windows.Forms.Label label_A;
         private System.Windows.Forms.Label label_B;
         private System.Windows.Forms.Button button_Breset;
         private System.Windows.Forms.PictureBox pictureBox_Background;
+        private System.Windows.Forms.Label label_Input;
+        private System.Windows.Forms.Label label_LeftInput;
+        private System.Windows.Forms.Label label_LeftA;
+        private System.Windows.Forms.Label label_LeftB;
     }
 }

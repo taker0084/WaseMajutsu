@@ -243,6 +243,24 @@ namespace unilab2024
     {
         public static byte[] CaptureClientArea(Form currentForm)
         {
+            //Rectangle clientRect = currentForm.ClientRectangle;
+
+            //// DPIスケーリングの問題を防ぐために、スケールモードを無効に設定
+            //currentForm.AutoScaleMode = AutoScaleMode.None;
+
+            //Bitmap bmp_Capt = new Bitmap(clientRect.Width, clientRect.Height);
+
+            //using (Graphics g = Graphics.FromImage(bmp_Capt))
+            //{
+            //    Point clientScreenPos = currentForm.PointToScreen(clientRect.Location);
+            //    g.CopyFromScreen(clientScreenPos, Point.Empty, clientRect.Size);
+            //}
+
+            //using (MemoryStream ms = new MemoryStream())
+            //{
+            //    bmp_Capt.Save(ms, ImageFormat.Png);
+            //    return ms.ToArray();
+            //}
             Rectangle clientRect = currentForm.ClientRectangle;
 
             Bitmap bmp_Capt = new Bitmap(clientRect.Width, clientRect.Height);
