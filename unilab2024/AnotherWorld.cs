@@ -53,24 +53,49 @@ namespace unilab2024
                             {
                                 button.BackColor = Color.FromArgb(128, 255, 255);
                                 button.ConditionImage = Dictionaries.Img_Button["Clear"];
-                                switch (i)
-                                {
-                                    case 5:
-                                        button.ForeImage = Dictionaries.Img_Object["15"];
-                                        break;
-                                    case 6:
-                                        button.ForeImage = Dictionaries.Img_Object["16"];
-                                        break;
-                                    case 7:
-                                        button.ForeImage = Dictionaries.Img_Object["17"];
-                                        break;
-                                    default:
-                                        break;
-                                }
                             }
                             else
                             {
                                 button.ConditionImage = null;
+                            }
+                            
+                            switch (i)
+                            {
+                                case 5:
+                                    for (int j = 3; j > 0; j--)
+                                    {
+                                        if (ClearCheck.IsCleared[i, j])
+                                        {
+                                            button.BackgroundImage = Dictionaries.Img_Button["Snow"+j];
+                                            button.BackgroundImageLayout = ImageLayout.Zoom;
+                                            break;
+                                        }
+                                    }
+                                    break;
+                                case 6:
+                                    for (int j = 3; j > 0; j--)
+                                    {
+                                        if (ClearCheck.IsCleared[i, j])
+                                        {
+                                            button.BackgroundImage = Dictionaries.Img_Button["Fruit" + j];
+                                            button.BackgroundImageLayout = ImageLayout.Zoom;
+                                            break;
+                                        }
+                                    }
+                                    break;
+                                case 7:
+                                    for (int j = 3; j > 0; j--)
+                                    {
+                                        if (ClearCheck.IsCleared[i, j])
+                                        {
+                                            button.BackgroundImage = Dictionaries.Img_Button["Watch" + j];
+                                            button.BackgroundImageLayout = ImageLayout.Zoom;
+                                            break;
+                                        }
+                                    }
+                                    break;
+                                default:
+                                    break;
                             }
                         }
                         else
