@@ -370,16 +370,19 @@ namespace unilab2024
         {
             //label_Info.Visible = false;
             ResetListBox(listBox_Input);                    //Program.CSに処理記載
+            label_LeftInput.Text = $"あと {limit_LB_Input}";
         }      
         private void button_A_Reset_Click(object sender, EventArgs e)           //Aの魔法リセット
         {
             //label_Info.Visible = false;
             ResetListBox(listBox_A);
+            label_LeftA.Text = $"あと {limit_LB_A}";
         }
         private void button_B_Reset_Click(object sender, EventArgs e)           //Aの魔法リセット
         {
             //label_Info.Visible = false;
             ResetListBox(listBox_B);
+            label_LeftB.Text = $"あと {limit_LB_B}";
         }
         private void DisplayMessage(string type)
         {
