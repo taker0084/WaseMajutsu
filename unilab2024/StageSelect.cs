@@ -98,13 +98,16 @@ namespace unilab2024
                                 switch (_worldNumber)
                                 {
                                     case 5:
-                                        button.ForeImage = Dictionaries.Img_Object["15"];
+                                        button.BackgroundImage = Dictionaries.Img_Object["15"];
+                                        button.BackgroundImageLayout = ImageLayout.Zoom;
                                         break;
                                     case 6:
-                                        button.ForeImage = Dictionaries.Img_Object["16"];
+                                        button.BackgroundImage = Dictionaries.Img_Object["16"];
+                                        button.BackgroundImageLayout = ImageLayout.Zoom;
                                         break;
                                     case 7:
-                                        button.ForeImage = Dictionaries.Img_Object["17"];
+                                        button.BackgroundImage = Dictionaries.Img_Object["17"];
+                                        button.BackgroundImageLayout = ImageLayout.Zoom;
                                         break;
                                     default:
                                         break;
