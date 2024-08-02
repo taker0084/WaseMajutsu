@@ -197,6 +197,7 @@
             this.listBox_A.TabIndex = 13;
             this.listBox_A.Visible = false;
             this.listBox_A.Click += new System.EventHandler(this.listBox_A_Click);
+            this.listBox_A.DoubleClick += new System.EventHandler(this.Change_item_click);
             // 
             // listBox_B
             // 
@@ -212,6 +213,7 @@
             this.listBox_B.TabIndex = 14;
             this.listBox_B.Visible = false;
             this.listBox_B.Click += new System.EventHandler(this.listBox_B_Click);
+            this.listBox_B.DoubleClick += new System.EventHandler(this.Change_item_click);
             // 
             // label_Result
             // 
