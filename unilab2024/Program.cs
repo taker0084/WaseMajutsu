@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -241,40 +242,43 @@ namespace unilab2024
 
     public partial class Func
     {
+        // WinAPI 関数のインポート
+        [DllImport("user32.dll")]
+        public static extern IntPtr GetDC(IntPtr hWnd);
+        [DllImport("user32.dll")]
+        public static extern int ReleaseDC(IntPtr hWnd, IntPtr hDC);
+        [DllImport("gdi32.dll")]
+        public static extern bool BitBlt(IntPtr hdcDest, int nXDest, int nYDest, int nWidth, int nHeight, IntPtr hdcSrc, int nXSrc, int nYSrc, int dwRop);
+        private const int SRCCOPY = 0x00CC0020;
+
         public static byte[] CaptureClientArea(Form currentForm)
         {
-            //Rectangle clientRect = currentForm.ClientRectangle;
-
-            //// DPIスケーリングの問題を防ぐために、スケールモードを無効に設定
-            //currentForm.AutoScaleMode = AutoScaleMode.None;
-
-            //Bitmap bmp_Capt = new Bitmap(clientRect.Width, clientRect.Height);
-
-            //using (Graphics g = Graphics.FromImage(bmp_Capt))
-            //{
-            //    Point clientScreenPos = currentForm.PointToScreen(clientRect.Location);
-            //    g.CopyFromScreen(clientScreenPos, Point.Empty, clientRect.Size);
-            //}
-
-            //using (MemoryStream ms = new MemoryStream())
-            //{
-            //    bmp_Capt.Save(ms, ImageFormat.Png);
-            //    return ms.ToArray();
-            //}
             Rectangle clientRect = currentForm.ClientRectangle;
 
-            Bitmap bmp_Capt = new Bitmap(clientRect.Width, clientRect.Height);
-
-            using (Graphics g = Graphics.FromImage(bmp_Capt))
+            using(Graphics g = currentForm.CreateGraphics())
             {
-                Point clientScreenPos = currentForm.PointToScreen(clientRect.Location);
-                g.CopyFromScreen(clientScreenPos, Point.Empty, clientRect.Size);
-            }
+                float scaleX = g.DpiX / 96.0f;
+                float scaleY = g.DpiY / 96.0f;
 
-            using (MemoryStream ms = new MemoryStream())
-            {
-                bmp_Capt.Save(ms, ImageFormat.Png);
-                return ms.ToArray();
+                int width = (int)(clientRect.Width * scaleX);
+                int height = (int)(clientRect.Height * scaleY);
+
+                Bitmap bmp_Capt = new Bitmap(width, height);
+                using(Graphics g_bmp = Graphics.FromImage(bmp_Capt))
+                {
+                    IntPtr hdcBitmap = g_bmp.GetHdc();
+                    IntPtr hdcSrc = GetDC(currentForm.Handle);
+
+                    BitBlt(hdcBitmap, 0, 0, width, height,hdcSrc,0, 0, SRCCOPY);
+
+                    ReleaseDC(currentForm.Handle, hdcSrc);
+                    g_bmp.ReleaseHdc(hdcBitmap);
+                }
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    bmp_Capt.Save(ms, ImageFormat.Png);
+                    return ms.ToArray();
+                }
             }
         }
 
@@ -541,7 +545,7 @@ namespace unilab2024
         numWorlds = 7+1,
         numStages = 3+1,
         waitTime_End = 100,
-        waitTime_Load = 350
+        waitTime_Load = 400
     }
 
     public partial class CurrentFormState
