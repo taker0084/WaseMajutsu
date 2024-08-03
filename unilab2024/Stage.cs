@@ -169,6 +169,7 @@ namespace unilab2024
             #region リストボックス・ボタンの設定
             //ゲーム画面の一ブロックの大きさ
             cell_length = pictureBox1.Width / 12;
+
             // 1行文の高さ
             int ItemHeight = 22;
             listBox_Input.ItemHeight = ItemHeight;
@@ -223,16 +224,11 @@ namespace unilab2024
             {
                 uiButtonObject_for.Visible = false;
                 uiButtonObject_endfor.Visible = false;
-                uiButtonObject_A.Visible = false;
-                uiButtonObject_B.Visible = false;
             }
-            else if(_worldNumber == 2)
-            {
-                uiButtonObject_A.Visible = false;
-                uiButtonObject_B.Visible = false;
-            }
-            if(stageName == "stage3-1") uiButtonObject_B.Visible=false;
-            if(stageName == "stage6-3" || stageName == "stage7-2" || stageName == "stage7-3") button_Hint.Visible = true;
+            if(limit_LB_A == 0) uiButtonObject_A.Visible = false;
+            if(limit_LB_B == 0) uiButtonObject_B.Visible = false;
+
+            if(File.Exists($"Map\\{stageName}_hint.csv")) button_Hint.Visible = true;
             //ChooseInput.Items.Clear();
             //ComboBoxes.Add(comboBox_Select);
 
@@ -354,35 +350,40 @@ namespace unilab2024
         #endregion
 
         #region リセット関連
-        public void ResetListBox(ListBox listbox)   //ListBoxの中身消去
+        public bool ResetListBox(ListBox listbox)   //ListBoxの中身消去
         {
+            bool isAllReset = false;
             if (listbox.SelectedIndex > -1)
             {
                 listbox.Items.RemoveAt(listbox.SelectedIndex);
+                return isAllReset;
             }
             else
             {
                 listbox.Items.Clear();
+                return !isAllReset;
             }
-            //label_Info.Visible = false;
         }
         private void button_Input_Reset_Click(object sender, EventArgs e)        //起動部分リセット
         {
             //label_Info.Visible = false;
-            ResetListBox(listBox_Input);                    //Program.CSに処理記載
-            label_LeftInput.Text = $"あと {limit_LB_Input}";
+            bool isReset = ResetListBox(listBox_Input);                    //Program.CSに処理記載
+            if(isReset) label_LeftInput.Text = $"あと {limit_LB_Input}";
+            else label_LeftInput.Text = $"あと {limit_LB_Input - listBox_Input.Items.Count}";
         }      
         private void button_A_Reset_Click(object sender, EventArgs e)           //Aの魔法リセット
         {
             //label_Info.Visible = false;
-            ResetListBox(listBox_A);
-            label_LeftA.Text = $"あと {limit_LB_A}";
+            bool isReset = ResetListBox(listBox_A);
+            if(isReset) label_LeftA.Text = $"あと {limit_LB_A}";
+            else label_LeftA.Text = $"あと {limit_LB_A - listBox_A.Items.Count}";
         }
         private void button_B_Reset_Click(object sender, EventArgs e)           //Aの魔法リセット
         {
             //label_Info.Visible = false;
-            ResetListBox(listBox_B);
-            label_LeftB.Text = $"あと {limit_LB_B}";
+            bool isReset = ResetListBox(listBox_B);
+            if(isReset) label_LeftB.Text = $"あと {limit_LB_B}";
+            else label_LeftB.Text = $"あと {limit_LB_B - listBox_B.Items.Count}";
         }
         private void DisplayMessage(string type)
         {
@@ -1227,7 +1228,7 @@ namespace unilab2024
                         //Graphics g2 = Graphics.FromImage(bmp2);
                         int placeX = x_goal * cell_length;
                         int placeY = y_goal * cell_length;
-                        g2.DrawImage(Dictionaries.Img_DotPic["GOAL"], placeX, placeY, cell_length, cell_length);
+                        g2.DrawImage(Dictionaries.Img_DotPic["GOAL"], placeX - extra_length, placeY - 2 * extra_length, cell_length + 2 * extra_length, cell_length + 2 * extra_length);
                         this.Invoke((MethodInvoker)delegate
                         {
                             // pictureBox2を同期的にRefreshする
