@@ -346,11 +346,11 @@ namespace unilab2024
                 {
                     if (MainCharacter.isBoy)
                     {
-                        charaName = "タロウ";
+                        charaName = "アレックス";
                     }
                     else
                     {
-                        charaName = "ハナコ";
+                        charaName = "エイミー";
                     }
                 }
 
