@@ -24,16 +24,14 @@ namespace unilab2024
         public Stage()
         {
             InitializeComponent();
-            //this.AllowDrop = true;
-            //this.DragDrop += new DragEventHandler(ListBox_DragDrop);          //Form全体にDrop可能にする
-            //this.DragEnter += new DragEventHandler(ListBox_DragEnter);
             pictureBox_Conv = Func.CreatePictureBox_Conv(this);
             pictureBox_Conv.Click += new EventHandler(pictureBox_Conv_Click);
 
-            this.KeyDown += new KeyEventHandler(Stage_KeyDown);
             this.KeyPreview = true;
+            this.KeyDown += new KeyEventHandler(Stage_KeyDown);
 
-            #region ボタン表示(開発中)
+
+            #region ボタン表示
             uiButtonObject_up.Size = new Size(80, 80);
             uiButtonObject_left.Size = new Size(80, 80);
             uiButtonObject_right.Size = new Size(80, 80);
@@ -50,7 +48,6 @@ namespace unilab2024
 
             bmp1 = new Bitmap(pictureBox1.Width, pictureBox1.Height);
             bmp2 = new Bitmap(pictureBox2.Width, pictureBox2.Height);
-            //bmp4 = new Bitmap(pictureBox4.Width, pictureBox4.Height);
             pictureBox1.Image = bmp1;
             pictureBox2.Image = bmp2;
             //pictureBox4.Image = bmp4;
@@ -84,7 +81,7 @@ namespace unilab2024
 
         #region グローバル変数定義
         //ここに必要なBitmapやImageを作っていく
-        Bitmap bmp1, bmp2, bmp4;
+        Bitmap bmp1, bmp2;
 
         Brush goalBackgroundColor = new SolidBrush(Color.Yellow);
         Brush startBackgroundColor = new SolidBrush(Color.Blue);
@@ -93,7 +90,8 @@ namespace unilab2024
 
         public static List<ListBox> ListBoxes = new List<ListBox>();
         public static ListBox InputListBox;   //入力先のリストボックス
-        public static bool isChange = false;
+        public static bool isChange = false;  //入力変更状態かどうか
+        public static bool isFor = false;     //For文入力中かどうか
         public static int Change_Item_Number;
         public static int[,] map = new int[12, 12]; //map情報
         public static string stageName;
@@ -257,17 +255,20 @@ namespace unilab2024
         private void listBox_Input_Click(object sender, EventArgs e)
         {
             InputListBox = listBox_Input;
+            listBox_Input.Focus();
             ShowListBox();
         }
 
         private void listBox_A_Click(object sender, EventArgs e)
         {
             InputListBox = listBox_A;
+            listBox_A.Focus();
             ShowListBox();
         }
         private void listBox_B_Click(object sender, EventArgs e)
         {
             InputListBox = listBox_B;
+            listBox_B.Focus();
             ShowListBox();
         }
 
@@ -316,6 +317,7 @@ namespace unilab2024
         // 要素の書き換え　
         public void Change_item_click(object sender, EventArgs e)
         {
+            if (InputListBox.SelectedIndex < 0) return;
             //label_Info.Visible = false;
             Change_Item_Number = InputListBox.SelectedIndex;
             //label_Info.Text ="修正したいボタンを押してね";
@@ -422,114 +424,6 @@ namespace unilab2024
             label_Error.Text = "ミス！";
             label_Error.Visible = false;
             label_Result.Visible = false;
-            //switch (type)
-            //{
-            //    //case "miss_out":
-            //    //    label_Error.Text = "そこは入れないよ！やり直そう！";
-            //    //    label_Error.Visible = true;
-            //    //    Thread.Sleep(300);
-            //    //    button_Retry.Visible = true;
-            //    //    button_Retry.Enabled = true;
-            //    //    miss_count += 1;
-            //    //    break;
-            //    //case "miss_countover":
-            //    //    label_Error.Text = "これ以上は移動できない！やり直そう！";
-            //    //    label_Error.Visible = true;
-            //    //    button_Retry.Visible = true;
-            //    //    button_Retry.Enabled = true;
-            //    //    Thread.Sleep(300);
-            //    //    miss_count += 1;
-            //    //    break;
-            //    //case "miss_end":
-            //    //    label_Error.Text = "ゴールまで届いてないね！やり直そう！";
-            //    //    label_Error.Visible = true;
-            //    //    button_Retry.Visible = true;
-            //    //    button_Retry.Enabled = true;
-            //    //    Thread.Sleep(300);
-            //    //    miss_count += 1;
-            //    //    break;
-            //    case "retry":
-                    
-                    
-            //        break;
-            //    default: break;
-            //}
-            #region 削除候補
-            //if (type == "quit")
-            //{
-            //    Func.CreateStageSelect(this, _worldName, _worldNumber);
-            //    return;
-            //}
-
-            //// 曇から落ちたミス
-            //else if (type == "miss_out")
-            //{
-            //    label_Error.Text = "そこは止まれないよ！やり直そう！";
-            //    label_Error.Visible = true;
-            //    Thread.Sleep(300);
-            //    miss_count += 1;
-            //}
-
-            ////木に刺されたミス
-            //else if (type == "miss_tree")
-            //{
-            //    label_Error.Text = "木に刺された！やり直そう！";
-            //    label_Error.Visible = true;
-            //    Thread.Sleep(300);
-            //    miss_count += 1;
-            //}
-
-            ////無限ループの時のミス
-            //else if (type == "miss_countover")
-            //{
-            //    label_Error.Text = "これ以上は移動できない！やり直そう！";
-            //    label_Error.Visible = true;
-            //    Thread.Sleep(300);
-            //    miss_count += 1;
-            //}
-
-            ////止まった時ゴール到着してないミス
-            //else if (type == "miss_end")
-            //{
-            //    label_Error.Text = "ゴールまで届いてないね！やり直そう！";
-            //    label_Error.Visible = true;
-            //    Thread.Sleep(300);
-            //    miss_count += 1;
-            //}
-
-            //// リトライボタン
-            //else if (type == "retry")
-            //{
-            //    //初期位置に戻す
-            //    x_now = x_start;
-            //    y_now = y_start;
-
-            //    //初期位置に書き換え
-            //    Graphics g2 = Graphics.FromImage(bmp2);
-            //    g2.Clear(Color.Transparent);
-            //    int cell_length = pictureBox1.Width / 12;
-            //    //character_me = Image.FromFile("忍者_正面.png");
-            //    //g2.DrawImage(character_me, Global.x_now * cell_length - Global.extra_length, Global.y_now * cell_length - 2 * Global.extra_length, cell_length + 2 * Global.extra_length, cell_length + 2 * Global.extra_length);
-
-            //    //g2.DrawImage(goal_obj(_stageName), Global.x_goal * cell_length - Global.extra_length, Global.y_goal * cell_length - 2 * Global.extra_length, cell_length + 2 * Global.extra_length, cell_length + 2 * Global.extra_length);
-            //    this.Invoke((MethodInvoker)delegate
-            //    {
-            //        // pictureBox2を同期的にRefreshする
-            //        pictureBox2.Refresh();
-            //    });
-
-            //    //初期設定に戻す
-            //    button_Start.Visible = true;
-            //    button_Start.Enabled = true;
-            //    label_Error.Visible = false;
-            //    count = 0;
-            //    miss_count = 0;
-            //    label_Error.Text = "ミス！";
-            //    label_Error.Visible = false;
-            //    label_Result.Visible = false;
-            //    label_Info.Visible = false;
-            //}
-            #endregion
         }
         #endregion
 
@@ -707,6 +601,7 @@ namespace unilab2024
         void uiButtonObject_for_Click(object sender, EventArgs e)
         {
             if (Input_check()) return;
+            isFor = true;
             //　ボタンの押下を制限　
             foreach (Control items in Controls)
             {
@@ -730,6 +625,7 @@ namespace unilab2024
                 For_count = int.Parse(e.KeyChar.ToString());
                 // リストボックスに "Input(数字)" 形式で追加
                 InputListBox.Items.Add($"リフレイン({For_count})");
+                isFor = false;
                 e.Handled = true;
                 textBox_ForCount.Visible = false;
                 //label_Info.Visible = false;
@@ -760,26 +656,9 @@ namespace unilab2024
 
         void Stage_KeyDown(object sender, KeyEventArgs e)
         {
+            if (isFor) return;
             switch (e.KeyCode)
             {
-                case Keys.Up:
-                    InputListBox.Items.Add("↑");
-                    break;
-                case Keys.Left:
-                    InputListBox.Items.Add("←");
-                    break;
-                case Keys.Right:
-                    InputListBox.Items.Add("→");
-                    break;
-                case Keys.Down:
-                    InputListBox.Items.Add("↓");
-                    break;
-                case Keys.A:
-                    InputListBox.Items.Add("A");
-                    break;
-                case Keys.B:
-                    InputListBox.Items.Add("B");
-                    break;
                 case Keys.M:
                     Func.ChangeControl(pictureBox_Conv, false);
                     break;
@@ -834,13 +713,6 @@ namespace unilab2024
 
             cell_length = pictureBox1.Width / 12;
 
-            //for (int y = 1; y < 11; y++)
-            //{
-            //    for (int x = 1; x < 11; x++)
-            //    {
-            //        g1.DrawImage(img_way, x * Global.cell_length, y * Global.cell_length, Global.cell_length, Global.cell_length);
-            //    }
-            //}
 
             for (int y = 0; y < 12; y++)
             {
