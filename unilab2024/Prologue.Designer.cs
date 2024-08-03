@@ -50,7 +50,7 @@
             // 
             this.button_Girl.ConditionImage = null;
             this.button_Girl.ForeImage = null;
-            this.button_Girl.Location = new System.Drawing.Point(886, 200);
+            this.button_Girl.Location = new System.Drawing.Point(900, 150);
             this.button_Girl.Name = "button_Girl";
             this.button_Girl.Size = new System.Drawing.Size(400, 400);
             this.button_Girl.TabIndex = 3;
@@ -61,7 +61,7 @@
             // 
             this.button_Boy.ConditionImage = null;
             this.button_Boy.ForeImage = null;
-            this.button_Boy.Location = new System.Drawing.Point(250, 200);
+            this.button_Boy.Location = new System.Drawing.Point(400, 150);
             this.button_Boy.Name = "button_Boy";
             this.button_Boy.Size = new System.Drawing.Size(400, 400);
             this.button_Boy.TabIndex = 2;
