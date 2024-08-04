@@ -58,45 +58,38 @@ namespace unilab2024
                             {
                                 button.ConditionImage = null;
                             }
-                            
+
+                            string itemName = "";
                             switch (i)
                             {
                                 case 5:
-                                    for (int j = 3; j > 0; j--)
-                                    {
-                                        if (ClearCheck.IsCleared[i, j])
-                                        {
-                                            button.BackgroundImage = Dictionaries.Img_Button["Snow"+j];
-                                            button.BackgroundImageLayout = ImageLayout.Zoom;
-                                            break;
-                                        }
-                                    }
+                                    itemName = "Snow";
                                     break;
                                 case 6:
-                                    for (int j = 3; j > 0; j--)
-                                    {
-                                        if (ClearCheck.IsCleared[i, j])
-                                        {
-                                            button.BackgroundImage = Dictionaries.Img_Button["Fruit" + j];
-                                            button.BackgroundImageLayout = ImageLayout.Zoom;
-                                            break;
-                                        }
-                                    }
+                                    itemName = "Fruit";
                                     break;
                                 case 7:
-                                    for (int j = 3; j > 0; j--)
-                                    {
-                                        if (ClearCheck.IsCleared[i, j])
-                                        {
-                                            button.BackgroundImage = Dictionaries.Img_Button["Watch" + j];
-                                            button.BackgroundImageLayout = ImageLayout.Zoom;
-                                            break;
-                                        }
-                                    }
+                                    itemName = "Watch";
                                     break;
                                 default:
                                     break;
                             }
+
+                            bool flg = false;
+                            for (int j = 3; j > 0; j--)
+                            {
+                                if (ClearCheck.IsCleared[i, j])
+                                {
+                                    button.BackgroundImage = Dictionaries.Img_Button[itemName + j];
+                                    flg = true;
+                                    break;
+                                }
+                            }
+                            if (!flg)
+                            {
+                                button.BackgroundImage = Dictionaries.Img_Button[itemName + 0];
+                            }
+                            button.BackgroundImageLayout = ImageLayout.Zoom;
                         }
                         else
                         {
@@ -132,6 +125,14 @@ namespace unilab2024
             {
                 ClearCheck.PlayAfterChapter4Story = false;
                 string convFileName = "Story_AfterChapter4-AnotherWorld.csv";
+                Conversations = Func.LoadConversations(convFileName);
+                await Task.Delay((int)ConstNum.waitTime_Load);
+                Capt = Func.PlayConv(this, pictureBox_Conv, Conversations);
+            }
+            else if (ClearCheck.PlayAfterAnotherWorldStory)
+            {
+                ClearCheck.PlayAfterAnotherWorldStory = false;
+                string convFileName = "Story_AfterAnotherWorld_Completed.csv";
                 Conversations = Func.LoadConversations(convFileName);
                 await Task.Delay((int)ConstNum.waitTime_Load);
                 Capt = Func.PlayConv(this, pictureBox_Conv, Conversations);
@@ -180,6 +181,12 @@ namespace unilab2024
                         ClearCheck.IsButtonEnabled[i, j] = true;
                     }
                 }
+
+                if (!ClearCheck.Completed)
+                {
+                    ClearCheck.PlayAfterAnotherWorldStory = true;
+                }
+                ClearCheck.Completed = true;
 
                 Func.CreateAnotherWorld(this);
             }

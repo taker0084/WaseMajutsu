@@ -171,6 +171,7 @@
             // listBox_Input
             // 
             this.listBox_Input.BackColor = System.Drawing.Color.Black;
+            this.listBox_Input.Cursor = System.Windows.Forms.Cursors.Hand;
             this.listBox_Input.Font = new System.Drawing.Font("メイリオ", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.listBox_Input.ForeColor = System.Drawing.SystemColors.Info;
             this.listBox_Input.FormattingEnabled = true;
@@ -187,6 +188,7 @@
             // listBox_A
             // 
             this.listBox_A.BackColor = System.Drawing.SystemColors.Info;
+            this.listBox_A.Cursor = System.Windows.Forms.Cursors.Hand;
             this.listBox_A.Font = new System.Drawing.Font("メイリオ", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.listBox_A.FormattingEnabled = true;
             this.listBox_A.ItemHeight = 36;
@@ -202,6 +204,7 @@
             // listBox_B
             // 
             this.listBox_B.BackColor = System.Drawing.SystemColors.Info;
+            this.listBox_B.Cursor = System.Windows.Forms.Cursors.Hand;
             this.listBox_B.Font = new System.Drawing.Font("メイリオ", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.listBox_B.ForeColor = System.Drawing.SystemColors.WindowText;
             this.listBox_B.FormattingEnabled = true;

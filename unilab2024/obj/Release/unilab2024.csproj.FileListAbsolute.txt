@@ -1,0 +1,15 @@
+C:\Users\ShingoNogami\source\repos\unilab2024\unilab2024\bin\Release\unilab2024.exe.config
+C:\Users\ShingoNogami\source\repos\unilab2024\unilab2024\bin\Release\unilab2024.exe
+C:\Users\ShingoNogami\source\repos\unilab2024\unilab2024\bin\Release\unilab2024.pdb
+C:\Users\ShingoNogami\source\repos\unilab2024\unilab2024\obj\Release\unilab2024.csproj.AssemblyReference.cache
+C:\Users\ShingoNogami\source\repos\unilab2024\unilab2024\obj\Release\unilab2024.AnotherWorld.resources
+C:\Users\ShingoNogami\source\repos\unilab2024\unilab2024\obj\Release\unilab2024.Prologue.resources
+C:\Users\ShingoNogami\source\repos\unilab2024\unilab2024\obj\Release\unilab2024.Properties.Resources.resources
+C:\Users\ShingoNogami\source\repos\unilab2024\unilab2024\obj\Release\unilab2024.Stage.resources
+C:\Users\ShingoNogami\source\repos\unilab2024\unilab2024\obj\Release\unilab2024.StageSelect.resources
+C:\Users\ShingoNogami\source\repos\unilab2024\unilab2024\obj\Release\unilab2024.Title.resources
+C:\Users\ShingoNogami\source\repos\unilab2024\unilab2024\obj\Release\unilab2024.WorldMap.resources
+C:\Users\ShingoNogami\source\repos\unilab2024\unilab2024\obj\Release\unilab2024.csproj.GenerateResource.cache
+C:\Users\ShingoNogami\source\repos\unilab2024\unilab2024\obj\Release\unilab2024.csproj.CoreCompileInputs.cache
+C:\Users\ShingoNogami\source\repos\unilab2024\unilab2024\obj\Release\unilab2024.exe
+C:\Users\ShingoNogami\source\repos\unilab2024\unilab2024\obj\Release\unilab2024.pdb

@@ -500,6 +500,15 @@ namespace unilab2024
                     button_ToMap.ConditionImage = Dictionaries.Img_Button["New"];
                 }
 
+                if (!ClearCheck.Completed)
+                {
+                    if (Func.IsAllStageClearedInWorld(false))
+                    {
+                        ClearCheck.Completed = true;
+                        ClearCheck.PlayAfterAnotherWorldStory = true;
+                    }
+                }
+
                 await Task.Delay((int)ConstNum.waitTime_End);
                 Capt = Func.PlayConv(this, pictureBox_Conv, EndConv);
             }
