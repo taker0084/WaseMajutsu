@@ -569,6 +569,10 @@ namespace unilab2024
 
         //卒業試験クリア時
         public static bool PlayAfterChapter4Story;
+
+        //外の世界クリア時
+        public static bool Completed;
+        public static bool PlayAfterAnotherWorldStory;
     }
 
     public partial class Func
@@ -586,6 +590,8 @@ namespace unilab2024
             }
 
             ClearCheck.PlayAfterChapter4Story = false;
+            ClearCheck.PlayAfterAnotherWorldStory = false;
+            ClearCheck.Completed = false;
 
             ClearCheck.IsButtonEnabled[1, 0] = true;
             ClearCheck.IsButtonEnabled[1, 1] = true;

@@ -95,23 +95,6 @@ namespace unilab2024
                             {
                                 button.BackColor = Color.FromArgb(128, 255, 255);
                                 button.ConditionImage = Dictionaries.Img_Button["Clear"];
-                                switch (_worldNumber)
-                                {
-                                    case 5:
-                                        button.BackgroundImage = Dictionaries.Img_Object["15"];
-                                        button.BackgroundImageLayout = ImageLayout.Zoom;
-                                        break;
-                                    case 6:
-                                        button.BackgroundImage = Dictionaries.Img_Object["16"];
-                                        button.BackgroundImageLayout = ImageLayout.Zoom;
-                                        break;
-                                    case 7:
-                                        button.BackgroundImage = Dictionaries.Img_Object["17"];
-                                        button.BackgroundImageLayout = ImageLayout.Zoom;
-                                        break;
-                                    default:
-                                        break;
-                                }
                             }
                             else
                             {
@@ -123,6 +106,32 @@ namespace unilab2024
                             button.ForeImage = Dictionaries.Img_Button["Lock"];
                             button.Cursor = Cursors.No;
                         }
+
+                        if(_worldNumber > 4)
+                        {
+                            string itemName = "";
+                            switch (_worldNumber)
+                            {
+                                case 5:
+                                    itemName = "Snow";
+                                    break;
+                                case 6:
+                                    itemName = "Fruit";
+                                    break;
+                                case 7:
+                                    itemName = "Watch";
+                                    break;
+                                default :
+                                    break;
+                            }
+                            if (!ClearCheck.IsCleared[_worldNumber, j])
+                            {
+                                itemName += "Gray";
+                            }
+                            button.BackgroundImage = Dictionaries.Img_Button[itemName];
+                            button.BackgroundImageLayout = ImageLayout.Zoom;
+                        }
+
                     }
                     else
                     {
